@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "Paysecure API Documentation",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#8666CF",
+    "light": "#DACAFF",
+    "dark": "#1F1438"
   },
   "favicon": "/favicon.ico",
   "navigation": {
@@ -75,8 +75,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/logo.png",
+    "dark": "/logo/logo.png"
   },
   "navbar": {
     "links": [
