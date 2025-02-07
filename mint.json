@@ -1,0 +1,142 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Paysecure",
+  "theme": "venus",
+  "logo": {
+    "dark": "/logo/logo.png",
+    "light": "/logo/logo.png"
+  },
+  "favicon": "/logo.png",
+  "colors": {
+    "primary": "#8666CF",
+    "light": "#DACAFF",
+    "dark": "#DACAFF"
+  },
+  "font": {
+    "headings": {
+      "family": "Inter",
+      "weight": 900
+    },
+    "body": {
+      "family": "Inter",
+      "weight": 400
+    }
+  },
+  "layout": "sidenav",
+  "sidebar": {
+    "items": "undecorated"
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true
+  },
+  "topbarLinks": [
+    {
+      "name": "Community",
+      "url": "https://community.phidata.com/"
+    },
+    {
+      "name": "Log In",
+      "url": "https://paysecure.net"
+    }
+  ],
+  "topbarCtaButton": {
+    "type": "github",
+    "url": "https://github.com/PaysecureCommunity"
+  },
+  "tabs": [
+    {
+      "name": "Examples",
+      "url": "examples"
+    },
+    {
+      "name": "Templates",
+      "url": "templates"
+    },
+    {
+      "name": "Product Updates",
+      "url": "changelog/overview"
+    },
+    {
+      "name": "Reference",
+      "url": "reference"
+    },
+    {
+      "name": "FAQs",
+      "url": "faq"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "introduction",
+        "integrations",
+        "examples",
+        "getting-help"
+      ]
+    },
+    {
+      "group": "Documentation",
+      "pages": [
+        {
+          "group": "APM Integrations",
+          "pages": [
+            "pages"
+          ]
+        },
+        {
+          "group": "Card Integrations",
+          "pages": [
+            "models/xai"
+          ]
+        },
+        {
+          "group": "Authentication",
+          "pages": [
+            "AUTH"
+          ]
+        },
+        {
+          "group": "Environments",
+          "pages": [
+            "environment"
+          ]
+        },
+        {
+          "group": "Payment Methods",
+          "pages": [
+            "payment"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Examples",
+      "pages": [
+        "examples/introduction"
+      ]
+    },
+    {
+      "group": "How To",
+      "pages": [
+        "examples/how-to/use-paysecure"
+      ]
+    },
+    {
+      "group": "Changelog",
+      "pages": [
+        "changelog/overview"
+      ]
+    },
+    {
+      "group": "FAQs",
+      "pages": [
+        "faq/could-not-connect-to-docker",
+        "faq/environment_variables",
+        "faq/phi-auth",
+        "faq/connecting-to-tableplus"
+      ]
+    }
+  ]
+}
