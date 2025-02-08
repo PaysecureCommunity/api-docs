@@ -124,18 +124,10 @@
       ]
     },
     {
-      "group": "Changelog",
-      "pages": [
-        "changelog/overview"
-      ]
-    },
-    {
       "group": "FAQs",
       "pages": [
         "faq/could-not-connect-to-docker",
-        "faq/environment_variables",
-        "faq/phi-auth",
-        "faq/connecting-to-tableplus"
+        "faq/environment_variables"
       ]
     }
   ]
