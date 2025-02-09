@@ -71,9 +71,12 @@
       "group": "Getting Started",
       "pages": [
         "introduction",
-        "integrations",
-        "examples",
-        "getting-help"
+        "integration-steps",
+        "authentication",
+        "get-status-api",
+        "headers",
+        "webhooks",
+        "upi-payments"
       ]
     },
     {

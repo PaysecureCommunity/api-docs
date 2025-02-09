@@ -1,0 +1,105 @@
+---
+title: "Get Status API"
+---
+
+# 🏷️ Get Status API
+
+This API provides details about a **Payout**, including its history.
+
+## Endpoint
+
+```
+GET https://api.paysecure.net/api/v1/getpayout/{payoutId}/
+```
+
+## Mandatory Parameter
+
+- `payoutId` (path parameter): Unique identifier for the payout.
+
+## Possible Values of `status`
+
+| Status               | Notes                              |
+|----------------------|----------------------------------|
+| `paid`              | Transaction Successful           |
+| `payout_in_process` | Payout is under Processing       |
+| `error`             | Transaction has Failed           |
+
+The webhook will only be triggered for **paid** transactions or **errors**.
+
+### Webhook Callbacks
+
+- **Paid Transaction:**
+  ```json
+  "success_callback": "https://success.com"
+  ```
+- **Error Transaction:**
+  ```json
+  "failure_callback": "https://failure.com"
+  ```
+
+## Authorization
+
+This API requires a **Bearer Token** in the `Authorization` header.
+
+```http
+Authorization: Bearer {Merchant API Key}
+```
+
+## Example Request
+
+```bash
+curl --location -g 'https://api.paysecure.net/api/v1/getpayout/{payoutId}/'
+```
+
+## Example Response
+
+```json
+{
+  "payoutId": "66bf2e76e3defc36cd575481",
+  "client": {
+    "customerId": "NA",
+    "email": "ashishm.21190@gmail.com",
+    "phone": "+14377717874",
+    "full_name": "Ashish Mistry",
+    "country": "CA"
+  },
+  "updated_on": 1723805728,
+  "payoutMethod": "PAYOUT-INTERAC",
+  "amountUnit": "MAJOR",
+  "amount": 12,
+  "errorMsg": "",
+  "purpose": "test payout",
+  "created_on": 1723805302,
+  "merchantRef": "66bf2e76e3defc36cd575481",
+  "merchantName": "arunsinghal",
+  "status": "PAID",
+  "status_history": [
+    {
+      "status": "created",
+      "timestamp": 1723805302
+    },
+    {
+      "status": "payout_in_process",
+      "timestamp": 1723805310
+    },
+    {
+      "status": "paid",
+      "timestamp": 1723805728
+    },
+    {
+      "status": "viewed",
+      "timestamp": 1738750221
+    }
+  ],
+  "viewedOn": 1738750221,
+  "currency": "USD",
+  "paymentOn": 1723805728,
+  "payOutDetails": {
+    "name": "INTERAC E-TRANSFER",
+    "emailAddress": "ashishm.21190@gmail.com",
+    "secretQA": "q66276336575481202",
+    "secretAnswer": "a66276336575481202"
+  },
+  "success_callback": "https://webhook.site/d7660184-d724-480c-bad0-cf0480f5518e",
+  "failure_callback": "https://webhook.site/d7660184-d724-480c-bad0-cf0480f5518e"
+}
