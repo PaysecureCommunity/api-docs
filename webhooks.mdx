@@ -1,0 +1,79 @@
+---
+title: "Webhooks"
+---
+
+# 🔌 Webhooks
+
+To receive information about various transaction statuses and events, you need to set up an endpoint that accepts payloads sent by Paysecure. Your endpoint will receive `POST` requests with `Content-Type: application/json`.
+
+## Configuring the Webhook Endpoint
+
+The webhook endpoint can be set up in **Partner Dashboard** → **Webhooks** → **New Webhook**. Ensure you save the endpoint by clicking **Create**.
+
+Paysecure will post all payloads to the specified URL. If there are issues with delivery, the payload will not be resent.
+
+**Note:**
+- You can set up one URL for all events or individual URLs for each event.
+- If using a single URL, the developer must extract the message from the payload information.
+
+## Events
+
+### PayIN Events
+
+| Type                  | Executed When                        | What is Sent               |
+|-----------------------|------------------------------------|-----------------------------|
+| Payment in Process   | Paid but payment is in process    | Purchase Object (Payload)  |
+| Expired              | Transaction Expired               | Purchase Object (Payload)  |
+| Error                | Transaction Error                 | Purchase Object (Payload)  |
+| Paid                 | Payment Successful                | Purchase Object (Payload)  |
+
+### PayOUT Events
+
+| Type                  | Executed When                        | What is Sent               |
+|-----------------------|------------------------------------|-----------------------------|
+| Payout in Process    | Paid but payment is in process    | Purchase Object (Payload)  |
+| Expired              | Transaction Expired               | Purchase Object (Payload)  |
+| Error                | Transaction Error                 | Purchase Object (Payload)  |
+| Paid                 | Payment Successful                | Purchase Object (Payload)  |
+
+## Webhook Structure
+
+### `paysecure_sign`
+
+Paysecure adds a signature in the `paysecure_sign` header for verifying the payload. If you have already created a **public key** in your **Merchant Dashboard**, you can verify this signature by decrypting it with your **public key**.
+
+To verify the signature, compare it with the following value:
+
+```
+purchaseId + "|" + status + "|" + brandId
+```
+
+### Example Code in Java
+
+```java
+private static boolean verify(String message, String signature, PublicKey publicKey) throws Exception {
+    Signature verifier = Signature.getInstance("SHA256withRSA");
+    verifier.initVerify(publicKey);
+    verifier.update(message.getBytes());
+    return verifier.verify(Base64.getDecoder().decode(signature.getBytes()));
+}
+```
+
+Where:
+- `message` = `purchaseId + "|" + status + "|" + brandId`
+- `signature` = Value of `paysecure_sign` received in the webhook
+
+You can obtain the **Public Key** from your **Merchant Dashboard**.
+
+**Note:**
+- If a `success_callback` or `failure_callback` webhook is provided in the **Purchase API**, it will take priority over the webhooks set in the **Merchant Dashboard**.
+- The webhook payload will be a JSON object (either a **purchase** or **payout** object) containing the status. This object is the same as what you receive from the `getStatus` API call.
+
+## API Endpoints
+
+- `https://api.paysecure.net/api/v1/purchases/{purchaseId}/`
+- `https://api.paysecure.net/api/v1/getpayout/{payoutId}/`
+
+## Authorization
+
+Ensure that requests use a **Bearer Token** for authentication.

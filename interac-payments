@@ -1,0 +1,82 @@
+---
+title: "Interac Payments"
+---
+
+# Interac Payments
+
+## Overview
+Interac is a leading Canadian payment network that facilitates secure, real-time transactions between bank accounts. It offers multiple payment options, including **Interac e-Transfers**.
+
+**Interac e-Transfer** allows users to send and receive money directly between bank accounts using email or SMS. It provides a fast, secure, and convenient alternative to traditional payment methods, accessible through most Canadian banks' online and mobile banking platforms.
+
+Paysecure’s Interac product suite enables merchants to initiate:
+- **PayIns**: Consumers can use Interac e-Transfer to transfer funds from their bank account through their bank’s app or website.
+- **Payouts**: Facilitate real-time disbursements directly to consumers' accounts.
+
+---
+
+## PayIn Flows
+### How It Works
+Paysecure’s Interac PayIn leverages Interac’s e-Transfer ‘Send Money’ capability to support a wide range of collection scenarios. Merchants can initiate payment requests via email or SMS, providing secure, efficient, and flexible options for collecting payments from customers.
+
+### Key Steps
+
+1. **Initiate Transfer Request**: The merchant sends a request to the Interac PayIn API to initiate a PayIn (deposit/collection) transaction. This request includes the customer’s email address or mobile number, the amount to be collected, and an optional message.
+
+2. **Generate Security Question & Answers**: The API generates a security question and answer that the customer must answer to complete the transaction. This ensures the security of the transfer. The request remains valid for 30 days by default (this can be increased but not decreased).
+
+3. **Send Notification**: The customer receives an email or SMS notification containing instructions on how to complete the transfer, including a link to their bank’s online platform and the security question.
+
+4. **Customer Completes Transfer**: The customer logs into their online banking, answers the security question, and authorizes the transfer of funds to the merchant’s account.
+
+5. **Confirm Transfer Completion**: Once the transfer is complete, the API sends a confirmation to the merchant, including the transaction details and status.
+
+6. **Update Merchant’s Account**: The merchant’s system updates the customer’s account balance to reflect the received funds.
+
+---
+
+## PayOut Flows
+### How It Works
+Paysecure offers the ability to make payouts to customers, individuals, or businesses' bank accounts using Interac e-Transfers. Whether for refunds, rewards, or other types of disbursements, the Interac Payouts API ensures efficient and reliable transactions, supporting real-time fund transfers and comprehensive transaction tracking.
+
+### Key Steps
+
+1. **Initiate Payout Request**: The merchant initiates the Interac e-Transfer transaction. This request includes the customer’s email address or mobile number, the amount to be transferred, and an optional message.
+
+2. **Generate Security Question & Answers (Optional)**: If necessary, the merchant can set a security question and answer that the customer must provide to receive the funds, adding an extra layer of security.
+
+3. **Send Notification**: The customer receives an email or SMS notification with instructions on how to deposit the money into their bank account, along with the security question (if applicable).
+
+4. **Customer Deposits Funds**: The customer follows the link in the notification, logs into their online banking, answers the security question (if applicable), and deposits the funds into their account.
+
+5. **Confirm Payout Completion**: The API sends a confirmation to the merchant once the customer has successfully deposited the funds, including the transaction details and status.
+
+6. **Update Merchant’s Account**: The merchant’s system updates the customer’s account balance to reflect the withdrawn funds.
+
+---
+
+## Transaction Limits
+The limits outlined below are generally for personal accounts and can vary by financial institution and account type. For business accounts, higher limits may apply. It’s advisable to check with your bank for the most accurate limits pertaining to your account.
+
+### PayIn Limits
+
+| Criteria  | Min Amount | Max Amount |
+|-----------|------------|------------|
+| Per Transaction | 0.01 CAD | 3,000 CAD |
+| Per Day | 0.01 CAD | 3,000 CAD |
+| Per User (over a 7-day rolling period) | 0.01 CAD | 10,000 CAD |
+| Per Month (over a 30-day rolling period) | 0.01 CAD | 20,000 CAD |
+
+### PayOut Limits
+
+| Criteria  | Min Amount | Max Amount |
+|-----------|------------|------------|
+| Per Transaction | 10 CAD | 3,000 CAD |
+| Per Day | 10 CAD | 10,000 CAD |
+| Per User (over a 7-day rolling period) | 10 CAD | 70,000 CAD |
+| Per Month (over a 30-day rolling period) | 10 CAD | 100,000 CAD |
+
+---
+
+This document provides a comprehensive overview of how Paysecure’s Interac product suite facilitates secure, real-time payments for both **PayIns** and **PayOuts**. 🚀
+
