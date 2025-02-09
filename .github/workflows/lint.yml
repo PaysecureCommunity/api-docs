@@ -1,0 +1,33 @@
+---
+  name: Lint
+  
+  on: # yamllint disable-line rule:truthy
+    push: null
+    pull_request: null
+  
+  permissions: {}
+  
+  jobs:
+    build:
+      name: Lint
+      runs-on: ubuntu-latest
+  
+      permissions:
+        contents: read
+        packages: read
+        statuses: write
+  
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+  
+        - name: Super-linter (MDX only)
+          uses: super-linter/super-linter@v7.2.1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            VALIDATE_ALL_CODEBASE: false
+            VALIDATE_MDX: true
+            DISABLE_LINTERS: "BASH,JSON,MARKDOWN,DOCKERFILE,JAVASCRIPT,TYPESCRIPT,YAML,HTML,CSS,CHECKOV,JSON_PRETTIER,YAML_PRETTIER"
+  

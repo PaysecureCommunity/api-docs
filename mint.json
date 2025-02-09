@@ -75,23 +75,22 @@
         "authentication",
         "get-status-api",
         "headers",
-        "webhooks",
-        "upi-payments"
+        "webhooks"
       ]
     },
     {
       "group": "Documentation",
       "pages": [
         {
-          "group": "APM Integrations",
+          "group": "Integrations",
           "pages": [
-            "pages"
+            "pages/apm-integrations/interac-payments",
+            "pages/apm-integrations/upi-payments"
           ]
         },
         {
           "group": "Card Integrations",
-          "pages": [
-            "models/xai"
+          "pages": ["pages"
           ]
         },
         {
