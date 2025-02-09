@@ -75,7 +75,8 @@
         "authentication",
         "get-status-api",
         "headers",
-        "webhooks"
+        "webhooks",
+        "upi-payments"
       ]
     },
     {

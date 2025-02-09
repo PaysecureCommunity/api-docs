@@ -1,0 +1,110 @@
+# UPI Payments Overview
+
+## UPI Overview
+The Unified Payments Interface (UPI) technology unifies various banking functions, smooth fund routing, and merchant payments under one roof by enabling multiple bank accounts into a single mobile application (of any participating bank).
+
+## Paysecure's UPI Product Suite
+Paysecure’s UPI product suite enables merchants to initiate:
+- **PayIns**: Consumers can utilize UPI to transfer funds from their bank account, through their bank’s app or website.
+- **Payouts**: Facilitate real-time disbursements directly to consumers' accounts by UPI ID, IMPS, RTGS, and NEFT.
+
+## PayIn Flows
+### How it Works
+Paysecure’s UPI PayIn API allows platforms to collect funds from payers through an intent flow/payment link without entering the payer's VPA. It is suitable for app or mobile-based flows.
+
+### Key Steps
+1. **Initiate Transfer Request**: The merchant sends a request to the UPI PayIn API, including the customer’s email address or mobile number, the amount to be collected, and an optional message.
+2. **UPI Payment Options**: The API generates multiple payment options (PayTM, GPay, PhonePe, or QR code scanning).
+3. **User Pays Using Their App**: The user completes the transaction using their preferred payment app or by scanning the QR code.
+4. **Confirm Transfer Completion**: Paysecure sends a webhook notification upon payment completion.
+5. **Update Merchant’s Account**: The merchant updates the customer’s account balance accordingly.
+
+## PayOut Flows
+### How it Works
+Paysecure’s API enables UPI payouts through IMPS, UPI, RTGS, and NEFT to both bank accounts and UPI IDs (VPAs).
+
+### Key Steps
+1. **Validate Bank Account**: The merchant verifies the customer’s bank account before initiating payouts.
+2. **Ensure Sufficient Balance**: The merchant checks their balance using the "GetBalance" API.
+3. **Initiate Payout Request**: The merchant provides the beneficiary’s bank details and transfer type.
+4. **Complete Payout**: Paysecure sends a webhook notification upon successful payout completion.
+5. **Update Merchant’s Account**: The merchant updates their records based on the payout status.
+
+## Transaction Limits
+### PayIns
+| Criteria | Min Amount | Max Amount |
+|----------|------------|------------|
+| Per Transaction | 100 INR | 100,000 INR |
+| Per Day | 100 INR | 100,000 INR |
+
+**Notes:**
+- Limits vary by bank.
+- QR code payments via saved images are limited to INR 2,000.
+
+### PayOuts
+| Criteria | Min Amount | Max Amount |
+|----------|------------|------------|
+| Per Transaction | 1000 INR | 100,000 INR |
+| Per Day | 3000 INR | 100,000 INR |
+
+## Authorization
+Use a **Bearer Token** for authentication.
+
+## PayIn API
+### API Flow
+1. **Create Purchase API**: The merchant initiates the purchase and receives PayIn details and a checkout URL.
+2. **User Payment Options**:
+   - PayTM
+   - Google Pay
+   - PhonePe
+   - QR Code
+3. **Webhook Notifications**: Paysecure sends webhooks for successful or failed payments.
+
+### Create Purchase API Endpoint
+**POST**: `https://api.paysecure.net/api/v1/purchases/`
+
+### Required Parameters
+| Parameter | Notes |
+|------------|-------------|
+| client.email | Identifier for the user |
+| client.city | User’s city |
+| client.country | ISO-3166 Country Code (e.g., "CA" for Interac) |
+| client.stateCode | Example "AL", "XZ" (must be uppercase) |
+| client.street_address | User’s street address |
+| client.zip_code | Postal code |
+| client.full_name | User’s full name |
+| purchase.currency | ISO 4217 code (e.g., 'CAD' for Interac) |
+| purchase.products.name | Product name |
+| purchase.products.price | Price in decimal format |
+| brand_id | Obtain from merchant dashboard |
+| success_redirect | URL for successful transactions |
+| failure_redirect | URL for unsuccessful transactions |
+
+### Optional Parameters
+- **expireInMin**: Time window for payment completion.
+- **merchantRef**: Prevents duplicate transactions and aids in retrieval.
+- **paymentMethod**: Specifies the preferred payment method.
+
+### Possible Error Messages
+| Error Message | Description |
+|--------------|-------------|
+| Invalid format of Date_of_Birth | Allowed format: yyyy-mm-dd |
+| Enter Valid Email | Ensure correct email format |
+| Please submit Valid Alpha2 Country Code | Example: AF, IN |
+| You are not Allowed for Live Transaction | Contact Administrator |
+| Minimum amount is not set for this merchant | Configure merchant settings |
+
+### Note:
+For some use cases, Paysecure provides a short purchase ID:
+```
+"purchaseIdShortCode": "4000013"
+```
+
+## Headers
+| Header | Value |
+|---------|-------------|
+| Content-Type | application/json |
+| Authorization | Bearer Token |
+
+This document provides a detailed overview of Paysecure’s UPI PayIn and PayOut solutions, transaction limits, API workflows, and error handling.
+
