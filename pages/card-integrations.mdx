@@ -1,0 +1,113 @@
+---
+title: "Card Integrations"
+---
+
+# Integration Steps
+
+To start integrating, you should already have your Merchant access to our admin portal and sandbox credentials, which are required to complete the integration.
+
+## 1. Setup & Check Merchant Details
+
+The first step in getting your integration ready is to verify that all your merchant details are correct on our Merchant portal. If you detect anomalies, please contact your client support executive.
+
+Start with **Sandbox Mode** (toggle between modes using the top right-hand corner on your merchant portal) and create the following items on your dashboard:
+
+- **API Key**: Necessary to send transactions via API.
+- **Brand ID**: Required for sending transactions. Use different brand IDs for different shops or brands.
+- **Webhook**: Recommended for receiving notifications from our server about transaction status changes. Details on webhook functionality can be found on the Webhooks page.
+
+## 2. Test the Integration in Sandbox Mode
+
+After completing your integration, ensure your code functions as intended by testing the purchase flow in the staging environment.
+
+### Testing Credentials (Only in Sandbox Mode)
+
+Use the following test card numbers to perform a test purchase:
+
+- **Card Numbers**:
+  - `4444 3333 2222 1111`
+  - `5555 5555 5555 4444`
+- **Cardholder Name**: Any name
+- **Expiry Date**: Any date greater than or equal to the current month/year
+- **CVC**: `345`
+
+## 3. Create and Test Credentials in Live Mode
+
+Once integration in sandbox mode is complete, create the three items mentioned in Step 1 in **Live Mode** as well. Test the integration using small amounts to ensure everything is working correctly.
+
+## 4. Go Live!
+
+Inform the team about your planned go-live date so they can assist you with the process.
+
+---
+
+# Concepts
+
+## Custom Payment Flow - Server-to-Server (S2S)
+
+Paysecure offers **Server-to-Server (S2S)** integration, enabling payment processing on the server level and eliminating direct interaction between the client’s browser/application and the API.
+
+This setup ensures payers do not directly access platform resources. Follow the **3-step routine** below to enable payment acceptance in your application or website:
+
+### Step 1: Create a Purchase
+
+Make a `POST` request to `/purchase/` to create a purchase in the system. Ensure you include:
+
+- `success_redirect` and `failure_redirect` fields set to valid URLs.
+
+### Step 2: Send Payment Method
+
+Make a `POST` request to `/p/{purchaseId}/?s2s=true` to send the payment method to the payment URL. The request body should contain the card details:
+
+```json
+{
+    "cardholder_name": "dk",
+    "card_number": "4444333322221111",
+    "expires": "10/23",
+    "cvc": "345",
+    "remember_card": "on",
+    "remote_ip": "157.38.242.7",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
+    "accept_header": "text/html",
+    "language": "en-US",
+    "java_enabled": false,
+    "javascript_enabled": true,
+    "color_depth": 24,
+    "utc_offset": 0,
+    "screen_width": 1920,
+    "screen_height": 1080
+}
+```
+
+For more details, refer to `/p/{purchaseId}/?s2s=true` API documentation.
+
+### Step 3: Handle 3D Secure Transactions (If Applicable)
+
+If the purchase is successful, the response will have a status code of `202` and include:
+
+```json
+{
+    "status": "pending",
+    "callback_url": "http://18.214.100.20/api/v1/payment/64bfc2a4f63e36669499e5cc/",
+    "method": "GET"
+}
+```
+
+In case of an error (status codes: `400`, `404`, `401`, `415`, `405`), you will receive:
+
+```json
+{
+    "message": "descriptive error message",
+    "code": "error_code"
+}
+```
+
+#### Redirecting the Customer
+
+- If the response code is `202`, redirect the customer to the `callback_url` provided in the response.
+- If the card requires **3D Secure verification**, the user will be redirected to a challenge screen by the issuing bank.
+- After successful verification, the user will be redirected to the **success URL** provided in Step 1.
+- If the transaction fails, the user will be redirected to the **failure URL** provided in Step 1.
+
+Refer to the **Status Code** section for further details.
+

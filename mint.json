@@ -90,13 +90,14 @@
         },
         {
           "group": "Card Integrations",
-          "pages": ["pages"
+          "pages": [
+            "pages/card-integrations"
           ]
         },
         {
           "group": "Authentication",
           "pages": [
-            "AUTH"
+            "authentication.mdx"
           ]
         },
         {
@@ -111,25 +112,6 @@
             "payment"
           ]
         }
-      ]
-    },
-    {
-      "group": "Examples",
-      "pages": [
-        "examples/introduction"
-      ]
-    },
-    {
-      "group": "How To",
-      "pages": [
-        "examples/how-to/use-paysecure"
-      ]
-    },
-    {
-      "group": "FAQs",
-      "pages": [
-        "faq/could-not-connect-to-docker",
-        "faq/environment_variables"
       ]
     }
   ]
