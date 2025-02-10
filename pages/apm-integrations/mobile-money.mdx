@@ -1,0 +1,66 @@
+# Mobile Money Overview
+
+Mobile Money is a digital payment service that allows users to send, receive, and manage money via their mobile devices. It facilitates secure and instant transactions directly between mobile wallets or bank accounts, offering a convenient alternative to traditional banking methods in Africa.
+
+## Mobile Money Product Suite
+
+Our Mobile Money solution enables merchants to seamlessly initiate **PayIns (Collections)** and **PayOuts (Disbursements)** on their websites.
+
+### PayIns:
+- Customers can choose Mobile Money as a payment method and transfer funds from their mobile wallet.
+- Upon successful PayIn, the webhook will update the payment status instantaneously, and both the merchant and customer wallet are updated.
+
+### Supported Countries
+PaySecure currently offers Mobile Money PayIns in the following countries:
+
+| Country | Region | Telco | Currency |
+|---------|--------|-------|----------|
+| Benin | FSSA | Moov | XOF (CFA Franc) |
+| Benin | FSSA | MTN | XOF (CFA Franc) |
+| Burkina Faso | FSSA | Moov | XOF (CFA Franc) |
+| Burkina Faso | FSSA | Orange | XOF (CFA Franc) |
+| Cote d'Ivoire | FSSA | Moov | XOF (CFA Franc) |
+| Cote d'Ivoire | FSSA | MTN | XOF (CFA Franc) |
+| Cote d'Ivoire | FSSA | Orange | XOF (CFA Franc) |
+| Cote d'Ivoire | FSSA | Wave | XOF (CFA Franc) |
+| DRC | SEA | Airtel | CDF (Congolese Franc) |
+| DRC | SEA | Orange | CDF (Congolese Franc) |
+| DRC | SEA | Vodacom | CDF (Congolese Franc) |
+| Ghana | AWA | Airteltigo | GHS (Ghanaian Cedi) |
+| Ghana | AWA | MTN | GHS (Ghanaian Cedi) |
+| Ghana | AWA | Vodafone | GHS (Ghanaian Cedi) |
+| Guinea Conakry | FSSA | MTN | GNF (Guinean Franc) |
+| Guinea Conakry | FSSA | Orange | GNF (Guinean Franc) |
+| Kenya | SEA | M-Pesa | KES (Kenyan Shilling) |
+
+## Customer Flow
+
+### PayIn Flows
+
+#### How It Works
+
+The PayIn flow leverages mobile money capabilities to support various collection scenarios. Merchants can initiate payment requests via SMS or app notifications, providing secure, efficient, and flexible options for collecting payments from customers.
+
+### Key Steps
+
+1. **Initiate Transfer Request**:
+   - The merchant sends a request to the Mobile Money PayIn API to initiate a PayIn transaction.
+   - This request includes the customer’s mobile number, the amount to be collected, and an optional message.
+
+2. **Send Notification**:
+   - The customer receives an SMS notification containing instructions on how to complete the transfer.
+   - The notification may include a link to their mobile money platform and a security code (if applicable).
+
+3. **Customer Completes Transfer**:
+   - The customer pays via USSD or their mobile money account.
+   - They enter the security code (if applicable) and authorize the funds to the merchant’s account.
+
+4. **Confirm Transfer Completion**:
+   - Once the transfer is complete, the merchant receives a payment success status via the webhook.
+
+5. **Update Merchant’s Account**:
+   - The merchant’s system updates the customer’s account balance to reflect the received funds.
+
+---
+
+This structured approach ensures a seamless experience for both merchants and customers in handling mobile money transactions.

@@ -85,7 +85,8 @@
           "group": "Integrations",
           "pages": [
             "pages/apm-integrations/interac-payments",
-            "pages/apm-integrations/upi-payments"
+            "pages/apm-integrations/upi-payments",
+            "pages/apm-integrations/webhooks"
           ]
         },
         {
