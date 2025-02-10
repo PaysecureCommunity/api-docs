@@ -1,0 +1,60 @@
+## Transaction Status and Their Meaning
+
+The lifecycle of a transaction is reflected through the status of the transaction. This section details various statuses of a transaction, what they mean, and when they appear.
+
+The status of a transaction can be read from the `status` field of the responses or webhook payload.
+
+### Transaction Statuses
+
+| Status | Description | When it Appears | Is it Final? |
+|--------|------------|----------------|--------------|
+| CREATED | Purchase is created in the system. | When Purchase API is called, the transaction is created as "CREATED". | N |
+| CANCELLED | Purchase is cancelled in the system. Only transactions in "CREATED" status can be cancelled. | When Cancel API is called. | Y |
+| OVERDUE | Purchase hasn't been completed yet. Only transactions in "CREATED" status can become "OVERDUE" if checkout_url hasn't been called in 2 hours. | `checkout_url` hasn't been called within 2 hours since transaction creation. | N |
+| EXPIRED | Purchase hasn't been completed. Only transactions in "PAYMENT IN PROCESS" status can become "EXPIRED". After payment in process, no data is provided. | Purchase either hasn't been completed or has failed within the specific time period. | N |
+| PAID | Purchase has been completed successfully. Only transactions in "PAYMENT IN PROCESS" status can become "PAID". | When a successful response is received from the bank. | Y |
+| PAYMENT IN PROCESS | The purchase hasn't been completed. Only transactions in "CREATED" status can become "PAYMENT IN PROCESS". | When the user's action is pending. Transaction can stay in this status for 24 hours since creation. | N |
+| ERROR | Only transactions in "PAYMENT IN PROCESS" status can become "ERROR". | Refers to the Errors list for possible errors. | Y |
+
+## Secure EFT - South Africa 🇿🇦
+
+### Overview
+
+EFT (Electronic Funds Transfer) is a secure and efficient method of processing online payments in South Africa. It allows customers to make instant payments directly from their bank accounts without using a credit card. EFT leverages the existing online banking infrastructure to facilitate quick and secure transactions, making it a popular choice for consumers and merchants.
+
+### Key Features of EFT
+
+- **Instant Payment Confirmation:** Transactions are processed and confirmed immediately, allowing for real-time payment updates.
+- **Secure Transactions:** Uses bank-level security measures to ensure the safety of customer data.
+- **Broad Bank Support:** It supports many South African banks, ensuring broad accessibility.
+- **User-Friendly:** The payment process is simple and intuitive, providing a seamless experience for users.
+
+### Payment Processing Steps Through EFT
+
+#### Step 1: Initiating the Payment
+- **Customer Selects 'Net Banking' Payment Option:** At the checkout page, the customer selects 'Net Banking' as their preferred payment method.
+- **Merchant Redirects to EFT Gateway:** The merchant's website or application redirects the customer to the EFT payment gateway.
+
+#### Step 2: Redirect to Bank Login
+- **Customer Selects Their Bank:** The customer selects their bank from the list of supported banks on the EFT gateway.
+- **Customer is Redirected to Bank Login Page:** The platform securely redirects customers to their bank’s online banking login page.
+
+#### Step 3: Logging into Online Banking
+- **Customer Logs In:** The customer logs into their online banking account using their credentials.
+- **Secure Session:** The login session is safe, and the customer’s banking credentials are not shared with the EFT gateway or the merchant.
+
+#### Step 4: Confirming the Payment
+- **Payment Details:** The customer reviews the pre-filled payment details, including the amount and beneficiary information.
+- **Authorize Payment:** The customer authorizes the payment using their bank’s authentication method (e.g., OTP, password).
+
+#### Step 5: Payment Processing and Confirmation
+- **Bank Processes Payment:** The customer’s bank processes the payment and debits the amount from the customer’s account.
+- **Instant Confirmation to the EFT Gateway:** Once the payment is processed, the bank sends an instant confirmation to the EFT gateway.
+
+#### Step 6: Notification to Merchant
+- **EFT Gateway Confirms Payment to Merchant:** The EFT gateway immediately notifies the merchant of the successful payment.
+- **Order Completion:** The merchant completes and confirms the order to the customer.
+
+#### Step 7: Customer Redirect
+- **Redirect to Merchant’s Site:** After confirming the payment, the customer is redirected back to the merchant’s website.
+- **Payment Confirmation Page:** The merchant’s website displays a payment confirmation page to the customer.
