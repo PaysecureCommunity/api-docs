@@ -1,0 +1,126 @@
+# Fawry Overview
+Fawry is a leading Egyptian payment network that facilitates secure, online and offline transactions across various financial services. It offers multiple payment options, including Fawry Pay, enabling seamless transactions between businesses and consumers.
+
+Fawry Pay allows users to make and receive payments directly through various channels, such as retail points, mobile apps, and online platforms. It provides a fast, secure, and convenient alternative to traditional payment methods, accessible through numerous banks and financial institutions in Egypt.
+
+## PayIn API
+### API Flow
+1. The merchant initiates the purchase via the create purchase API. If successful, they receive PayIn details (Unique Ref Code) along with a checkout URL in the response JSON.
+2. The merchant then has two options:
+   - Use the PayIn details in the JSON to create a webpage within the merchant’s IT estate and show the PayIn instruction to the user.
+   - Direct the end-user to our checkout URL, where the client sees bank details for payment.
+3. After a successful or failed payment by the end user, an appropriate webhook is sent to the merchant. If option 2b was used, the user is redirected to the appropriate redirect URL.
+
+## AUTHORIZATION
+### Bearer Token
+This API uses a Bearer Token for authorization.
+
+## POST Create Purchase
+### Endpoint
+```plaintext
+https://api.paysecure.net/api/v1/purchases/
+```
+### Request Requirements
+To initiate a payment, send a request to `/purchases` with the required data in the request body.
+
+#### Mandatory Parameters
+| Parameter                | Notes |
+|--------------------------|-------|
+| `client.email`          | An identifier for a user. |
+| `client.city`           | City of the user. |
+| `client.country`        | ISO-3166 Country Code (e.g., "EG"). |
+| `client.stateCode`      | Example: "AL", "XZ". Must be in uppercase. |
+| `client.street_address` | Full street address. |
+| `client.zip_code`       | Postal code. |
+| `client.phone`          | User's phone number. |
+| `client.full_name`      | User's full name. |
+| `purchase.currency`     | ISO 4217 currency code. |
+| `purchase.products.name`| Name of the product. |
+| `purchase.products.price`| Price in decimal format (e.g., `10.37`). |
+| `brand_id`              | Obtain from the merchant dashboard. |
+| `success_redirect`      | URL for successful transactions. |
+| `failure_redirect`      | URL for unsuccessful transactions. |
+
+### Optional Parameters
+#### `merchantRef`
+- Prevents duplicate requests.
+- Helps retrieve transaction details if the initial request times out.
+
+#### `paymentMethod`
+- Identifies the preferred payment solution.
+
+## Possible Error Messages
+| Error Message | Description |
+|--------------|-------------|
+| `Invalid format of Date_of_Birth` | Allowed format: `yyyy-mm-dd`. |
+| `Enter Valid Email` | The email format is incorrect. |
+| `Currency "{curr_name}" is Not Allowed` | Currency not enabled for this account. |
+| `Transaction amount must be equal or greater to minimum trans amount` | Amount does not meet the required minimum. |
+
+## HEADERS
+```json
+{
+  "Content-Type": "application/json",
+  "Authorization": "Bearer Token"
+}
+```
+
+## Example Request
+```json
+{
+  "client": {
+     "email": "test@example.com",
+      "street_address": "10 New Burlington Street Apt. 214",
+      "city": "London",
+      "full_name": "Test User",
+      "zip_code": "W1S 3BE",
+      "country": "EG",
+      "stateCode": "QLD",
+      "phone": "+447755564318"
+  },
+  "purchase": {
+      "currency": "EGP",
+      "products": [
+          {
+              "name": "test",
+              "price": 10
+          }
+      ]
+  },
+  "paymentMethod": "FawryPay",
+  "brand_id": "{{brand_id}}",
+  "success_redirect": "https://your.success.redirect.com",
+  "failure_redirect": "https://your.failure.redirect.com"
+}
+```
+
+## Example Response
+```json
+{
+  "purchaseId": "667cfb2cf0bd8d672c8fc562",
+  "client": {
+    "email": "test@example.com",
+    "phone": "+447755564318",
+    "full_name": "Test User",
+    "street_address": "10 New Burlington Street Apt. 214",
+    "country": "EG",
+    "city": "London",
+    "zip_code": "W1S 3BE"
+  },
+  "status": "PAYMENT_IN_PROCESS",
+  "checkout_url": "https://api.paysecure.net/payments/667cfb2cf0bd8d672c8fc562/"
+}
+```
+
+## GET Purchase Status
+### Endpoint
+```plaintext
+https://api.paysecure.net/api/v1/purchases/{purchaseId}/
+```
+### Possible Status Values
+| Status               | Description |
+|----------------------|-------------|
+| `paid`              | Transaction successful. |
+| `payment_in_process`| Payment is processing. |
+| `expired`           | Purchase expired. |
+| `error`             | Transaction failed. |
