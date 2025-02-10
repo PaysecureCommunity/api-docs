@@ -90,7 +90,8 @@
         },
         {
           "group": "Card Integrations",
-          "pages": ["pages"
+          "pages": [
+            "pages/card-integrations"
           ]
         },
         {
