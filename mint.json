@@ -46,8 +46,20 @@
   },
   "tabs": [
     {
-      "name": "Run on Postman",
-      "url": "templates"
+      "name": "Run the API",
+      "url": "api"
+    },
+    {
+      "name": "FAQ",
+      "url": "faq"
+    },
+    {
+      "name": "Support",
+      "url": "support"
+    },
+    {
+      "name": "Contact",
+      "url": "contact"
     }
   ],
   "navigation": [
@@ -55,6 +67,7 @@
       "group": "Getting Started",
       "pages": [
         "overview",
+        "environments",
         "introduction",
         "integration-steps",
         "authentication",
