@@ -46,36 +46,20 @@
   },
   "tabs": [
     {
-      "name": "Examples",
-      "url": "examples"
-    },
-    {
-      "name": "Templates",
+      "name": "Run on Postman",
       "url": "templates"
-    },
-    {
-      "name": "Product Updates",
-      "url": "changelog/overview"
-    },
-    {
-      "name": "Reference",
-      "url": "reference"
-    },
-    {
-      "name": "FAQs",
-      "url": "faq"
     }
   ],
   "navigation": [
     {
       "group": "Getting Started",
       "pages": [
+        "overview",
         "introduction",
         "integration-steps",
         "authentication",
         "get-status-api",
-        "headers",
-        "webhooks"
+        "headers"
       ]
     },
     {
@@ -98,19 +82,7 @@
         {
           "group": "Authentication",
           "pages": [
-            "authentication.mdx"
-          ]
-        },
-        {
-          "group": "Environments",
-          "pages": [
-            "environment"
-          ]
-        },
-        {
-          "group": "Payment Methods",
-          "pages": [
-            "payment"
+            "authentication"
           ]
         }
       ]
