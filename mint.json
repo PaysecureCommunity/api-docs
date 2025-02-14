@@ -8,9 +8,9 @@
   },
   "favicon": "/logo.png",
   "colors": {
-    "primary": "#8666CF",
-    "light": "#DACAFF",
-    "dark": "#DACAFF"
+    "primary": "#5023B6",
+    "light": "#626262",
+    "dark": "#FFFFFF"
   },
   "font": {
     "headings": {
@@ -32,39 +32,27 @@
   },
   "topbarLinks": [
     {
-      "name": "Community",
-      "url": "https://community.phidata.com/"
+      "name": "Public",
+      "url": "https://paysecure.net/"
     },
     {
-      "name": "Log In",
-      "url": "https://paysecure.net"
+      "style": "pill",
+      "name": "Run on Postman",
+      "url": "https://web.postman.co/workspace/737fc97e-c848-450f-861c-9c23bc79f5c2/collection/33934520-f5192107-d93c-4a5f-b4fd-98c6eb960f3c"
+    },
+    {
+      "style": "pill",
+      "name": " GitHub",
+      "url": "https://github.com/PaysecureCommunity"
     }
   ],
   "topbarCtaButton": {
     "type": "github",
     "url": "https://github.com/PaysecureCommunity"
   },
-  "tabs": [
-    {
-      "name": "Run the API",
-      "url": "api"
-    },
-    {
-      "name": "FAQ",
-      "url": "faq"
-    },
-    {
-      "name": "Support",
-      "url": "support"
-    },
-    {
-      "name": "Contact",
-      "url": "contact"
-    }
-  ],
   "navigation": [
     {
-      "group": "Getting Started",
+      "group": "Paysecure API Documentation",
       "pages": [
         "overview",
         "environments",
@@ -96,6 +84,12 @@
           "group": "Authentication",
           "pages": [
             "authentication"
+          ]
+        },
+        {
+          "group": "Trust Score",
+          "pages": [
+            "pages/products/trust-score"
           ]
         }
       ]
