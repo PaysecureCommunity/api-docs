@@ -1,0 +1,151 @@
+# Trust Score API Documentation
+
+## POST CreateCustomer
+**Endpoint:** `https://api.paysecure.net/api/v1/customer`
+
+### Overview
+The `createCustomer` API allows merchants to create a customer profile on PaySecure when a user visits their website. This facilitates a seamless payment experience by pre-filling the customer's details on the PaySecure Cashier. The API returns a unique `customerId` that can be used in subsequent transactions.
+
+### Parameters
+| Parameter   | Type   | Description                              | Example                      |
+|-------------|--------|------------------------------------------|------------------------------|
+| fullName    | String | Full name of the customer.               | "TestUser"                   |
+| emailId     | String | Email address of the customer.           | "test3@paysecure.net"        |
+| dateOfBirth | String | Customer's date of birth (YYYY-MM-DD).  | "1995-08-27"                 |
+| phoneNo     | String | Customer's phone number.                 | "797639082"                  |
+| brandId     | String | Unique identifier for the merchant.      | "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636" |
+| city        | String | Customer's city.                        | "Jaipur"                     |
+| stateCode   | String | State code.                             | "RJ"                         |
+| zipCode     | String | Postal code.                            | "202020"                     |
+| address     | String | Full address.                           | "Jaipur"                     |
+| country     | String | Country code (ISO 3166-1 alpha-2).      | "IN"                         |
+
+### Request Body
+```json
+{
+  "fullName": "TestUser",
+  "emailId": "test3@paysecure.net",
+  "dateOfBirth": "1995-08-27",
+  "phoneNo": "797639082",
+  "brandId": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
+  "city": "Jaipur",
+  "stateCode": "RJ",
+  "zipCode": "202020",
+  "address": "Jaipur",
+  "country": "IN"
+}
+```
+
+### Example Response
+```json
+{
+  "customerId": "6731e58116f07d2792f8e0a1",
+  "fullName": "TestUser",
+  "emailId": "test3@paysecure.net",
+  "dateOfBirth": "1995-08-27",
+  "phoneNo": "797639082",
+  "brandId": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
+  "city": "Jaipur",
+  "stateCode": "RJ",
+  "zipCode": "202020",
+  "address": "Jaipur",
+  "country": "IN"
+}
+```
+
+---
+
+## POST CreateSession
+**Endpoint:** `https://api.paysecure.net/api/v1/createSession`
+
+### Overview
+The `createSession` API initiates a payment session for a customer after their profile has been created. The session is generated at the backend, allowing customers to complete payments seamlessly.
+
+### Parameters
+| Parameter  | Type   | Description                                      | Example                        |
+|------------|--------|--------------------------------------------------|--------------------------------|
+| customerId | String | Unique ID of the customer (from createCustomer). | "6731a609b6bb5a43ad66c4a6"    |
+| brandId    | String | Unique ID of the merchant.                      | "88cb97c5-ac56-4d7f-b8db-77430c5b3cb1" |
+
+### Request Body
+```json
+{
+  "customerId": "6731a609b6bb5a43ad66c4a6",
+  "brandId": "88cb97c5-ac56-4d7f-b8db-77430c5b3cb1"
+}
+```
+
+### Example Response
+```json
+{
+  "sessionUrl": "http://127.0.0.1:9091/session/672c652b96a3c734f6e11eed/",
+  "brandId": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
+  "customerId": "672c63fa96a3c734f6e11ee6",
+  "sessionId": "672c652b96a3c734f6e11eed",
+  "expiryOn": 1730963631,
+  "createdOn": 1730962731
+}
+```
+
+---
+
+## POST CreatePurchase
+**Endpoint:** `https://api.paysecure.net/api/v1/purchases/`
+
+### Overview
+The `CreatePurchase` API allows merchants to initiate payments by creating a purchase session. It provides dynamic routing, customizable callbacks, and session expiration control.
+
+### Request Body
+```json
+{
+    "client": {
+        "full_name": "Test User",
+        "email": "testuser@email.com",
+        "country": "GB",
+        "city": "London",
+        "stateCode": "CA",
+        "street_address": "123 Test Street",
+        "zip_code": "234567",
+        "phone": "9999999999",
+        "tax_number": "34946395822"
+    },
+    "purchase": {
+        "currency": "GBP",
+        "expireInMin": "40",
+        "products": [
+            {
+                "name": "testProduct",
+                "price": "10"
+            }
+        ]
+    },
+    "paymentMethod": "",
+    "brand_id": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
+    "merchantRef": "",
+    "send_receipt": "",
+    "skip_capture": "",
+    "success_redirect": "https://your.success.redirect.com",
+    "failure_redirect": "https://your.failure.redirect.com",
+    "success_callback": "https://your.success.callback.com",
+    "failure_callback": "https://your.failure.callback.com"
+}
+```
+
+### Example Response
+```json
+{
+  "purchaseId": "abc123xyz",
+  "status": "pending",
+  "redirectUrl": "https://paysecure.net/payment/abc123xyz",
+  "expireInMin": 40
+}
+```
+
+---
+
+## Authorization
+All API requests require a **Bearer Token** to be included in the headers:
+```bash
+Authorization: Bearer YOUR_ACCESS_TOKEN
+```
+
