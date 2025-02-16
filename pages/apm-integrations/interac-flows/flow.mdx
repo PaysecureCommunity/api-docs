@@ -1,0 +1,54 @@
+How It Works: PaySecure’s Interac PayIn & PayOut
+Interac PayIn (Deposits/Collections)
+PaySecure’s Interac PayIn leverages Interac’s e-Transfer ‘Send Money’ feature to facilitate seamless payment collection. Merchants can request payments via email or SMS, providing a secure, efficient, and flexible way to collect funds from customers.
+
+Key Steps
+1. Initiate Transfer Request
+The merchant initiates a PayIn (deposit/collection) transaction by sending a request to the Interac PayIn API. This request includes:
+
+The customer’s email address or mobile number
+The amount to be collected
+An optional message
+2. Generate Security Question & Answer
+To ensure secure transactions, the API generates a security question and answer that the customer must correctly respond to in order to complete the transfer. By default, the request remains valid for 30 days. While this duration can be extended, it cannot be shortened.
+
+3. Send Notification
+The customer receives an email or SMS with instructions on completing the payment. This notification includes:
+
+A link to their bank’s online platform
+The security question
+4. Customer Completes Transfer
+The customer logs into their online banking, answers the security question, and authorizes the transfer of funds to the merchant’s account.
+
+5. Confirm Transfer Completion
+Once the transfer is successfully completed, the API notifies the merchant with transaction details and status.
+
+6. Update Merchant’s Account
+The merchant’s system updates the customer’s account balance to reflect the received funds.
+
+Interac PayOut (Disbursements/Withdrawals)
+PaySecure enables businesses to send payouts directly to customers, individuals, or businesses via Interac e-Transfers. Whether for refunds, rewards, or other types of disbursements, the Interac PayOut API ensures efficient and reliable transactions, supporting real-time fund transfers and comprehensive transaction tracking.
+
+Key Steps
+1. Initiate Payout Request
+The merchant initiates an Interac e-Transfer transaction, specifying:
+
+The customer’s email address or mobile number
+The amount to be transferred
+An optional message
+2. Generate Security Question & Answer (Optional)
+If needed, the merchant can set a security question and answer that the customer must provide to receive the funds, adding an extra layer of security.
+
+3. Send Notification
+The customer receives an email or SMS with instructions on how to deposit the money into their bank account, along with the security question (if applicable).
+
+4. Customer Deposits Funds
+The customer follows the link in the notification, logs into their online banking, answers the security question (if applicable), and deposits the funds into their account.
+
+5. Confirm Payout Completion
+The API sends a confirmation to the merchant once the customer has successfully deposited the funds, including the transaction details and status.
+
+6. Update Merchant’s Account
+The merchant’s system updates the customer’s account balance to reflect the withdrawn funds.
+
+By leveraging PaySecure’s Interac PayIn and PayOut capabilities, businesses can streamline their payment processes, enhance customer experience, and ensure secure, efficient fund transfers. For more information on integrating these APIs into your platform, refer to the detailed API documentation.
