@@ -1,0 +1,88 @@
+---
+name: Session Management
+description: Learn about handling user sessions effectively in Paysecure.
+---
+
+# Session Management
+
+Session management is crucial for maintaining user authentication and ensuring secure transactions within Paysecure. This guide covers how to handle sessions effectively.
+
+## Establishing a Session
+
+To establish a session, users must authenticate using their credentials. Upon successful authentication, a session token is issued.
+
+### Authentication Example
+
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user@example.com",
+  "password": "securepassword"
+}
+```
+
+Response:
+
+```json
+{
+  "sessionToken": "abcdef1234567890",
+  "expiresIn": 3600
+}
+```
+
+## Maintaining a Session
+
+Use the session token in the `Authorization` header for subsequent requests.
+
+```http
+GET /api/user/profile
+Authorization: Bearer abcdef1234567890
+```
+
+## Expiring and Refreshing Sessions
+
+Sessions expire after a predefined duration. Users can refresh their session using a refresh token.
+
+```http
+POST /api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "xyz123refresh"
+}
+```
+
+Response:
+
+```json
+{
+  "sessionToken": "newabcdef1234567890",
+  "expiresIn": 3600
+}
+```
+
+## Logging Out
+
+To log out, revoke the session token.
+
+```http
+POST /api/auth/logout
+Authorization: Bearer abcdef1234567890
+```
+
+Response:
+
+```json
+{
+  "message": "Successfully logged out"
+}
+```
+
+## Best Practices
+- Always use HTTPS to encrypt session tokens.
+- Implement token expiration and refresh mechanisms.
+- Store session tokens securely, avoiding exposure in client-side code.
+- Revoke inactive sessions periodically to enhance security.
+
