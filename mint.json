@@ -42,7 +42,7 @@
     },
     {
       "style": "pill",
-      "name": " GitHub",
+      "name": "GitHub",
       "url": "https://github.com/PaysecureCommunity"
     }
   ],
@@ -90,6 +90,12 @@
           "group": "Trust Score",
           "pages": [
             "pages/products/trust-score"
+          ]
+        },
+        {
+          "group": "FAQ",
+          "pages": [
+            "pages/faq/faq"
           ]
         }
       ]
