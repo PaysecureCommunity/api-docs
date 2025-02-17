@@ -87,9 +87,10 @@
           ]
         },
         {
-          "group": "Trust Score",
+          "group": "Product of Paysecure",
           "pages": [
-            "pages/products/trust-score"
+            "pages/products/trust-score",
+            "pages/products/session"
           ]
         },
         {
