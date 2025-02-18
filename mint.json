@@ -69,9 +69,14 @@
         {
           "group": "Integrations",
           "pages": [
-            "pages/apm-integrations/interac-payments",
-            "pages/apm-integrations/upi-payments",
-            "pages/apm-integrations/webhooks"
+            "pages/payment-methods/interac-payments",
+            "pages/payment-methods/upi-payments",
+            "pages/payment-methods/webhooks",
+            "pages/payment-methods/secure-eft",
+            "pages/payment-methods/mobile-money",
+            "pages/payment-methods/interac-e-transfer",
+            "pages/payment-methods/fawry-payments"
+
           ]
         },
         {
