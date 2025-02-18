@@ -98,6 +98,12 @@
           "pages": [
             "pages/faq/faq"
           ]
+        },
+        {
+          "group": "Payment Methods",
+          "pages": [
+            "pages/payment-methods/payment-methods"
+          ]
         }
       ]
     }
