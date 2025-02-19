@@ -75,7 +75,8 @@
             "pages/payment-methods/secure-eft",
             "pages/payment-methods/mobile-money",
             "pages/payment-methods/interac-e-transfer",
-            "pages/payment-methods/fawry-payments"
+            "pages/payment-methods/fawry-payments",
+            "pages/payment-methods/pix/pix"
 
           ]
         },
