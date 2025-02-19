@@ -1,0 +1,115 @@
+---
+title: "Open Banking Integration"
+description: "Learn how PaySecure integrates with third-party net banking providers to enable seamless local bank transfers."
+---
+
+## Open Banking Integration
+
+### Overview
+Third-Party Net Banking refers to the integration with local bank transfer systems in specific countries, enabling users to make payments directly from their bank accounts through a secure and trusted interface. This is particularly useful for regions where direct bank transfers are a preferred payment method over cards or other alternative payment methods (APMs).
+
+### How PaySecure Leverages Third-Party Net Banking
+PaySecure facilitates transactions through third-party net banking providers, allowing businesses to access localized payment options without the complexity of managing individual bank integrations. Each third-party service is tailored to the specific financial infrastructure of the country or region, ensuring:
+
+- **Compliance:** Adherence to local banking regulations and financial standards.
+- **Security:** Encrypted transactions and authentication mechanisms for secure payments.
+- **Ease of Use:** Streamlined checkout experience for end users with minimal friction.
+
+### Key Benefits of Third-Party Net Banking
+- **Localized Payment Options:** Supports region-specific payment methods, giving customers familiar and trusted ways to pay.
+- **Secure Transactions:** Payments are processed directly through the customer’s bank, enhancing trust and security.
+- **Real-Time Verification:** Enables real-time confirmation of payments, reducing risks and improving cash flow.
+- **Compliance:** Adheres to local and international regulatory standards like PSD2 for Europe, ensuring that payments are secure and compliant.
+
+This setup allows PaySecure to offer a diverse range of bank transfer options to its global clientele, catering to the specific needs of different regions while maintaining a consistent and secure payment experience.
+
+### Key Features
+- **Seamless Bank Transfers:** Enable customers to pay directly from their bank accounts.
+- **Localized Payment Support:** Access to region-specific banking networks.
+- **Enhanced Security:** Multi-factor authentication and tokenization support.
+- **Automated Reconciliation:** Real-time transaction status updates and settlement tracking.
+
+### Supported Regions
+PaySecure continuously expands its network of third-party net banking integrations. Currently, we support key markets including:
+
+- **Europe:** Open Banking-enabled bank transfers via PSD2-compliant providers.
+- **India:** UPI and net banking integrations with major banks.
+- **Southeast Asia:** Local bank transfer networks in Indonesia, Malaysia, and Thailand.
+- **Latin America:** Regional bank transfer solutions for Brazil, Mexico, and Argentina.
+
+### Getting Started
+To integrate third-party net banking with PaySecure:
+
+1. **Sign Up** for a PaySecure merchant account.
+2. **Configure Banking Providers** through the dashboard.
+3. **Implement API Endpoints** to enable bank transfer payments.
+4. **Test & Go Live** with sandbox and production environments.
+
+### Setup & Check Merchant Details
+The first step in getting your integration ready is to check whether all the details about you as a merchant are correct on our Merchant portal. If you detect anomalies, please get in touch with your client support executive.
+
+Start with sandbox mode (you can toggle between modes by clicking the top right-hand corner of your merchant portal) and create the following 3 items on your dashboard:
+
+- **API Key:** Necessary to send transactions via API.
+- **Brand ID:** Needed to send transactions. Use different brand IDs for different shops or brands.
+- **Webhook:** You should get notifications from our server to your server to inform you of transaction status changes and notifications about transactions. You can check all the details of how our webhooks work on the Webhooks page.
+
+### API Integration
+#### Step 1:
+Create a purchase using `POST /purchase/` API to create a Purchase in the system. Make sure to meet all the required criteria, which include defining `success_redirect` and `failure_redirect` fields for the Purchase and setting them to valid URLs.
+
+#### Step 2:
+The customer is redirected to the `checkout_url` page, which is configured to point to their net banking system.
+
+#### Step 3:
+Once the payment is initiated from the net banking site, the user will be redirected to the redirect URL.
+
+For detailed API documentation and integration guides, refer to our [developer portal](/docs/api/open-banking).
+
+### Status Codes
+#### HTTP Response Codes
+| Code | Triggering Event |
+|------|----------------|
+| 200  | Successful Response |
+| 202  | Successful / Accepted |
+| 400  | Bad request, the given data is invalid, or data is required |
+| 401  | Unauthorized request |
+| 404  | Page not found |
+| 405  | Method Not Allowed (GET/POST) |
+| 415  | Unsupported media type |
+| 422  | Unprocessable content, data is required |
+| 429  | Too many request attempts |
+| 500  | Internal server error |
+
+You will not receive error codes if the HTTPS response code is 200 or 202.
+
+### Error Codes and Messages
+For HTTP response codes 400, 401, 404, 405, and 415, the following error response format is used:
+```json
+{
+    "message": "descriptive error message",
+    "code": "error_code"
+}
+```
+
+#### Common Error Codes
+| Code | Message | Affected APIs |
+|------|---------|--------------|
+| authentication_failed | Authorization header missing | All |
+| already_in_process | Some processing is running on this purchaseId | All |
+| unsupported_media_type | Unsupported media type "text/plain; charset=ISO-8859-1" in request. | All |
+| authentication_failed | Incorrect secret_key/Invalid Merchant Type | All |
+
+#### Transaction Statuses
+| Status | Description | When it Appears | Final? |
+|--------|-------------|----------------|--------|
+| CREATED | Purchase is created in the system | When Purchase API is called | N |
+| CANCELLED | Purchase is cancelled in the system. Only transactions in "CREATED" status can be cancelled. | When Cancel API is called | Y |
+| OVERDUE | Purchase hasn't been completed yet. Only transactions in "CREATED" status can become "OVERDUE" if checkout_url hasn't been called in 2 hours. | checkout_url hasn't been called within 2 hours since transaction creation. | N |
+| EXPIRED | Purchase hasn't been completed. Only transactions in "PAYMENT IN PROCESS" status can become "EXPIRED". | Purchase either hasn't been completed or has failed within the specific time period. | N |
+| PAID | Purchase has been completed successfully. Only transactions in "PAYMENT IN PROCESS" status can become "PAID". | When a successful response is received from the bank. | Y |
+| PAYMENT IN PROCESS | The purchase hasn't been completed. Only transactions in "CREATED" status can become "PAYMENT IN PROCESS". | When the user's action is pending. Transaction can stay in this status for 24 hours since creation. | N |
+| ERROR | Only transactions in "PAYMENT IN PROCESS" status can become "ERROR". | Refers to the Errors list for possible errors. | Y |
+
+### Contact Support
+If you need assistance with setting up third-party net banking, please reach out to our [support team](/support).
