@@ -73,10 +73,12 @@
             "pages/payment-methods/upi-payments",
             "pages/payment-methods/webhooks",
             "pages/payment-methods/secure-eft",
-            "pages/payment-methods/mobile-money",
+            "pages/payment-methods/mobile-money/mobile-money",
             "pages/payment-methods/interac-e-transfer",
             "pages/payment-methods/fawry-payments",
-            "pages/payment-methods/pix/pix"
+            "pages/payment-methods/pix/pix",
+            "pages/payment-methods/mobile-money/mobile-money-pay-in-out",
+            "pages/pix/pix-pay-in-out"
 
           ]
         },
@@ -87,9 +89,9 @@
           ]
         },
         {
-          "group": "Authentication",
+          "group": "API Reference",
           "pages": [
-            "authentication"
+            "api-reference/introduction"
           ]
         },
         {
