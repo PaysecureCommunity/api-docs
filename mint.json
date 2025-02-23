@@ -58,8 +58,6 @@
         "environments",
         "introduction",
         "integration-steps",
-        "authentication",
-        "get-status-api",
         "headers"
       ]
     },
@@ -89,13 +87,7 @@
           ]
         },
         {
-          "group": "API Reference",
-          "pages": [
-            "api-reference/introduction"
-          ]
-        },
-        {
-          "group": "Product of Paysecure",
+          "group": "Products of Paysecure",
           "pages": [
             "pages/products/trust-score",
             "pages/products/session"
