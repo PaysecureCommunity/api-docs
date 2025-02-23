@@ -1,0 +1,41 @@
+# HTTP Status Codes
+
+| Code | HTTP Response Code | Triggering Event |
+|------|--------------------|-----------------|
+| 200  | Successful Response |
+| 202  | Successful / Accepted |
+| 400  | Bad request, the given data is invalid, or data is required |
+| 401  | Unauthorized request |
+| 404  | Page not found |
+| 405  | Method Not Allowed (GET/POST) |
+| 415  | Unsupported media type |
+| 422  | Unprocessable content, data is required |
+| 429  | Too many request attempts |
+| 500  | Internal server error |
+
+> **Note:** You will not receive error codes if the HTTPS response code is `200` or `202`.
+
+---
+
+## Error Codes and Messages
+
+Error codes are returned with HTTP response codes `400`, `404`, `401`, `415`, and `405`.
+
+### Format
+
+```json
+{
+    "message": "descriptive error message",
+    "code": "error_code"
+}
+```
+
+### Error Codes Table
+
+| Code                  | Message                                              | APIs that could generate the error code |
+|-----------------------|------------------------------------------------------|-----------------------------------------|
+| `authentication_failed` | Authorization header missing                        | All                                     |
+| `already_in_process`   | Some processing is running on this `purchaseId`     | All                                     |
+| `unsupported_media_type` | Unsupported media type "text/plain; charset=ISO-8859-1" in request. | All                                     |
+| `authentication_failed` | Incorrect `secret_key` / Invalid Merchant Type     | All                                     |
+| `transaction_error`    | See the table below                                 | See the table below                     |

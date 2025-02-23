@@ -78,7 +78,7 @@
             "pages/payment-methods/fawry-payments",
             "pages/payment-methods/pix/pix",
             "pages/payment-methods/mobile-money/mobile-money-pay-in-out",
-            "pages/pix/pix-pay-in-out"
+            "pages/payment-methods/pix/pix-pay-in-out"
 
           ]
         },
@@ -111,6 +111,14 @@
           "group": "Payment Methods",
           "pages": [
             "pages/payment-methods/payment-methods"
+          ]
+        },
+        {
+          "group": "Bank Transfers",
+          "pages": [
+            "pages/bank-transfers/bank-transfers",
+            "pages/bank-transfers/concept",
+            "pages/bank-transfers/status-code"
           ]
         }
       ]
