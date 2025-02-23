@@ -1,0 +1,118 @@
+## Overview
+
+PaySecure provides a user-friendly, direct integration with Quickbit wallet where users can purchase and manage their crypto funds easily. Integrating this interface into your payment process is a straightforward process, requiring just a few simple steps.
+
+We continuously work on improving the integration flow, and as we roll out updates, both customers and merchants can look forward to an enhanced and improved payment experience.
+
+## Integration Flow
+
+### Step 1
+
+The first call to the PaySecure API is `POST /purchases` initiated by the merchant's backend when they receive a request from the user to make a QuickBit purchase.
+
+It's essential to ensure that the request body includes:
+
+- `success_redirect` - URL where the user will be redirected from Quickbit after completing the purchase.
+- `failure_redirect` - URL where the user will be redirected from Quickbit if the purchase fails.
+- `paymentMethod` - Payment method requested. It must specify `QBPAYFTOPUP`.
+
+> **Note:** `paymentMethod` is not a mandatory parameter. If it is not provided, the redirect URL will point to PaySecure Cashier. It must be provided for direct payment with Quickbit.
+
+#### Example Request Body
+
+```json
+{
+    "client": {
+        "email": "john.doe@paysecure.net",
+        "country": "GB",
+        "city": "London",
+        "stateCode": "Marleybone",
+        "street_address": "221B Baker Street",
+        "zip_code": "NW1 6XE",
+        "phone": "9999999999"
+    },
+    "purchase": {
+        "products": [
+            {
+                "name": "QBit Payment",
+                "price": "10"
+            }
+        ]
+    },
+    "status": "created",
+    "brand_id": "brand_id_from_the_portal",
+    "paymentMethod": "QBPAYFTOPUP",
+    "success_redirect": "https://google.com",
+    "failure_redirect": "https://yahoo.com"
+}
+```
+
+If the request is successful, the response will include a parameter called `CheckOutURL`. This is the QBit payment URL that should be loaded for the customer to proceed with the payment.
+
+#### Example Response
+
+```json
+{
+    "purchaseId": "657a10b3c0daf365fa98cdf9",
+    "client": {
+        "email": "john.doe@paysecure.net",
+        "phone": "9999999999",
+        "street_address": "221B Baker Street",
+        "country": "GB",
+        "city": "London",
+        "zip_code": "NW1 6XE",
+        "stateCode": "Marleybone"
+    },
+    "updated_on": 1702498483,
+    "type": "purchase",
+    "paymentMethod": "QBPAYFTOPUP",
+    "amountUnit": "MINOR",
+    "status": "CREATED",
+    "purchase": {
+        "currency": "USD",
+        "products": [
+            {
+                "name": "QBit Payment",
+                "quantity": 1.0,
+                "price": 1000.0,
+                "tax_percent": "0.00"
+            }
+        ],
+        "total": 10.0
+    },
+    "checkout_url": "https://staging.paysecure.net/payments/657a10b3casd23123122/",
+    "success_redirect": "https://google.com",
+    "failure_redirect": "https://yahoo.com"
+}
+```
+
+### Step 2
+
+Once the customer is redirected to the `CheckOutURL`, the page they see will depend on their country.
+
+- For users in Sweden, the page will look like this:
+  
+  ![Sweden Payment Page](sweden-payment-page.png)
+
+- For users in other countries, the page will look as follows:
+  
+  ![International Payment Page](international-payment-page.png)
+
+On this page, new users will need to verify their identity, and existing users will be prompted to log in.
+
+### Step 3
+
+In the Quickbit app, the user will be requested to provide their payment details:
+
+![Payment Details](payment-details.png)
+
+Once the payment goes through, the user must confirm sending the transaction to complete the process:
+
+![Confirm Payment](confirm-payment.png)
+
+### Step 4
+
+Depending on the outcome of the payment at Quickbit, the customer will be directed to:
+
+- **Success Redirect:** The URL specified in `success_redirect` that was provided in the initial `POST /purchases` request.
+- **Failure Redirect:** The URL specified in `failure_redirect` that was provided in the initial `POST /purchases` request.
