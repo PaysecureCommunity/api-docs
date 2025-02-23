@@ -116,7 +116,7 @@
         {
           "group": "Bank Transfers",
           "pages": [
-            "pages/bank-transfers/bank-transfers",
+            "pages/bank-transfers/bank-transfer",
             "pages/bank-transfers/concept",
             "pages/bank-transfers/status-code"
           ]
