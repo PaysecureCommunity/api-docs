@@ -1,151 +1,131 @@
-# Trust Score API Documentation
 
-## POST CreateCustomer
-**Endpoint:** `https://api.paysecure.net/api/v1/customer`
+# PaySecure TrustScore API
 
-### Overview
-The `createCustomer` API allows merchants to create a customer profile on PaySecure when a user visits their website. This facilitates a seamless payment experience by pre-filling the customer's details on the PaySecure Cashier. The API returns a unique `customerId` that can be used in subsequent transactions.
+## Overview
 
-### Parameters
-| Parameter   | Type   | Description                              | Example                      |
-|-------------|--------|------------------------------------------|------------------------------|
-| fullName    | String | Full name of the customer.               | "TestUser"                   |
-| emailId     | String | Email address of the customer.           | "test3@paysecure.net"        |
-| dateOfBirth | String | Customer's date of birth (YYYY-MM-DD).  | "1995-08-27"                 |
-| phoneNo     | String | Customer's phone number.                 | "797639082"                  |
-| brandId     | String | Unique identifier for the merchant.      | "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636" |
-| city        | String | Customer's city.                        | "Jaipur"                     |
-| stateCode   | String | State code.                             | "RJ"                         |
-| zipCode     | String | Postal code.                            | "202020"                     |
-| address     | String | Full address.                           | "Jaipur"                     |
-| country     | String | Country code (ISO 3166-1 alpha-2).      | "IN"                         |
+Paysecure TrustScore's proprietary API combines email, phone number, IP, and URL so that you can request and receive a user trust score from our enriched data, rules, and scoring in a single API call.
 
-### Request Body
+Our take on Trust is different from the usual approach to fraud. This API tells you how much you can trust this user. It’s based on 100+ data points to which we have access. We use complex algorithms based on data sanity and customer behavior in our partner network.
+
+## Trust Score & Usage
+
+TrustScore offers two distinct endpoints: General and Detailed.
+
+- **General Endpoint:** Provides basic information by indicating whether a transaction is permitted or not with a simple 'yes' or 'no' response.
+- **Detailed Endpoint:** Offers an in-depth analysis beyond simple allowance or denial, providing nuanced insights and information about transaction legitimacy.
+
+### Trust Score Levels
+
+Trust scores range from `0` to `5`. A trust score of `0` indicates limited information and the lowest level of trust. Additionally, the API provides eight other flags to help assess user profiles and determine appropriate actions:
+
+- Email deliverability
+- Proxy usage
+- VPN usage
+- Tor usage
+- Recent abusive behavior
+
+> Every company has a unique target audience, so you might achieve better results by flagging or blocking entities with low trust scores and recent abuse instances. 
+
+## Access Permission
+
+Access to this API is restricted. If you receive a `401` error with "You are not allowed to call this API service," please contact your PaySecure sales representative for access.
+
+## API Endpoint
+
+**POST** `https://api.paysecure.net/api/v1/trustScore`
+
+## Mandatory Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| `ip` | User's IP (both IPv4 and IPv6 are valid) |
+| `email` | Email ID of the user for trust scoring |
+| `url` | The URL where the user is purchasing or consuming a product, service, or data |
+
+## Optional Parameters
+
+Additional optional parameters improve response accuracy. Values should be strings.
+
 ```json
 {
-  "fullName": "TestUser",
-  "emailId": "test3@paysecure.net",
-  "dateOfBirth": "1995-08-27",
-  "phoneNo": "797639082",
-  "brandId": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
-  "city": "Jaipur",
-  "stateCode": "RJ",
-  "zipCode": "202020",
-  "address": "Jaipur",
-  "country": "IN"
-}
-```
-
-### Example Response
-```json
-{
-  "customerId": "6731e58116f07d2792f8e0a1",
-  "fullName": "TestUser",
-  "emailId": "test3@paysecure.net",
-  "dateOfBirth": "1995-08-27",
-  "phoneNo": "797639082",
-  "brandId": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
-  "city": "Jaipur",
-  "stateCode": "RJ",
-  "zipCode": "202020",
-  "address": "Jaipur",
-  "country": "IN"
-}
-```
-
----
-
-## POST CreateSession
-**Endpoint:** `https://api.paysecure.net/api/v1/createSession`
-
-### Overview
-The `createSession` API initiates a payment session for a customer after their profile has been created. The session is generated at the backend, allowing customers to complete payments seamlessly.
-
-### Parameters
-| Parameter  | Type   | Description                                      | Example                        |
-|------------|--------|--------------------------------------------------|--------------------------------|
-| customerId | String | Unique ID of the customer (from createCustomer). | "6731a609b6bb5a43ad66c4a6"    |
-| brandId    | String | Unique ID of the merchant.                      | "88cb97c5-ac56-4d7f-b8db-77430c5b3cb1" |
-
-### Request Body
-```json
-{
-  "customerId": "6731a609b6bb5a43ad66c4a6",
-  "brandId": "88cb97c5-ac56-4d7f-b8db-77430c5b3cb1"
-}
-```
-
-### Example Response
-```json
-{
-  "sessionUrl": "http://127.0.0.1:9091/session/672c652b96a3c734f6e11eed/",
-  "brandId": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
-  "customerId": "672c63fa96a3c734f6e11ee6",
-  "sessionId": "672c652b96a3c734f6e11eed",
-  "expiryOn": 1730963631,
-  "createdOn": 1730962731
+    "last_bets": "",
+    "last_wins": "",
+    "total_bonuses": "",
+    "last_real_bets": "",
+    "last_real_wins": ""
 }
 ```
 
 ---
 
-## POST CreatePurchase
-**Endpoint:** `https://api.paysecure.net/api/v1/purchases/`
+# PaySecure checkTransactionAllowed API
 
-### Overview
-The `CreatePurchase` API allows merchants to initiate payments by creating a purchase session. It provides dynamic routing, customizable callbacks, and session expiration control.
+## Overview
 
-### Request Body
+The `checkTransactionAllowed` API provides a binary response indicating whether a transaction is permitted.
+
+## API Endpoint
+
+**POST** `https://api.paysecure.net/api/v1/checkTransAllowed`
+
+## Mandatory Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| `ip` | User's IP (both IPv4 and IPv6 are valid) |
+| `email` | Email ID of the user for trust scoring |
+| `url` | The URL where the user is purchasing or consuming a product, service, or data |
+
+## Optional Parameters
+
+Additional optional parameters can be included for improved accuracy. These should be provided as strings.
+
+## Response
+
+The response contains a single parameter:
+
 ```json
 {
-    "client": {
-        "full_name": "Test User",
-        "email": "testuser@email.com",
-        "country": "GB",
-        "city": "London",
-        "stateCode": "CA",
-        "street_address": "123 Test Street",
-        "zip_code": "234567",
-        "phone": "9999999999",
-        "tax_number": "34946395822"
-    },
-    "purchase": {
-        "currency": "GBP",
-        "expireInMin": "40",
-        "products": [
-            {
-                "name": "testProduct",
-                "price": "10"
-            }
-        ]
-    },
-    "paymentMethod": "",
-    "brand_id": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
-    "merchantRef": "",
-    "send_receipt": "",
-    "skip_capture": "",
-    "success_redirect": "https://your.success.redirect.com",
-    "failure_redirect": "https://your.failure.redirect.com",
-    "success_callback": "https://your.success.callback.com",
-    "failure_callback": "https://your.failure.callback.com"
+    "transactionAllowed": "YES"
 }
 ```
 
-### Example Response
+If an error occurs, the response follows this format:
+
 ```json
 {
-  "purchaseId": "abc123xyz",
-  "status": "pending",
-  "redirectUrl": "https://paysecure.net/payment/abc123xyz",
-  "expireInMin": 40
+    "message": "descriptive error message",
+    "code": "error_code"
 }
 ```
 
----
+### Possible Errors
+
+| Code | Error Message |
+|------|--------------|
+| `401` | Incorrect `secret_key` |
+| `401` | You are not allowed to call this API service |
 
 ## Authorization
-All API requests require a **Bearer Token** to be included in the headers:
-```bash
-Authorization: Bearer YOUR_ACCESS_TOKEN
-```
 
+This request requires a **Bearer Token** for authentication.
+
+## Example Request Body
+
+```json
+{
+    "requiredinput": {
+        "ip": "111.11.11.11",
+        "email": "test@gmail.com",
+        "url": "https://www.asos.com/"
+    },
+    "optionalInput": {
+        "last_bets": "",
+        "last_wins": "",
+        "total_bonuses": "",
+        "last_real_bets": "",
+        "last_real_wins": ""
+    }
+}
+```
+```

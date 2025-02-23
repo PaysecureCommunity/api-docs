@@ -58,8 +58,6 @@
         "environments",
         "introduction",
         "integration-steps",
-        "authentication",
-        "get-status-api",
         "headers"
       ]
     },
@@ -73,9 +71,12 @@
             "pages/payment-methods/upi-payments",
             "pages/payment-methods/webhooks",
             "pages/payment-methods/secure-eft",
-            "pages/payment-methods/mobile-money",
+            "pages/payment-methods/mobile-money/mobile-money",
             "pages/payment-methods/interac-e-transfer",
-            "pages/payment-methods/fawry-payments"
+            "pages/payment-methods/fawry-payments",
+            "pages/payment-methods/pix/pix",
+            "pages/payment-methods/mobile-money/mobile-money-pay-in-out",
+            "pages/payment-methods/pix/pix-pay-in-out"
 
           ]
         },
@@ -86,13 +87,7 @@
           ]
         },
         {
-          "group": "Authentication",
-          "pages": [
-            "authentication"
-          ]
-        },
-        {
-          "group": "Product of Paysecure",
+          "group": "Products of Paysecure",
           "pages": [
             "pages/products/trust-score",
             "pages/products/session"
@@ -108,6 +103,14 @@
           "group": "Payment Methods",
           "pages": [
             "pages/payment-methods/payment-methods"
+          ]
+        },
+        {
+          "group": "Bank Transfers",
+          "pages": [
+            "pages/bank-transfers/bank-transfer",
+            "pages/bank-transfers/concept",
+            "pages/bank-transfers/status-code"
           ]
         }
       ]

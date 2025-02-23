@@ -1,0 +1,29 @@
+## 🏦 PayIn Flows
+### How it Works
+Paysecure's A2A paying system utilizes powerful Virtual Accounts capabilities, enabling you to support a wide range of scenarios using the following methods.
+
+### Key Steps
+#### Flow
+1. The merchant platform retrieves the account details (Account number, IBAN, and SWIFT code) for the merchant-assigned currency account intended for the PayIn.
+2. These account details are then provided to the payer, who is instructed to make the payment to this account.
+3. The payer accesses their banking app and inputs the provided account details along with the transaction amount.
+4. Upon receiving the money from the payer, Paysecure promptly receives an Inward Credit Notification (ICN) webhook from its banking partner, confirming that the funds have been deposited into the corresponding virtual account.
+5. The ICN contains all relevant transaction details. Paysecure forwards this notification to the merchant to inform them of the transaction.
+
+---
+
+## 💸 PayOut Flows
+### How it Works
+Paysecure offers the ability to make payments to customers', individuals', or businesses' bank accounts using various transfer methods via its dashboard or suite of APIs. The dashboard consolidates all available features accessible through APIs, allowing you to easily go live with minimal technical setup.
+
+### Key Steps
+#### Flow
+1. The merchant platform initiates the creation of a payout by passing beneficiary details, along with payout details.
+
+   **Beneficiary details include:**
+   - Beneficiary ID (email or phone)
+   - Beneficiary's address (mandatory but not validated; if available, send it, otherwise use a placeholder value)
+   - Beneficiary's bank details
+   - Beneficiary's name
+
+2. Upon completion of the payout, reaching either a Success or Failure state, Paysecure notifies the merchant’s platform via webhook, providing the final status of the transaction and additional details.

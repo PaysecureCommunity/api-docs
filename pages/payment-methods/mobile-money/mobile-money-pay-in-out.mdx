@@ -1,0 +1,73 @@
+## How It Works
+
+The pay-in process harnesses mobile money capabilities to support effortless collections. Merchants can initiate payment requests via USSD, offering a secure, efficient, and flexible method to collect customer payments.
+
+> 💡 **Note:** Refunds are not possible over Mobile Money. Merchants must initiate a PayOut request manually to process any refunds.
+
+### Key Steps
+
+#### Initiate Transfer Request:
+- The merchant sends a transaction request to the Mobile Money PayIn API.
+- This request includes the customer’s mobile number, the collection amount, and an optional message.
+
+#### Send Notification:
+- The customer receives a USSD pop-up with payment instructions on their mobile device.
+
+#### Customer Completes Transfer:
+- The customer follows the USSD instructions, enters their security PIN if required, and authorizes the transfer of funds to the merchant’s account.
+
+#### Confirm Transfer Completion:
+- Once the payment is successful, the merchant receives a confirmation via a webhook indicating a successful transaction.
+
+#### Update Merchant’s Account:
+- The merchant’s system updates the customer’s account balance to reflect the received funds.
+
+---
+
+## Mobile Money PayIns Availability
+
+| Country         | Networks                         | Currency  |
+|---------------|--------------------------------|-----------|
+| Benin         | MTN, Moov                      | XOF       |
+| Burkina Faso  | Mobicash, Orange               | XOF       |
+| Cote d'Ivoire | MTN, Moov, Orange, Wave       | XAF       |
+| DRC           | Airtel, Orange                 | CDF, USD  |
+| Guinea Conakry| MTN, Orange                    | XOF       |
+| Kenya         | Safaricom                      | KES       |
+| Mali          | Mobicash, Orange               | XAF       |
+| Nigeria       | Baxi Agent                     | NGN       |
+| Rwanda        | Airtel, MTN                    | RWF       |
+| Senegal       | Orange, Free Money, Wave      | XAF       |
+| Tanzania      | Vodacom, Airtel                | TZS       |
+| Togo          | Moov, Tmoney                   | XOF       |
+| Uganda        | Airtel, MTN                    | UGX       |
+| Zambia        | MTN                             | ZMW       |
+
+---
+
+## Payouts
+
+The Payout API offers seamless payouts to customers over mobile money. Whether processing refunds, rewards, or other disbursements, our API delivers efficient, reliable transactions with real-time fund transfers and detailed transaction tracking.
+
+### Key Steps
+
+#### Initiate Payout Request:
+- When a customer requests a withdrawal, the merchant site calls the Paysecure Payouts API to start the mobile money payout.
+- This request includes the customer’s mobile number, the transfer amount, and the currency.
+
+#### Send Notification:
+- Customers receive an immediate USSD notification confirming the successful payout.
+- Merchants are notified via an instant webhook.
+
+#### Update Merchant’s Account:
+- The merchant’s account balance is promptly updated to reflect the transaction.
+
+---
+
+## Mobile Money Payouts Availability
+
+| Country  | Telco   | Currency                |
+|---------|--------|------------------------|
+| DRC     | Orange | USD, XAF (CFA Franc)   |
+| Uganda  | Airtel | UGX (Ugandan Shilling) |
+| Zambia  | MTN    | ZMW (Zambian Kwacha)   |
