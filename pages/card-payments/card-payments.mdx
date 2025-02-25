@@ -1,0 +1,83 @@
+## Custom Payment Flow - Server-to-Server
+
+PaySecure offers **Server-to-Server ("S2S")** integration that enables processing payments on the server level, eliminating direct interaction between the client's browser or application and the API.
+
+This integration allows you to build a setup that restricts payers from directly accessing platform resources.
+
+To enable payment acceptance in your application or website using **Server-to-Server (S2S) integration**, follow the following **3-step routine**.
+
+---
+
+### Step 1: Create a Purchase
+
+Make a **POST** request to `/purchase/` API to create a Purchase in the system. Ensure that you meet all the required criteria, including:
+
+- Defining `success_redirect` and `failure_redirect` fields for the Purchase.
+- Setting them to **valid URLs**.
+
+---
+
+### Step 2: Send the Payment Method
+
+Send the payment method details to the payment URL by making a **POST** request to:
+
+```
+/p/{purchaseId}/?s2s=true
+```
+
+#### Request Body:
+
+```json
+{
+    "cardholder_name": "dk",
+    "card_number": "4444333322221111",
+    "expires": "10/23",
+    "cvc": "345",
+    "remember_card": "on",
+    "remote_ip": "157.38.242.7",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
+    "accept_header": "text/html",
+    "language": "en-US",
+    "java_enabled": false,
+    "javascript_enabled": true,
+    "color_depth": 24,
+    "utc_offset": 0,
+    "screen_width": 1920,
+    "screen_height": 1080
+}
+```
+
+Refer to `/p/{purchaseId}/?s2s=true` API documentation for more details.
+
+---
+
+### Step 3: Handle 3D Secure Transactions (If Configured)
+
+Once the response is received, if the purchase is **successful** (indicated by a response status code of `202`), you will receive the following response:
+
+```json
+{
+    "status": "pending",
+    "callback_url": "http://18.214.100.20/api/v1/payment/64bfc2a4f63e36669499e5cc/",
+    "method": "GET"
+}
+```
+
+Otherwise, if there is an error (response status code could be `400, 404, 401, 415, 405`), you'll receive an error response:
+
+```json
+{
+    "message": "descriptive error message",
+    "code": "error_code"
+}
+```
+
+#### Handling Response:
+- If the response code is `202`, redirect the customer to the `callback_url` provided in the response.
+- If the card **requires 3D Secure verification**, the user will be redirected to a **verification or challenge screen** by the card issuing bank.
+- After successful user verification, the user will be redirected to the **success URL** provided in the `/purchase` API from **Step 1**.
+- If the transaction **fails**, the user will be redirected to the **failure URL** provided in the `/purchase` API from **Step 1**.
+
+---
+
+For further details, please see the **Status Code** section in the documentation.

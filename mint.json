@@ -83,7 +83,9 @@
         {
           "group": "Card Integrations",
           "pages": [
-            "pages/card-integrations"
+            "pages/card-integrations",
+            "pages/card-payments/card-payments-status-codes",
+            "pages/card-payments/card-payments"
           ]
         },
         {
