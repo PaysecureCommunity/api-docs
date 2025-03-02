@@ -1,0 +1,130 @@
+## Create Purchase API Flow
+
+The merchant initiates the purchase via the **Create Purchase API**. If successful, they receive **PayIn details** along with a **checkout URL** in the response JSON.
+
+### Merchant Options
+
+Once the merchant receives the response, they have two options:
+
+1. **Retrieve PayIn details** from the response JSON to create a custom webpage within their IT estate, displaying the PayIn instructions to the user.
+2. **Direct the user to the checkout URL** included in the response. On this page, the user will see the necessary details to complete the Interac payment:
+   - **Deposit Email Address**
+   - **Secret Question**
+   - **Secret Answer**
+
+### Handling Payment Outcomes
+
+After the end-user completes the payment (success or failure), the merchant will receive an appropriate **webhook notification**.
+
+- If the user was directed to the checkout URL, they will also be redirected to the appropriate **redirect URL** after payment completion.
+
+### API Endpoints
+
+#### **POST Create Purchase**
+
+**Endpoint:**
+```
+POST https://api.paysecure.net/api/v1/purchases/
+```
+To initiate a payment, the first call to make is to `/purchases` with the required data in the request body.
+
+To generate a purchase, you must provide:
+- **Brand ID** (in the request body)
+- **API key** (in the header)
+
+Both can be found in the Dashboard section of your merchant account.
+
+#### **Mandatory Parameters**
+
+| Parameter               | Notes |
+|-------------------------|-----------------------------------------------|
+| `client.email`         | An identifier for a user |
+| `client.city`         |   |
+| `client.country`      | ISO-3166 Country Code (Uppercase). "CA" for Interac |
+| `client.stateCode`    | Example: "AL", "XZ" (Uppercase) |
+| `client.street_address` | |
+| `client.zip_code`     | |
+| `client.phone`        | |
+| `client.full_name`    | |
+| `purchase.currency`   | ISO 4217 code ("CAD" for Interac) |
+| `purchase.products.name` | |
+| `purchase.products.price` | Price in decimal format (e.g., 5.00 for EUR 5) |
+| `brand_id`           | Obtainable from the Dashboard |
+| `success_redirect`   | URL for successful transactions |
+| `failure_redirect`   | URL for failed transactions |
+
+#### **GET Purchase Status**
+
+**Endpoint:**
+```
+GET https://api.paysecure.net/api/v1/purchases/{purchaseId}/
+```
+This API retrieves details of a purchase (PayIn), including its history.
+
+**Required:** `purchaseId` in the API URL.
+
+#### **Status Values**
+
+| Status                 | Notes |
+|------------------------|------------------------------|
+| `paid`                | Transaction successful |
+| `payment_in_process`  | Payment processing |
+| `expired`             | Purchase expired |
+| `error`               | Transaction failed |
+
+If errors occur, details can be retrieved from `transaction_data.attempts.error`.
+
+#### **Headers**
+
+```
+Content-Type: application/json
+Authorization: Bearer Token
+```
+
+### Example Request
+
+```sh
+curl --location -g 'https://api.paysecure.net/api/v1/purchases/{purchaseId}/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer Token'
+```
+
+### Example Response
+
+```json
+{
+  "purchaseId": "6790e75fa46a5a5bb0b00e55",
+  "client": {
+    "customerId": "NA",
+    "email": "ashishm.21190@gmail.com",
+    "phone": "+14377717874",
+    "full_name": "Test test",
+    "date_of_birth": "1970-07-10",
+    "street_address": "10 New Burlington Street Apt. 214",
+    "country": "CA",
+    "city": "London",
+    "zip_code": "W1S 3BE",
+    "stateCode": "QLD"
+  },
+  "paymentMethod": "INTERAC",
+  "status": "PAID",
+  "purchase": {
+    "currency": "CAD",
+    "products": [
+      {
+        "name": "test",
+        "quantity": 1,
+        "price": 1
+      }
+    ],
+    "total": 2
+  },
+  "payInDetails": {
+    "name": "INTERAC",
+    "emailAddress": "deposit@ieft.ca",
+    "secretQA": "66a8c78af1fc2f768304bce4",
+    "secretAnswer": "ps8766a8af"
+  },
+  "checkout_url": "https://api.choicepay.ca/payments/6790e75fa46a5a5bb0b00e55/"
+}
+```

@@ -1,7 +1,5 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
-  "name": "Paysecure",
-  "theme": "venus",
+  "name": "Paysecure API Documentation",
   "logo": {
     "dark": "/logo/logo.png",
     "light": "/logo/logo.png"
@@ -12,23 +10,10 @@
     "light": "#626262",
     "dark": "#FFFFFF"
   },
-  "font": {
-    "headings": {
-      "family": "Inter",
-      "weight": 900
-    },
-    "body": {
-      "family": "Inter",
-      "weight": 400
-    }
-  },
-  "layout": "sidenav",
-  "sidebar": {
-    "items": "undecorated"
-  },
   "feedback": {
     "thumbsRating": true,
-    "suggestEdit": true
+    "suggestEdit": true,
+    "raiseIssue": true
   },
   "topbarLinks": [
     {
@@ -36,36 +21,52 @@
       "url": "https://paysecure.net/"
     },
     {
-      "style": "pill",
-      "name": "Run on Postman",
-      "url": "https://web.postman.co/workspace/737fc97e-c848-450f-861c-9c23bc79f5c2/collection/33934520-f5192107-d93c-4a5f-b4fd-98c6eb960f3c"
-    },
-    {
-      "style": "pill",
       "name": "GitHub",
       "url": "https://github.com/PaysecureCommunity"
     }
   ],
-  "topbarCtaButton": {
-    "type": "github",
-    "url": "https://github.com/PaysecureCommunity"
+  "primaryTab": {
+    "name": "Introduction"
   },
+  "tabs": [
+    {
+      "name": "Overview",
+      "url": "overview"
+    },
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    },
+    {
+      "name": "Reach out to us",
+      "url": "support"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Paysecure",
+      "icon": "house-chimney-window",
+      "url": "https://paysecure.net/"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/PaysecureCommunity"
+    }
+  ],
   "navigation": [
     {
-      "group": "Paysecure API Documentation",
+      "group": "GETTING STARTED",
       "pages": [
         "overview",
-        "environments",
-        "introduction",
-        "integration-steps",
-        "headers"
+        "introduction"
       ]
     },
     {
-      "group": "Documentation",
+      "group": "ABOUT PAYSECURE",
       "pages": [
         {
-          "group": "Integrations",
+          "group": "Payment Methods",
           "pages": [
             "pages/payment-methods/interac-payments",
             "pages/payment-methods/upi-payments",
@@ -77,7 +78,6 @@
             "pages/payment-methods/pix/pix",
             "pages/payment-methods/mobile-money/mobile-money-pay-in-out",
             "pages/payment-methods/pix/pix-pay-in-out"
-
           ]
         },
         {
@@ -115,6 +115,18 @@
             "pages/bank-transfers/status-code"
           ]
         }
+      ]
+    },
+    {
+      "group": "SUPPORT",
+      "pages": [
+        "pages/support/support"
+      ]
+    },
+    {
+      "group":"API Reference",
+      "pages": [
+        "api-reference/introduction"
       ]
     }
   ]
