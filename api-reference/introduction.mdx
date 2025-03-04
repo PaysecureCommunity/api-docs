@@ -1,29 +1,47 @@
 ---
-title: 'Introduction'
-description: 'Section for showcasing API endpoints'
+title: "Introduction to Paysecure APIs"
+description: "Overview of Paysecure APIs"
 ---
 
 
-## Welcome
+---
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+## APIs
 
-<Card
-  title="Create Purchase Endpoints"
-  icon="leaf"
-  href="/api-reference/create-purchase"
->
-  View the OpenAPI specification file
-</Card>
+This section aims to provide **technical insights** (setup processes, implementation flow, request structures, etc.) into **every API endpoint** Paysecure offers.
 
-## Authentication
+---
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+## Paysecure APIs
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+<CardGroup cols={3}>
+  <Card title="Interac PayIN API" href="/api-reference/interac/pay-in">
+    Interac PayIN API allows you to accept payments from customers using Interac.
+  </Card>
+  <Card title="Interac PayOut API" href="/api-reference/interac/pay-out">
+    Interac PayOut API allows you to send payments to customers using Interac.
+  </Card>
+  <Card title="Interac-E-Transfer PayOut API" href="/api-reference/interac-e-transfer/pay-out">
+    Interac-E-Transfer PayOut API allows you to send payments to customers using Interac E-Transfer.
+  </Card>
+  <Card title="Interac-E-Transfer PayIN API" href="/api-reference/interac-e-transfer/pay-in">
+    Interac-E-Transfer PayIN API allows you to accept payments from customers using Interac E-Transfer.
+  </Card>
+</CardGroup>
+
+## General APIs
+
+<CardGroup cols={3}>
+  <Card title="Get Status API" href="/api-reference/get-status-api">
+    Retrieve all details of a purchase (PayIn), including its history.
+  </Card>
+  <Card
+    title="Get Balance API"
+    href="/api-reference/get-balance-api"
+  >
+    Retrieve the current balance of the merchant account.
+  </Card>
+  <Card title="Webhooks" href="/api-reference/webhooks">
+    Collection of webhooks for various events.
+  </Card>
+</CardGroup>
