@@ -1,0 +1,146 @@
+### INTERAC-E-TRANSFER Purchase API
+
+#### Overview
+The merchant requests the INTERAC-E-TRANSFER purchase API to initiate a PayIn (deposit/collections) transaction. A payment link is generated, and the customer is redirected to follow the payment instructions. Upon successful or failed payment, an appropriate webhook is sent back to the merchant.
+
+#### Authorization
+**Bearer Token**
+This API requires Bearer Token authentication, which can be retrieved from the Paysecure API Documentation - Live.
+
+#### Endpoint
+**POST**: Create Purchase  
+`https://api.paysecure.net/api/v1/purchases/`
+
+#### Required Parameters
+To generate a purchase, you must provide the **Brand ID** (request body) and **API key** (header), both available in the merchant dashboard.
+
+##### Mandatory Parameters in Request Body:
+| Parameter | Notes |
+|-----------|-------|
+| `client.email` | Unique identifier for the user |
+| `client.city` | Customer's city |
+| `client.country` | ISO-3166 Country Code (Must be uppercase, e.g., "CA" for Interac) |
+| `client.stateCode` | State code in uppercase (e.g., “AL”, “XZ”) |
+| `client.street_address` | Street address of the client |
+| `client.zip_code` | ZIP code of the client |
+| `client.phone` | Client's phone number |
+| `client.full_name` | Full name of the client |
+| `purchase.currency` | ISO 4217 currency code (Should be 'CAD' for Interac) |
+| `purchase.products.name` | Product name |
+| `purchase.products.price` | Price in decimal format (e.g., `10.37`) |
+| `brand_id` | Obtainable from the merchant dashboard |
+| `success_redirect` | URL to redirect on success |
+| `failure_redirect` | URL to redirect on failure |
+
+##### Optional Parameters:
+| Parameter | Notes |
+|-----------|-------|
+| `expireInMin` | Time window for completing the payment before it expires. Payments outside this window may cause inconsistencies. |
+| `merchantRef` | Strongly advised for preventing duplicate transactions and retrieving transaction details. |
+| `paymentMethod` | Specifies the payment solution used. If provided, Paysecure will process the payment directly. |
+
+### Example Request
+```json
+{
+  "client": {
+    "email": "ashishm.21190@gmail.com",
+    "street_address": "10 New Burlington Street Apt. 214",
+    "city": "London",
+    "full_name": "Test test",
+    "zip_code": "W1S 3BE",
+    "country": "CA",
+    "stateCode": "QLD",
+    "phone": "+447755564318",
+    "gender": "MALE",
+    "date_of_birth": "1970-07-10"
+  },
+  "purchase": {
+    "currency": "CAD",
+    "products": [
+      {
+        "name": "test",
+        "price": 1
+      }
+    ]
+  },
+  "paymentMethod": "Interac-e-Transfer",
+  "brand_id": "0cea7af3-23b2-4278-ab94-acf4076cbee4",
+  "success_redirect": "https://your.redirect.url/getResponse",
+  "failure_redirect": "https://your.redirect.url/getResponse",
+  "success_callback": "https://your.success.callback.url",
+  "failure_callback": "https://your.success.failure.url"
+}
+```
+
+### cURL Request
+```sh
+curl --location 'https://api.paysecure.net/api/v1/purchases' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer Token' \
+--data-raw '{
+  "client": {
+    "email": "ashishm.21190@gmail.com",
+    "street_address": "10 New Burlington Street Apt. 214",
+    "city": "London",
+    "full_name": "Test test",
+    "zip_code": "W1S 3BE",
+    "country": "CA",
+    "stateCode": "QLD",
+    "phone": "+447755564318",
+    "gender": "MALE",
+    "date_of_birth": "1970-07-10"
+  },
+  "purchase": {
+    "currency": "CAD",
+    "products": [
+      {
+        "name": "test",
+        "price": 1
+      }
+    ]
+  },
+  "paymentMethod": "Interac-e-Transfer",
+  "brand_id": "0cea7af3-23b2-4278-ab94-acf4076cbee4",
+  "success_redirect": "https://your.redirect.url/getResponse",
+  "failure_redirect": "https://your.redirect.url/getResponse",
+  "success_callback": "https://your.success.callback.url",
+  "failure_callback": "https://your.success.failure.url"
+}'
+```
+
+### Example Response
+```json
+{
+  "purchaseId": "670cb0affcc7f4706acb65e0",
+  "client": {
+    "email": "ashishm.21190@gmail.com",
+    "phone": "+447755564318",
+    "full_name": "Test test",
+    "date_of_birth": "1970-07-10",
+    "street_address": "10 New Burlington Street Apt. 214",
+    "country": "CA",
+    "city": "London",
+    "zip_code": "W1S 3BE",
+    "stateCode": "QLD"
+  },
+  "status": "PAYMENT_IN_PROCESS",
+  "purchase": {
+    "currency": "CAD",
+    "products": [
+      {
+        "name": "test",
+        "price": 1
+      }
+    ],
+    "total": 1
+  },
+  "payment": {
+    "amount": 1,
+    "currency": "CAD",
+    "net_amount": 1
+  },
+  "checkout_url": "https://api.paysecure.net/payments/670cb0affcc7f4706acb65e0/",
+  "success_redirect": "https://your.redirect.url/getResponse.jsp?success=true",
+  "failure_redirect": "https://your.redirect.url/getResponse.jsp?success=false"
+}
+```
