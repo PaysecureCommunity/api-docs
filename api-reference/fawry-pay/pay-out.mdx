@@ -1,0 +1,102 @@
+# PaySecure PayOut API
+
+## Overview
+The PaySecure PayOut API allows merchants to initiate payouts, check transaction status, and retrieve balance information.
+
+---
+
+## Authorization
+All API requests require a Bearer Token for authentication.
+
+### Headers:
+```json
+{
+  "Content-Type": "application/json",
+  "Authorization": "Bearer <your_token>"
+}
+```
+
+---
+
+## Create PayOut
+### Endpoint:
+**POST** `/api/v1/payout/`
+
+### Request Body:
+```json
+{
+  "client": {
+    "email": "test@gmail.com",
+    "country": "EG",
+    "phone": "9586445444",
+    "full_name": "Test Person-uk",
+    "documentId": "29206260104051"
+  },
+  "purpose": "test payout",
+  "currency": "EGP",
+  "payoutMethod": "Payout-fawrypay",
+  "amount": 20,
+  "success_callback": "https://success.com",
+  "failure_callback": "https://failure.com"
+}
+```
+
+### Response Example:
+```json
+{
+  "payoutId": "6687d86dde5d5c0feecf7621",
+  "status": "PAYOUT_IN_PROCESS",
+  "status_history": [
+    { "status": "created", "timestamp": 1720178797 },
+    { "status": "payout_in_process", "timestamp": 1720178799 }
+  ],
+  "payOutDetails": {
+    "instruction": "Please use transaction reference 20514294 at any Fawry store within 72 hrs"
+  }
+}
+```
+
+---
+
+## Get PayOut Status
+### Endpoint:
+**GET** `/api/v1/getpayout/{payoutId}/`
+
+### Response Example:
+```json
+{
+  "payoutId": "6685467c0e5b201a73f91256",
+  "status": "PAID",
+  "status_history": [
+    { "status": "created", "timestamp": 1720010364 },
+    { "status": "payout_in_process", "timestamp": 1720010367 },
+    { "status": "paid", "timestamp": 1720010823 }
+  ]
+}
+```
+
+### Possible Status Values:
+- `paid` – Transaction successful.
+- `payout_in_process` – Payout is being processed.
+- `error` – Transaction failed.
+
+---
+
+## Check Balance
+### Endpoint:
+**POST** `/api/v1/getBalance`
+
+### Request Body:
+```json
+{
+  "paymentMethod": "INTERAC"
+}
+```
+
+### Response Example:
+```json
+{
+  "balance": 1500.00,
+  "currency": "USD"
+}
+```
