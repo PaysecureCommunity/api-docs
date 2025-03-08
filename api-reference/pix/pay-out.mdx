@@ -24,7 +24,7 @@ If the merchant has enough balance, then the transaction amount will be deducted
 ##### **Processing:**
 1. **Payment details**: Using Paysecure's API, the merchant provides the recipient's Pix key (which can be a phone number, email, CPF/CNPJ, or random key) and the transfer amount.
 2. **Funds check**: Paysecure verifies if sufficient funds are available in the merchant account to cover the transfer.
-3.  : The recipient's Pix key is validated using the DICT (Transactional Identifier Directory). This central database links Pix keys with users' bank accounts.
+3. **Processing & Key mapping**: The recipient's Pix key is validated using the DICT (Transactional Identifier Directory). This central database links Pix keys with users' bank accounts.
 
 ##### **Payout:**
 1. **Instant transfer**: If everything checks out, the payer's bank instantly transfers the funds to the recipient's bank account. The recipient typically receives confirmation messages from their respective bank about the successful transaction.
