@@ -1,7 +1,7 @@
 ---
 title: Check Balance API
 description: API for checking payout balances across different payment methods
-openapi: 'openapi POST /#getBalance'
+openapi: 'openapi GET /#getBalance'
 ---
 
 # Check Balance API
@@ -13,20 +13,17 @@ The Check Balance API allows merchants to retrieve current balance information f
 
 ## Get Balance
 ### Endpoint:
-**POST** `/api/v1/getBalance/`
+**GET** `/api/v1/getBalance/`
 
-### Request Body Parameters:
+### Query Parameters:
 | Parameter        | Required | Description                                                                 |
 |------------------|----------|-----------------------------------------------------------------------------|
 | `paymentMethod`  | Yes      | Payment method type (e.g. "INTERAC", "FAWRYPAY", "UPI")                   |
 | `currency`       | No       | Currency code (e.g. "USD", "CAD", "EGP"). Omit to get all currency balances |
 
-### Request Example:
-```json
-{
-  "paymentMethod": "FAWRYPAY",
-  "currency": "CAD"
-}
+### Example Request:
+```
+GET /api/v1/getBalance/?paymentMethod=FAWRYPAY&currency=CAD
 ```
 
 ### Response Example (Specific Currency):

@@ -11,34 +11,34 @@
     }
   ],
   "paths": {
-    "/getBalance": {
-      "post": {
+    "/#getBalance": {
+      "get": {
         "summary": "Retrieve account balance information",
         "description": "Get balance for specific currency or all currencies associated with the account",
         "operationId": "getBalance",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BalanceRequest"
-              },
-              "examples": {
-                "specificCurrency": {
-                  "value": {
-                    "paymentMethod": "FAWRYPAY",
-                    "currency": "CAD"
-                  }
-                },
-                "allCurrencies": {
-                  "value": {
-                    "paymentMethod": "INTERAC"
-                  }
-                }
-              }
-            }
+        "parameters": [
+          {
+            "name": "paymentMethod",
+            "in": "query",
+            "required": true,
+            "description": "Payment method type",
+            "schema": {
+              "type": "string",
+              "enum": ["INTERAC", "FAWRYPAY", "UPI", "BANK_TRANSFER"]
+            },
+            "example": "FAWRYPAY"
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "required": false,
+            "description": "Currency code (ISO 4217)",
+            "schema": {
+              "type": "string"
+            },
+            "example": "CAD"
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Successful balance response",
@@ -95,12 +95,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
+        }
       }
     }
   },
