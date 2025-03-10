@@ -1,10 +1,126 @@
 ---
 title: "Get Customer"
 description: "Get the Customer profile for payment processing"
+openapi: "openapi GET /api/v1/customer"
 ---
 
-# Get Customer API
+### Customer Profile API
 
-This API allows you to retrieve the Customer profile for payment processing.
+#### Overview
+The **getCustomer API** allows merchants to retrieve a customer profile from PaySecure using the merchantCustomerId. This API is useful for verifying customer information and retrieving customer details for use in subsequent transactions.
 
-<!-- OpenAPI content will be added here later --> 
+#### Authorization
+**Bearer Token**
+This API requires Bearer Token authentication, which can be retrieved from the Paysecure API Documentation - Live.
+
+#### Endpoint
+**GET**: Retrieve Customer  
+`https://api.paysecure.net/api/v1/customer`
+
+#### Required Parameters
+To retrieve a customer profile, you must provide the **Brand ID** (header) and **API key** (header), both available in the merchant dashboard.
+
+##### Request Body:
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `merchantCustomerId` | String | Unique customer ID provided by merchant | "merchantCustomerId" |
+
+### Example Request
+```json
+{
+  "merchantCustomerId": "merchantCustomerId"
+}
+```
+
+```javascript JavaScript
+const axios = require("axios");
+
+(async () => {
+  const response = await axios.get(
+    "https://api.paysecure.net/api/v1/customer",
+    {
+      data: {
+        merchantCustomerId: "merchantCustomerId"
+      },
+      headers: {
+        "Content-Type": "application/json",
+        "BrandId": "your-brand-id-here",
+        "Authorization": "Bearer your-token-here"
+      }
+    }
+  );
+
+  console.log(response.data);
+})();
+```
+
+### cURL Request
+```sh
+curl --location 'https://api.paysecure.net/api/v1/customer' \
+--header 'Content-Type: application/json' \
+--header 'Accept: */*' \
+--header 'BrandId: brand_id_value' \
+--header 'Authorization: Bearer Token' \
+--data-raw '{
+  "merchantCustomerId": "merchantCustomerId"
+}'
+```
+
+### Example Response
+```json
+{
+  "customerId": "67c54bff81fd9953719186ff",
+  "merchantCustomerId": "merchantCustomerId",
+  "fullName": "John Doe",
+  "emailId": "john.doe@example.com",
+  "dateOfBirth": "1990-01-01",
+  "phoneNo": "1234567890",
+  "brandID": "db8414b4-e527-4be6-b2bf-df5cb7a646c7",
+  "city": "New York",
+  "zipCode": "10001",
+  "address": "123 Main St",
+  "country": "US",
+  "stateCode": "NY",
+  "custRegDate": "2023-01-01",
+  "successTrans": 5
+}
+```
+
+## Use Cases
+
+### 1. Verify Customer Information
+Use this API to verify if a customer exists in the PaySecure system and retrieve their details before initiating a transaction.
+
+### 2. Pre-fill Customer Data
+Retrieve customer information to pre-fill forms or display customer details in your application.
+
+### 3. Customer Management
+Integrate with your customer management system to keep customer data synchronized between your platform and PaySecure.
+
+## Error Handling
+
+If the customer is not found or there are other issues with the request, the API will return an appropriate error response:
+
+```json
+{
+  "status": "error",
+  "message": "Customer not found",
+  "code": "NOT_FOUND"
+}
+```
+
+Common error scenarios include:
+- Customer not found (404)
+- Invalid input parameters (400)
+- Authentication failure (401)
+- Server error (500)
+
+## Integration Tips
+
+1. **Store the merchantCustomerId**: Always store the merchantCustomerId in your system for future reference.
+2. **Error Handling**: Implement proper error handling to manage cases where the customer might not exist.
+3. **Caching**: Consider caching customer information to reduce API calls, but ensure you refresh the cache periodically.
+
+## Related APIs
+- [Post Customer](/api-reference/cashier/post-customer): Create a new customer profile
+- [Update Customer](/api-reference/cashier/update-customer): Update an existing customer profile 

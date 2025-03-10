@@ -9,10 +9,6 @@ openapi: "openapi POST /api/v1/customer"
 #### Overview
 The **createCustomer API**  allows merchants to create a customer profile on PaySecure when a user visits their website, facilitating a seamless payment experience by pre-filling the customer's details on the PaySecure Cashier. The API takes in customer information and returns a unique customerID that can be passed in purchase payload, eliminating the need for customers to manually enter their details during transactions.
 
-#### Authorization
-**Bearer Token**
-This API requires Bearer Token authentication, which can be retrieved from the Paysecure API Documentation - Live.
-
 #### Endpoint
 **POST**: Create Customer  
 `https://api.paysecure.net/api/v1/customer`
