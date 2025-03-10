@@ -1,10 +1,172 @@
 ---
-title: "Post Customer"
+title: "Post createCustomer"
 description: "Initialize the Customer profile for payment processing"
+openapi: "openapi POST /api/v1/customer"
 ---
 
-# Post Customer API
+### Customer Profile API
 
-This API allows you to initialize the Customer profile for payment processing.
+#### Overview
+The **createCustomer API**  allows merchants to create a customer profile on PaySecure when a user visits their website, facilitating a seamless payment experience by pre-filling the customer's details on the PaySecure Cashier. The API takes in customer information and returns a unique customerID that can be passed in purchase payload, eliminating the need for customers to manually enter their details during transactions.
 
-<!-- OpenAPI content will be added here later --> 
+#### Authorization
+**Bearer Token**
+This API requires Bearer Token authentication, which can be retrieved from the Paysecure API Documentation - Live.
+
+#### Endpoint
+**POST**: Create Customer  
+`https://api.paysecure.net/api/v1/customer`
+
+#### Required Parameters
+To create a customer profile, you must provide the **Brand ID** (request body) and **API key** (header), both available in the merchant dashboard.
+
+##### Mandatory Parameters in Request Body:
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `merchantCustomerId` | String | Unique customer ID provided by merchant | Email, mobile or alphanumeric string |
+| `fullName` | String | Full name of the customer | "Test User" |
+| `emailId` | String | Email address of the customer | "test3@paysecure.net" |
+| `phoneNo` | String | Customer's phone number | "797639082" |
+| `city` | String | City of the customer | "Jaipur" |
+| `stateCode` | String | State code of the customer | "RA" |
+| `zipCode` | String | Postal code of the customer's location | "202020" |
+| `address` | String | Full address of the customer | "Jaipur" |
+| `country` | String | Country code (ISO 3166-1 alpha-2) | "IN" |
+| `brand_id` | String | Obtainable from the merchant dashboard | "0cea7af3-23b2-4278-ab94-acf4076cbee4" |
+
+##### Optional Parameters:
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `dateOfBirth` | String | Customer's date of birth in YYYY-MM-DD format | "1995-08-27" |
+| `custRegDate` | String | Customer registration date on merchant site | "2023-08-27" |
+| `successTxn` | String | Number of successful transactions customer has carried on merchant site | "32" |
+
+**Note**: Merchants can add up to 20 additional custom parameters in this request.
+
+### Example Request
+```json
+{
+  "merchantCustomerId": "customer123",
+  "fullName": "John Doe",
+  "emailId": "john.doe@example.com",
+  "phoneNo": "9876543210",
+  "city": "Mumbai",
+  "stateCode": "MH",
+  "zipCode": "400001",
+  "address": "123 Main Street, Andheri",
+  "country": "IN",
+  "dateOfBirth": "1990-05-15",
+  "custRegDate": "2023-01-10",
+  "successTxn": "8",
+  "brand_id": "0cea7af3-23b2-4278-ab94-acf4076cbee4"
+}
+```
+
+```javascript JavaScript
+const axios = require("axios");
+
+(async () => {
+  const response = await axios.post(
+    "https://api.paysecure.net/api/v1/customer",
+    {
+      merchantCustomerId: "customer123",
+      fullName: "John Doe",
+      emailId: "john.doe@example.com",
+      phoneNo: "9876543210",
+      city: "Mumbai",
+      stateCode: "MH",
+      zipCode: "400001",
+      address: "123 Main Street, Andheri",
+      country: "IN",
+      dateOfBirth: "1990-05-15",
+      custRegDate: "2023-01-10",
+      successTxn: "8",
+      brand_id: "your-brand-id-here"
+    },
+    {
+      headers: {
+        "Authorization": "Bearer your-token-here",
+        "Content-Type": "application/json"
+      }
+    }
+  );
+
+  console.log(response.data);
+})();
+```
+
+### cURL Request
+```sh
+curl --location 'https://api.paysecure.net/api/v1/customer' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer Token' \
+--data-raw '{
+  "merchantCustomerId": "customer123",
+  "fullName": "John Doe",
+  "emailId": "john.doe@example.com",
+  "phoneNo": "9876543210",
+  "city": "Mumbai",
+  "stateCode": "MH",
+  "zipCode": "400001",
+  "address": "123 Main Street, Andheri",
+  "country": "IN",
+  "dateOfBirth": "1990-05-15",
+  "custRegDate": "2023-01-10",
+  "successTxn": "8",
+  "brand_id": "0cea7af3-23b2-4278-ab94-acf4076cbee4"
+}'
+```
+
+### Example Response
+```json
+{
+  "status": "success",
+  "message": "Customer created successfully",
+  "data": {
+    "customerId": "cust_12345abcde",
+    "merchantCustomerId": "customer123",
+    "fullName": "John Doe",
+    "emailId": "john.doe@example.com",
+    "created_at": "2023-08-27T10:15:30Z"
+  }
+}
+```
+
+## Implementation Approaches
+
+### 1. At Checkout
+When a customer initiates the checkout process, your system should invoke the createCustomer API before starting the payment session.
+
+1. **Call createCustomer**: This API call generates a unique customer ID.
+2. **Use of Customer ID**: Pass the returned customer ID in Session API when creating a payment session.
+
+### 2. Upon Customer Login
+Alternatively, merchants may choose to call createCustomer at the time of customer login on their site.
+
+1. **Persistent Customer Profiles**: This approach helps build or maintain a persistent customer profile, ensuring the customer ID is available for any subsequent payment sessions without needing to call createCustomer again.
+2. **Integration Flexibility**: This is useful for merchants who want to initialize customer data early in the customer journey rather than during checkout.
+
+**Note**: The second method is not advised for white-label merchants who want to manage different customerIDs for each brand.
+
+## User Flow
+
+1. **Customer visits merchant's website**: The customer selects the product or service and proceeds to checkout page.
+2. **Merchant calls the createCustomer API**: The merchant sends a POST request to the PaySecure API with the customer's details.
+3. **Customer ID generation**: PaySecure processes the request and generates a unique customerId which is returned in the response.
+4. **Payment Process**: The merchant uses the customerId for subsequent transactions, ensuring the customer doesn't need to re-enter their details for future payments.
+
+## Benefits
+
+- **Seamless user experience**: The customer does not have to enter their details manually for every purchase.
+- **Faster Checkout**: The merchant can use the customerId for faster payment processing.
+- **Data Security**: Customer details are stored securely and can be reused across transactions, reducing the chances of errors.
+
+## Error Response
+If there are any errors, they will be in the following format:
+```json
+{
+  "status": "error",
+  "message": "descriptive error message",
+  "code": "error_code"
+}
+``` 

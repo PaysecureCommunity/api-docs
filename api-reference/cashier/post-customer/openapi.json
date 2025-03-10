@@ -1,0 +1,344 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Post createCustomer API",
+    "description": "Initialize the Customer profile for payment processing",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.paysecure.net",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/api/v1/customer": {
+      "post": {
+        "summary": "Create a customer profile",
+        "description": "Creates a customer profile on PaySecure to facilitate a seamless payment experience by pre-filling customer details on the PaySecure Cashier.",
+        "operationId": "createCustomer",
+        "tags": ["Customer"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerRequest"
+              },
+              "examples": {
+                "customer": {
+                  "value": {
+                    "merchantCustomerId": "testuser@gmail.com",
+                    "fullName": "Akshaya Singhal",
+                    "emailId": "testuser@gmail.com",
+                    "dateOfBirth": "1995-11-27",
+                    "phoneNo": "2222222222",
+                    "city": "jaipur",
+                    "stateCode": "ra",
+                    "zipCode": "202020",
+                    "address": "Mansarovar Jaipur",
+                    "country": "IN",
+                    "custRegDate": "2024-11-27",
+                    "successTxn": "32"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Customer created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponse"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "customerId": "67c54bff81fd9953719186ff",
+                      "merchantCustomerId": "testuser@gmail.com",
+                      "fullName": "Akshaya Singhal",
+                      "emailId": "testuser@gmail.com",
+                      "dateOfBirth": "1995-11-27",
+                      "phoneNo": "2222222222",
+                      "brandID": "db8414b4-e527-4be6-b2bf-df5cb7a646c7",
+                      "city": "jaipur",
+                      "zipCode": "202020",
+                      "address": "Mansarovar Jaipur",
+                      "country": "IN",
+                      "stateCode": "ra",
+                      "custRegDate": "2024-11-27",
+                      "successTrans": 32
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid input parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "status": "error",
+                      "message": "Invalid input parameters",
+                      "code": "INVALID_INPUT"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "status": "error",
+                      "message": "Authentication failed",
+                      "code": "AUTH_FAILED"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "status": "error",
+                      "message": "Internal server error",
+                      "code": "SERVER_ERROR"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CustomerRequest": {
+        "type": "object",
+        "required": [
+          "merchantCustomerId",
+          "fullName",
+          "emailId",
+          "phoneNo",
+          "city",
+          "stateCode",
+          "zipCode",
+          "address",
+          "country"
+        ],
+        "properties": {
+          "merchantCustomerId": {
+            "type": "string",
+            "description": "Unique customer ID provided by merchant",
+            "example": "testuser@gmail.com"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Full name of the customer",
+            "example": "Akshaya Singhal"
+          },
+          "emailId": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of the customer",
+            "example": "testuser@gmail.com"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "description": "Customer's date of birth in YYYY-MM-DD format",
+            "example": "1995-11-27"
+          },
+          "phoneNo": {
+            "type": "string",
+            "description": "Customer's phone number",
+            "example": "2222222222"
+          },
+          "city": {
+            "type": "string",
+            "description": "City of the customer",
+            "example": "jaipur"
+          },
+          "stateCode": {
+            "type": "string",
+            "description": "State code of the customer",
+            "example": "ra"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "Postal code of the customer's location",
+            "example": "202020"
+          },
+          "address": {
+            "type": "string",
+            "description": "Full address of the customer",
+            "example": "Mansarovar Jaipur"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country code (ISO 3166-1 alpha-2)",
+            "example": "IN"
+          },
+          "custRegDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Customer registration date on merchant site",
+            "example": "2024-11-27"
+          },
+          "successTxn": {
+            "type": "string",
+            "description": "Number of successful transactions customer has carried on merchant site",
+            "example": "32"
+          },
+          "extraParam": {
+            "type": "object",
+            "description": "Additional custom parameters (up to 20)",
+            "example": {
+              "param1": "value1",
+              "param2": "value2",
+              "param3": "value3",
+              "param4": "value4"
+            }
+          }
+        }
+      },
+      "CustomerResponse": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "description": "Unique identifier for the customer in PaySecure system",
+            "example": "67c54bff81fd9953719186ff"
+          },
+          "merchantCustomerId": {
+            "type": "string",
+            "description": "Unique customer ID provided by merchant",
+            "example": "testuser@gmail.com"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Full name of the customer",
+            "example": "Akshaya Singhal"
+          },
+          "emailId": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of the customer",
+            "example": "testuser@gmail.com"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "description": "Customer's date of birth in YYYY-MM-DD format",
+            "example": "1995-11-27"
+          },
+          "phoneNo": {
+            "type": "string",
+            "description": "Customer's phone number",
+            "example": "2222222222"
+          },
+          "brandID": {
+            "type": "string",
+            "description": "Brand ID associated with the customer",
+            "example": "db8414b4-e527-4be6-b2bf-df5cb7a646c7"
+          },
+          "city": {
+            "type": "string",
+            "description": "City of the customer",
+            "example": "jaipur"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "Postal code of the customer's location",
+            "example": "202020"
+          },
+          "address": {
+            "type": "string",
+            "description": "Full address of the customer",
+            "example": "Mansarovar Jaipur"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country code (ISO 3166-1 alpha-2)",
+            "example": "IN"
+          },
+          "stateCode": {
+            "type": "string",
+            "description": "State code of the customer",
+            "example": "ra"
+          },
+          "custRegDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Customer registration date on merchant site",
+            "example": "2024-11-27"
+          },
+          "successTrans": {
+            "type": "integer",
+            "description": "Number of successful transactions customer has carried on merchant site",
+            "example": 32
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Error status",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Descriptive error message",
+            "example": "Invalid input parameters"
+          },
+          "code": {
+            "type": "string",
+            "description": "Error code",
+            "example": "INVALID_INPUT"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "BrandIdHeader": {
+        "name": "BrandId",
+        "in": "header",
+        "description": "Brand ID for the merchant",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "brand_id_value"
+      }
+    }
+  }
+}
