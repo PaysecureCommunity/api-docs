@@ -89,6 +89,12 @@
           ]
         },
         {
+          "group": "On-Ramp",
+          "pages": [
+            "pages/on-ramp/on-ramp"
+          ]
+        },
+        {
           "group": "Products of Paysecure",
           "pages": [
             "pages/products/trust-score",
