@@ -1,0 +1,192 @@
+---
+title: "Patch Customer"
+description: "Update the Customer profile for payment processing"
+openapi: "openapi PATCH /api/v1/{customerId}/patchCustomer"
+---
+
+### Customer Profile Update API
+
+#### Overview
+The **patchCustomer API** allows merchants to update customer details in the PaySecure system when a customer or the merchant updates information on the merchant site. This ensures that customer data remains synchronized between the merchant's platform and PaySecure, providing a consistent experience across all touchpoints.
+
+#### Authorization
+**Bearer Token**
+This API requires Bearer Token authentication, which can be retrieved from the Paysecure API Documentation - Live.
+
+#### Endpoint
+**PATCH**: Update Customer  
+`https://api.paysecure.net/api/v1/{customerId}/patchCustomer`
+
+#### Path Parameters
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `customerId` | String | Unique identifier for the customer in PaySecure system | "customerId" |
+
+#### Required Parameters
+To update a customer profile, you must provide the **Brand ID** (header) and **API key** (header), both available in the merchant dashboard.
+
+##### Request Body:
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `fullName` | String | Full name of the customer | "Akshaya Singhal" |
+| `emailId` | String | Email address of the customer | "testuserabcd@gmail.com" |
+| `dateOfBirth` | String | Customer's date of birth in YYYY-MM-DD format | "1995-11-27" |
+| `phoneNo` | String | Customer's phone number | "2222222222" |
+| `city` | String | City of the customer | "jaipur" |
+| `stateCode` | String | State code of the customer | "ra" |
+| `zipCode` | String | Postal code of the customer's location | "202020" |
+| `address` | String | Full address of the customer | "Mansarovar Jaipur" |
+| `country` | String | Country code (ISO 3166-1 alpha-2) | "IN" |
+
+##### Optional Parameters:
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `custRegDate` | String | Customer registration date on merchant site (Non-Mandatory) | "2024-11-27" |
+| `successTxn` | String | Success transaction details (Non-Mandatory) | "32" |
+| `extraParam` | Object | Additional parameters including param1, param2, param3, param4 with their respective values | `{"param1": "value1", "param2": "value2"}` |
+
+### Example Request
+```json
+{
+  "fullName": "Akshaya Singhal",
+  "emailId": "testuserabcd@gmail.com",
+  "dateOfBirth": "1995-11-27",
+  "phoneNo": "2222222222",
+  "city": "jaipur",
+  "stateCode": "ra",
+  "zipCode": "202020",
+  "address": "Mansarovar Jaipur",
+  "country": "IN",
+  "custRegDate": "2024-11-27",
+  "successTxn": "32"
+}
+```
+
+```javascript JavaScript
+const axios = require("axios");
+
+(async () => {
+  const customerId = "customerId";
+  
+  const response = await axios.patch(
+    `https://api.paysecure.net/api/v1/${customerId}/patchCustomer`,
+    {
+      fullName: "Akshaya Singhal",
+      emailId: "testuserabcd@gmail.com",
+      dateOfBirth: "1995-11-27",
+      phoneNo: "2222222222",
+      city: "jaipur",
+      stateCode: "ra",
+      zipCode: "202020",
+      address: "Mansarovar Jaipur",
+      country: "IN",
+      custRegDate: "2024-11-27",
+      successTxn: "32"
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "BrandId": "brand_id_value",
+        "Authorization": "Bearer your-token-here"
+      }
+    }
+  );
+
+  console.log(response.data);
+})();
+```
+
+### cURL Request
+```sh
+curl --location -g --request PATCH 'https://api.paysecure.net/api/v1/{customerId}/patchCustomer' \
+--header 'Content-Type: application/json' \
+--header 'Accept: */*' \
+--header 'BrandId: brand_id_value' \
+--header 'Authorization: Bearer Token' \
+--data-raw '{
+  "fullName": "Akshaya Singhal",
+  "emailId": "testuserabcd@gmail.com",
+  "dateOfBirth": "1995-11-27",
+  "phoneNo": "2222222222",
+  "city": "jaipur",
+  "stateCode": "ra",
+  "zipCode": "202020",
+  "address": "Mansarovar Jaipur",
+  "country": "IN",
+  "custRegDate": "2024-11-27",
+  "successTxn": "32"
+}'
+```
+
+### Example Response
+```json
+{
+  "customerId": "customerId",
+  "merchatCustomerID": "merchantProvidedCustomerId",
+  "brandId": "brandId",
+  "fullName": "Akshaya Singhal",
+  "emailId": "testuserabcd@gmail.com",
+  "dateOfBirth": "1995-11-27",
+  "phoneNo": "2222222222",
+  "city": "jaipur",
+  "stateCode": "ra",
+  "zipCode": "202020",
+  "address": "Mansarovar Jaipur",
+  "country": "IN",
+  "createdOn": "2025-02-27",
+  "custRegDate": "2024-11-27",
+  "successTrans": 32,
+  "lastActivity": "",
+  "lastUpdated": ""
+}
+```
+
+## Use Cases
+
+### 1. Customer Profile Updates
+When customers update their personal information on your platform, use this API to synchronize the changes with PaySecure.
+
+### 2. Address Changes
+When a customer changes their address or contact details, update this information in PaySecure to ensure accurate delivery and communication.
+
+### 3. Data Correction
+If you discover incorrect customer information in your system, use this API to correct the data in PaySecure as well.
+
+## When to Call This API
+
+You should call the patchCustomer API in the following scenarios:
+
+1. **Customer Self-Service Updates**: When customers update their profile information through your website or app.
+2. **Customer Support Changes**: When your customer support team makes changes to a customer's profile.
+3. **Data Synchronization**: During regular data synchronization processes between your system and PaySecure.
+4. **Data Correction**: When you identify and correct inaccurate customer information.
+
+## Error Handling
+
+If there are issues with the update request, the API will return an appropriate error response:
+
+```json
+{
+  "status": "error",
+  "message": "Customer not found",
+  "code": "NOT_FOUND"
+}
+```
+
+Common error scenarios include:
+- Customer not found (404)
+- Invalid input parameters (400)
+- Authentication failure (401)
+- Server error (500)
+
+## Integration Tips
+
+1. **Validate Data Before Sending**: Ensure all data is validated on your end before sending it to the API.
+2. **Partial Updates**: You only need to include the fields you want to update in the request body.
+3. **Error Handling**: Implement proper error handling to manage cases where the update might fail.
+4. **Audit Trail**: Consider maintaining an audit trail of customer profile changes in your system.
+
+## Related APIs
+- [Post Customer](/api-reference/cashier/post-customer): Create a new customer profile
+- [Get Customer](/api-reference/cashier/get-customer): Retrieve an existing customer profile 

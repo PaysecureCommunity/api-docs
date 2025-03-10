@@ -1,0 +1,393 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Patch Customer API",
+    "description": "Update the Customer profile for payment processing",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.paysecure.net",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/api/v1/{customerId}/patchCustomer": {
+      "patch": {
+        "summary": "Update a customer profile",
+        "description": "Updates customer information in the Paysecure API when customer details are changed on the merchant site.",
+        "operationId": "patchCustomer",
+        "tags": ["Customer"],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier for the customer in PaySecure system",
+            "schema": {
+              "type": "string"
+            },
+            "example": "customerId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerUpdateRequest"
+              },
+              "examples": {
+                "customer": {
+                  "value": {
+                    "fullName": "Akshaya Singhal",
+                    "emailId": "testuserabcd@gmail.com",
+                    "dateOfBirth": "1995-11-27",
+                    "phoneNo": "2222222222",
+                    "city": "jaipur",
+                    "stateCode": "ra",
+                    "zipCode": "202020",
+                    "address": "Mansarovar Jaipur",
+                    "country": "IN",
+                    "custRegDate": "2024-11-27",
+                    "successTxn": "32"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Customer updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponse"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "customerId": "customerId",
+                      "merchatCustomerID": "merchantProvidedCustomerId",
+                      "brandId": "brandId",
+                      "fullName": "Akshaya Singhal",
+                      "emailId": "testuserabcd@gmail.com",
+                      "dateOfBirth": "1995-11-27",
+                      "phoneNo": "2222222222",
+                      "city": "jaipur",
+                      "stateCode": "ra",
+                      "zipCode": "202020",
+                      "address": "Mansarovar Jaipur",
+                      "country": "IN",
+                      "createdOn": "2025-02-27",
+                      "custRegDate": "2024-11-27",
+                      "successTrans": 32,
+                      "lastActivity": "",
+                      "lastUpdated": ""
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid input parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "status": "error",
+                      "message": "Invalid input parameters",
+                      "code": "INVALID_INPUT"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "status": "error",
+                      "message": "Authentication failed",
+                      "code": "AUTH_FAILED"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "status": "error",
+                      "message": "Customer not found",
+                      "code": "NOT_FOUND"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "status": "error",
+                      "message": "Internal server error",
+                      "code": "SERVER_ERROR"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CustomerUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "Full name of the customer",
+            "example": "Akshaya Singhal"
+          },
+          "emailId": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of the customer",
+            "example": "testuserabcd@gmail.com"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "description": "Customer's date of birth in YYYY-MM-DD format",
+            "example": "1995-11-27"
+          },
+          "phoneNo": {
+            "type": "string",
+            "description": "Customer's phone number",
+            "example": "2222222222"
+          },
+          "city": {
+            "type": "string",
+            "description": "City of the customer",
+            "example": "jaipur"
+          },
+          "stateCode": {
+            "type": "string",
+            "description": "State code of the customer",
+            "example": "ra"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "Postal code of the customer's location",
+            "example": "202020"
+          },
+          "address": {
+            "type": "string",
+            "description": "Full address of the customer",
+            "example": "Mansarovar Jaipur"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country code (ISO 3166-1 alpha-2)",
+            "example": "IN"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date",
+            "description": "Time when the customer was created",
+            "example": "2025-02-27"
+          },
+          "custRegDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Customer registration date on merchant site (Non-Mandatory)",
+            "example": "2024-11-27"
+          },
+          "successTxn": {
+            "type": "string",
+            "description": "Success transaction details (Non-Mandatory)",
+            "example": "32"
+          },
+          "lastActivity": {
+            "type": "string",
+            "description": "Time of the last activity",
+            "example": ""
+          },
+          "lastUpdated": {
+            "type": "string",
+            "description": "Time when the last patch was called",
+            "example": ""
+          },
+          "extraParam": {
+            "type": "object",
+            "description": "Additional parameters",
+            "example": {
+              "param1": "value1",
+              "param2": "value2",
+              "param3": "value3",
+              "param4": "value4"
+            }
+          }
+        }
+      },
+      "CustomerResponse": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "description": "Unique identifier for the customer in PaySecure system",
+            "example": "customerId"
+          },
+          "merchatCustomerID": {
+            "type": "string",
+            "description": "Unique customer ID provided by merchant",
+            "example": "merchantProvidedCustomerId"
+          },
+          "brandId": {
+            "type": "string",
+            "description": "Brand ID associated with the customer",
+            "example": "brandId"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Full name of the customer",
+            "example": "Akshaya Singhal"
+          },
+          "emailId": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of the customer",
+            "example": "testuserabcd@gmail.com"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "description": "Customer's date of birth in YYYY-MM-DD format",
+            "example": "1995-11-27"
+          },
+          "phoneNo": {
+            "type": "string",
+            "description": "Customer's phone number",
+            "example": "2222222222"
+          },
+          "city": {
+            "type": "string",
+            "description": "City of the customer",
+            "example": "jaipur"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "Postal code of the customer's location",
+            "example": "202020"
+          },
+          "address": {
+            "type": "string",
+            "description": "Full address of the customer",
+            "example": "Mansarovar Jaipur"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country code (ISO 3166-1 alpha-2)",
+            "example": "IN"
+          },
+          "stateCode": {
+            "type": "string",
+            "description": "State code of the customer",
+            "example": "ra"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date",
+            "description": "Time when the customer was created",
+            "example": "2025-02-27"
+          },
+          "custRegDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Customer registration date on merchant site",
+            "example": "2024-11-27"
+          },
+          "successTrans": {
+            "type": "integer",
+            "description": "Number of successful transactions customer has carried on merchant site",
+            "example": 32
+          },
+          "lastActivity": {
+            "type": "string",
+            "description": "Time of the last activity",
+            "example": ""
+          },
+          "lastUpdated": {
+            "type": "string",
+            "description": "Time when the last patch was called",
+            "example": ""
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Error status",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Descriptive error message",
+            "example": "Invalid input parameters"
+          },
+          "code": {
+            "type": "string",
+            "description": "Error code",
+            "example": "INVALID_INPUT"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "BrandIdHeader": {
+        "name": "BrandId",
+        "in": "header",
+        "description": "Brand ID for the merchant",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "brand_id_value"
+      }
+    }
+  }
+} 
