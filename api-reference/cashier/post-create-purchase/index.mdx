@@ -1,10 +1,281 @@
 ---
 title: "Post createPurchase"
 description: "Create a new purchase for payment processing"
+openapi: "openapi POST /api/v1/purchases/"
 ---
 
-# Post createPurchase API
+### Purchase API
 
-This API allows you to create a new purchase for payment processing.
+#### Overview
+The **createPurchase API** is a core feature of the PaySecure Cashier System, enabling merchants to initiate payments by creating a purchase session. This API streamlines the payment process by allowing customization based on customer details, purchase information, and payment methods.
 
-<!-- OpenAPI content will be added here later --> 
+The API initiates the payment process by generating a unique session for a transaction. Depending on the passed paymentMethod and pre-configured routing rules, the API directs the transaction through the appropriate payment channel. Additionally, success and failure callbacks are used to provide real-time updates on transaction status.
+
+#### Key Features
+- **Dynamic Payment Routing**: Routes transactions to specific payment methods based on the merchant's configuration.
+- **Customizable Callbacks**: Configure URLs for success and failure redirects as well as server-to-server callbacks for real-time updates.
+- **Receipt and Capture Options**: Optionally send customer receipts or skip the capture step for certain use cases.
+- **Timeout Configuration**: Define an expiration period (expireInMin) for the purchase session.
+
+#### Endpoint
+**POST**: Create Purchase  
+`https://api.paysecure.net/api/v1/purchases/`
+
+#### Required Parameters
+To create a purchase, you must provide the **Brand ID** (request body) and **API key** (header), both available in the merchant dashboard.
+
+##### Client Information Parameters:
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `client.full_name` | String | Customer's full name | "test user" |
+| `client.email` | String | Customer's email address | "testuser@email.com" |
+| `client.country` | String | Country code (ISO 3166-1 alpha-2) | "GB" |
+| `client.city` | String | Customer's city | "testcity" |
+| `client.stateCode` | String | State code | "ca" |
+| `client.street_address` | String | Street address | "test street" |
+| `client.zip_code` | String | Postal/ZIP code | "234567" |
+| `client.phone` | String | Customer's phone number | "9999999999" |
+| `client.tax_number` | String | Tax identification number | "34946395822" |
+
+##### Purchase Information Parameters:
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `purchase.currency` | String | Currency code for the transaction | "GBP" |
+| `purchase.expireInMin` | String | Session expiration time in minutes | "40" |
+| `purchase.products` | Array | List of products with name and price details | `[{"name": "testproduct", "price": "10"}]` |
+
+##### Additional Parameters:
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `paymentMethod` | String | Payment method to be used (e.g., PIX, UPI) | "" |
+| `brand_id` | String | Merchant's unique identifier | "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636" |
+| `merchantRef` | String | Custom merchant reference for tracking | "" |
+| `send_receipt` | String | Flag to send customer receipt (true or false) | "" |
+| `skip_capture` | String | Skip payment capture (true or false) | "" |
+| `success_redirect` | String | URL to redirect customers on successful payment | "https://your.success.redirect.com" |
+| `failure_redirect` | String | URL to redirect customers on payment failure | "https://your.failure.redirect.com" |
+| `success_callback` | String | Callback URL for server-to-server success events | "https://your.success.callback.com" |
+| `failure_callback` | String | Callback URL for server-to-server failure events | "https://your.failure.callback.com" |
+
+### Example Request
+```json
+{
+  "client": {
+    "full_name": "test user",
+    "email": "testuser@email.com",
+    "country": "GB",
+    "city": "testcity",
+    "stateCode": "ca",
+    "street_address": "test street",
+    "zip_code": "234567",
+    "phone": "9999999999",
+    "tax_number": "34946395822"
+  },
+  "purchase": {
+    "currency": "GBP",
+    "expireInMin": "40",
+    "products": [
+      {
+        "name": "testproduct",
+        "price": "10"
+      }
+    ]
+  },
+  "paymentMethod": "",
+  "brand_id": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
+  "merchantRef": "",
+  "send_receipt": "",
+  "skip_capture": "",
+  "success_redirect": "https://your.success.redirect.com",
+  "failure_redirect": "https://your.failure.redirect.com",
+  "success_callback": "https://your.success.callback.com",
+  "failure_callback": "https://your.failure.callback.com"
+}
+```
+
+```javascript JavaScript
+const axios = require("axios");
+
+(async () => {
+  const response = await axios.post(
+    "https://api.paysecure.net/api/v1/purchases/",
+    {
+      client: {
+        full_name: "test user",
+        email: "testuser@email.com",
+        country: "GB",
+        city: "testcity",
+        stateCode: "ca",
+        street_address: "test street",
+        zip_code: "234567",
+        phone: "9999999999",
+        tax_number: "34946395822"
+      },
+      purchase: {
+        currency: "GBP",
+        expireInMin: "40",
+        products: [
+          {
+            name: "testproduct",
+            price: "10"
+          }
+        ]
+      },
+      paymentMethod: "",
+      brand_id: "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
+      merchantRef: "",
+      send_receipt: "",
+      skip_capture: "",
+      success_redirect: "https://your.success.redirect.com",
+      failure_redirect: "https://your.failure.redirect.com",
+      success_callback: "https://your.success.callback.com",
+      failure_callback: "https://your.failure.callback.com"
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer your-token-here"
+      }
+    }
+  );
+
+  console.log(response.data);
+})();
+```
+
+### cURL Request
+```sh
+curl --location 'https://api.paysecure.net/api/v1/purchases/' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "client": {
+    "full_name": "test user",
+    "email": "testuser@email.com",
+    "country": "GB",
+    "city": "testcity",
+    "stateCode": "ca",
+    "street_address": "test street",
+    "zip_code": "234567",
+    "phone": "9999999999",
+    "tax_number": "34946395822"
+  },
+  "purchase": {
+    "currency": "GBP",
+    "expireInMin": "40",
+    "products": [
+      {
+        "name": "testproduct",
+        "price": "10"
+      }
+    ]
+  },
+  "paymentMethod": "",
+  "brand_id": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
+  "merchantRef": "",
+  "send_receipt": "",
+  "skip_capture": "",
+  "success_redirect": "https://your.success.redirect.com",
+  "failure_redirect": "https://your.failure.redirect.com",
+  "success_callback": "https://your.success.callback.com",
+  "failure_callback": "https://your.failure.callback.com"
+}'
+```
+
+### Example Response
+```json
+{
+  "purchaseId": "675c3e1acc720c3a49bb2985",
+  "client": {
+    "customerId": "NA",
+    "email": "testuser@email.com",
+    "phone": "9999999999",
+    "full_name": "test user",
+    "street_address": "test street",
+    "country": "GB",
+    "city": "testcity",
+    "zip_code": "234567",
+    "cc": [],
+    "bcc": [],
+    "tax_number": "34946395822",
+    "stateCode": "ca"
+  },
+  "updated_on": 1734098458,
+  "type": "purchase",
+  "paymentMethod": "SPEI-CLABE,SPEI-CARD,SPEI-MOBILE,eNaira,BANKTRANSFER,KoraPayMobileMoney,PIX,MASTER,VISA,THIRDPARTY-NETBANKING,INTERAC,INTERAC-E-TRANSFER,QBPAYFTOPUP,MOBILEWALLET,UZCARD,HUMO,AMEX,KLARNA,JCB,FawryPay,DISCOVER,QBPAY",
+  "amountUnit": "MAJOR",
+  "errorMsg": "",
+  "redirectType": "POST",
+  "force_recurring": false,
+  "created_on": 1734098458,
+  "merchantRef": "675c3e1acc720c3a49bb2985",
+  "merchantName": "merchant002",
+  "purchase": {
+    "currency": "GBP",
+    "products": [
+      {
+        "name": "testproduct",
+        "quantity": 1,
+        "price": 10,
+        "discount": 0,
+        "tax_percent": "0.00"
+      }
+    ],
+    "total": 10,
+    "language": "en",
+    "notes": "",
+    "debt": 0,
+    "total_formatted": 1,
+    "expireInMin": "40",
+    "request_client_details": [],
+    "timezone": "MIT",
+    "email_message": ""
+  },
+  "status": "CREATED",
+  "status_history": [
+    {
+      "status": "created",
+      "timestamp": 1734098458
+    }
+  ],
+  "brand_id": "c4003b2c-22d4-4dc1-ad0c-c6b54f8c9636",
+  "checkout_url": "https://staging.paysecure.net/payments/675c3e1acc720c3a49bb2985/",
+  "direct_post_url": "https://staging.paysecure.net/api/v1/p/675c3e1acc720c3a49bb2985/",
+  "success_redirect": "https://your.success.redirect.com",
+  "failure_redirect": "https://your.failure.redirect.com",
+  "success_callback": "https://your.success.callback.com",
+  "failure_callback": "https://your.failure.callback.com"
+}
+```
+
+## Payment Flow
+
+1. **Initiate Payment**: Use the createPurchase API to create a payment session by passing the required details in the payload.
+2. **Dynamic Routing**: The paymentMethod parameter determines the channel for processing the payment based on pre-configured rules.
+3. **Callback Notification**: Once the payment is completed, the system triggers the configured success_callback or failure_callback URL with transaction details.
+4. **Redirects**: After processing, the customer is redirected to the configured success_redirect or failure_redirect page.
+
+## Use Cases
+
+### 1. E-commerce Checkout
+Integrate the API into your e-commerce platform to process customer payments for online purchases.
+
+### 2. Subscription Services
+Use the API to set up recurring payments for subscription-based services.
+
+### 3. Multi-currency Transactions
+Process payments in different currencies based on customer location or preference.
+
+### 4. Custom Payment Flows
+Create tailored payment experiences by configuring specific payment methods and callback URLs.
+
+## Integration Tips
+
+1. **Secure Authentication**: Always use secure Bearer Token authentication for API calls.
+2. **Webhook Implementation**: Set up robust webhook handlers for success and failure callbacks to ensure reliable transaction tracking.
+3. **Error Handling**: Implement comprehensive error handling to manage various payment scenarios.
+4. **Testing**: Use test credentials to thoroughly test the payment flow before going live.
+5. **Expiration Settings**: Configure appropriate expiration times (expireInMin) based on your business requirements.
+
+## Related APIs
+- [Get Purchase Status](/api-reference/cashier/get-purchase): Retrieve details of an existing purchase
+- [Post Customer](/api-reference/cashier/post-customer): Create a customer profile for payment processing 
