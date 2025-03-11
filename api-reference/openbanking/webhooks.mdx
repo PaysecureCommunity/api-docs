@@ -1,0 +1,140 @@
+---
+title: 'OpenBanking Webhooks'
+description: 'Learn how to use webhooks to receive real-time updates about OpenBanking payment status changes.'
+---
+
+## Understanding Webhooks
+
+Webhooks allow your application to receive real-time notifications about events that happen in your Paysecure account. Instead of polling the API for updates, webhooks push notifications to your application as soon as events occur.
+
+For OpenBanking payments, webhooks are particularly important because they allow you to know immediately when a payment has been completed or failed, enabling you to take appropriate actions in your application.
+
+## Configuring Webhooks
+
+You can configure webhook URLs when creating a purchase by setting the following parameters:
+
+- `success_callback`: URL to receive notifications about successful payments
+- `failure_callback`: URL to receive notifications about failed payments
+
+```javascript
+{
+  // ... other purchase parameters
+  "success_callback": "https://your-api.com/webhooks/success",
+  "failure_callback": "https://your-api.com/webhooks/failure"
+}
+```
+
+## Webhook Events
+
+Paysecure sends webhook notifications for the following OpenBanking payment events:
+
+| Event | Description |
+|-------|-------------|
+| `payment.success` | The payment has been successfully completed |
+| `payment.failure` | The payment has failed |
+| `payment.pending` | The payment is being processed |
+
+## Webhook Payload
+
+When an event occurs, Paysecure sends an HTTP POST request to your webhook URL with a JSON payload containing details about the event.
+
+### Success Webhook Payload Example
+
+```json
+{
+  "event": "payment.success",
+  "purchaseId": "60a1c2d3e4f5a6b7c8d9e0f1",
+  "merchantRef": "60a1c2d3e4f5a6b7c8d9e0f1",
+  "status": "completed",
+  "amount": 49.99,
+  "currency": "GBP",
+  "timestamp": 1621234600,
+  "payment": {
+    "is_outgoing": false,
+    "payment_type": "PURCHASE",
+    "amount": 49.99,
+    "currency": "GBP",
+    "net_amount": 49.99,
+    "fee_amount": 0.0,
+    "description": "",
+    "paid_on": 1621234600,
+    "remote_paid_on": 1621234600
+  }
+}
+```
+
+### Failure Webhook Payload Example
+
+```json
+{
+  "event": "payment.failure",
+  "purchaseId": "60a1c2d3e4f5a6b7c8d9e0f1",
+  "merchantRef": "60a1c2d3e4f5a6b7c8d9e0f1",
+  "status": "failed",
+  "amount": 49.99,
+  "currency": "GBP",
+  "timestamp": 1621234600,
+  "error": {
+    "code": "payment_rejected",
+    "message": "Payment was rejected by the bank"
+  }
+}
+```
+
+## Webhook Security
+
+To ensure that webhook notifications are coming from Paysecure, you should verify the signature included in the webhook headers.
+
+### Verifying Webhook Signatures
+
+Paysecure includes a `X-Paysecure-Signature` header in webhook requests. This header contains a signature that you can use to verify the authenticity of the webhook.
+
+```javascript JavaScript
+const crypto = require('crypto');
+
+// Your webhook handler
+app.post('/webhooks/success', (req, res) => {
+  const signature = req.headers['x-paysecure-signature'];
+  const payload = JSON.stringify(req.body);
+  const webhookSecret = 'your-webhook-secret';
+  
+  // Calculate expected signature
+  const expectedSignature = crypto
+    .createHmac('sha256', webhookSecret)
+    .update(payload)
+    .digest('hex');
+  
+  // Verify signature
+  if (signature === expectedSignature) {
+    // Signature is valid, process the webhook
+    const event = req.body.event;
+    const purchaseId = req.body.purchaseId;
+    
+    // Handle the event
+    if (event === 'payment.success') {
+      // Update order status, send confirmation email, etc.
+    }
+    
+    res.status(200).send('Webhook received');
+  } else {
+    // Signature is invalid
+    res.status(401).send('Invalid signature');
+  }
+});
+```
+
+## Best Practices
+
+1. **Respond Quickly**: Your webhook endpoint should respond with a 2xx status code as quickly as possible to acknowledge receipt of the webhook.
+
+2. **Process Asynchronously**: Process webhook events asynchronously to avoid blocking the response.
+
+3. **Handle Retries**: Paysecure may retry webhook deliveries if your endpoint fails to respond with a 2xx status code. Make sure your webhook handler is idempotent to avoid processing the same event multiple times.
+
+4. **Verify Signatures**: Always verify webhook signatures to ensure that webhook notifications are coming from Paysecure.
+
+5. **Implement Logging**: Log webhook events for debugging and auditing purposes.
+
+6. **Set Up Monitoring**: Monitor your webhook endpoints to ensure they are functioning correctly.
+
+7. **Implement Fallbacks**: Implement fallback mechanisms, such as periodic polling, in case webhook deliveries fail. 

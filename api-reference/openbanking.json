@@ -1,0 +1,368 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PaySecure OpenBanking API",
+    "description": "API for initiating and managing OpenBanking payments through PaySecure.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.paysecure.net/api/v1"
+    }
+  ],
+  "paths": {
+    "/purchases": {
+      "post": {
+        "summary": "Initiate an OpenBanking payment",
+        "description": "Creates a new OpenBanking purchase request with client and purchase details.",
+        "operationId": "createOpenBankingPurchase",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenBankingPurchaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenBankingPurchaseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/purchases/{purchaseId}": {
+      "get": {
+        "summary": "Retrieve OpenBanking purchase details",
+        "description": "Fetches details of a specific OpenBanking purchase, including status and transaction history.",
+        "operationId": "getOpenBankingPurchase",
+        "parameters": [
+          {
+            "name": "purchaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier of the purchase"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenBankingPurchaseResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Purchase not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OpenBankingPurchaseRequest": {
+        "type": "object",
+        "required": ["client", "purchase", "paymentMethod", "brand_id"],
+        "properties": {
+          "client": {
+            "type": "object",
+            "required": ["email", "full_name", "country"],
+            "properties": {
+              "email": { 
+                "type": "string",
+                "description": "Email address of the customer"
+              },
+              "street_address": { 
+                "type": "string",
+                "description": "Street address of the customer"
+              },
+              "city": { 
+                "type": "string",
+                "description": "City of the customer"
+              },
+              "full_name": { 
+                "type": "string",
+                "description": "Full name of the customer"
+              },
+              "zip_code": { 
+                "type": "string",
+                "description": "Postal code of the customer"
+              },
+              "country": { 
+                "type": "string",
+                "description": "Country code (ISO-3166) of the customer"
+              },
+              "date_of_birth": { 
+                "type": "string", 
+                "format": "date",
+                "description": "Date of birth of the customer (YYYY-MM-DD)"
+              },
+              "stateCode": { 
+                "type": "string",
+                "description": "State code (ISO standard) of the customer"
+              },
+              "phone": { 
+                "type": "string",
+                "description": "Phone number of the customer"
+              }
+            }
+          },
+          "purchase": {
+            "type": "object",
+            "required": ["currency", "products"],
+            "properties": {
+              "currency": { 
+                "type": "string",
+                "description": "Currency code of the transaction (e.g., EUR, GBP)"
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "price"],
+                  "properties": {
+                    "name": { 
+                      "type": "string",
+                      "description": "Name of the product"
+                    },
+                    "price": { 
+                      "type": "number", 
+                      "format": "float",
+                      "description": "Price of the product"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "format": "float",
+                      "default": 1.0,
+                      "description": "Quantity of the product"
+                    },
+                    "discount": {
+                      "type": "number",
+                      "format": "float",
+                      "default": 0,
+                      "description": "Discount amount for the product"
+                    },
+                    "tax_percent": {
+                      "type": "string",
+                      "default": "0.00",
+                      "description": "Tax percentage for the product"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "paymentMethod": { 
+            "type": "string",
+            "enum": ["BANKTRANSFER"],
+            "description": "Payment method (must be BANKTRANSFER for OpenBanking)"
+          },
+          "brand_id": { 
+            "type": "string",
+            "description": "Merchant brand identifier"
+          },
+          "success_redirect": { 
+            "type": "string",
+            "description": "URL to redirect the user after a successful transaction"
+          },
+          "failure_redirect": { 
+            "type": "string",
+            "description": "URL to redirect the user if the transaction fails"
+          },
+          "success_callback": { 
+            "type": "string",
+            "description": "URL for webhook notification on successful transaction"
+          },
+          "failure_callback": { 
+            "type": "string",
+            "description": "URL for webhook notification on failed transaction"
+          },
+          "signature": {
+            "type": "string",
+            "description": "Digital signature for request verification"
+          }
+        }
+      },
+      "OpenBankingPurchaseResponse": {
+        "type": "object",
+        "properties": {
+          "purchaseId": { 
+            "type": "string",
+            "description": "Unique identifier for the purchase transaction"
+          },
+          "status": { 
+            "type": "string",
+            "enum": ["created", "pending_execute", "payment_in_process", "completed", "failed"],
+            "description": "Current status of the transaction"
+          },
+          "merchantRef": { 
+            "type": "string",
+            "description": "Merchant reference for the transaction"
+          },
+          "checkout_url": { 
+            "type": "string",
+            "description": "URL to redirect the customer to complete the payment"
+          },
+          "created_on": { 
+            "type": "integer",
+            "description": "Timestamp of when the transaction was created"
+          },
+          "updated_on": { 
+            "type": "integer",
+            "description": "Timestamp of when the transaction was last updated"
+          },
+          "amountUnit": { 
+            "type": "string",
+            "description": "Unit of the amount (MAJOR or MINOR)"
+          },
+          "errorMsg": { 
+            "type": "string",
+            "description": "Error message if the transaction failed"
+          },
+          "payInBankDetails": {
+            "type": "object",
+            "description": "Bank details for the payment",
+            "properties": {
+              "accountName": { 
+                "type": "string",
+                "description": "Name of the bank account"
+              },
+              "accountNumber": { 
+                "type": "string",
+                "description": "Bank account number"
+              },
+              "bankName": { 
+                "type": "string",
+                "description": "Name of the bank"
+              },
+              "swiftCode": { 
+                "type": "string",
+                "description": "SWIFT code of the bank"
+              },
+              "branchName": { 
+                "type": "string",
+                "description": "Name of the bank branch"
+              },
+              "accountType": { 
+                "type": "string",
+                "description": "Type of the bank account"
+              },
+              "payment_routing_parameters": {
+                "type": "object",
+                "description": "Additional routing parameters for the payment",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "status_history": {
+            "type": "array",
+            "description": "History of status changes for the transaction",
+            "items": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Status value"
+                },
+                "timestamp": {
+                  "type": "integer",
+                  "description": "Timestamp of the status change"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+} 

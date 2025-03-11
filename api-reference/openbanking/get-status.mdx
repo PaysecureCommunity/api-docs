@@ -1,0 +1,131 @@
+---
+title: 'Get OpenBanking Status'
+description: 'Learn how to check the status of an OpenBanking payment transaction.'
+openapi: 'openapi GET /purchases/{purchaseId}'
+---
+
+## Checking Transaction Status
+
+After initiating an OpenBanking payment, you can check its status using the `GET /purchases/{purchaseId}` endpoint. This allows you to track the progress of the payment and take appropriate actions based on the status.
+
+### Status Flow
+
+OpenBanking payments typically follow this status flow:
+
+1. **created** - The purchase has been created but not yet initiated
+2. **pending_execute** - The purchase is waiting for the customer to be redirected to the bank
+3. **payment_in_process** - The customer has been redirected to the bank and the payment is being processed
+4. **completed** - The payment has been successfully completed
+5. **failed** - The payment has failed
+
+<Warning>
+It's important to implement proper status checking in your application to ensure a smooth user experience. You should also configure webhooks to receive real-time updates about payment status changes.
+</Warning>
+
+## Query Example
+
+```javascript JavaScript
+const axios = require("axios");
+
+(async () => {
+  const purchaseId = "60a1c2d3e4f5a6b7c8d9e0f1";
+  
+  const response = await axios.get(
+    `https://api.paysecure.net/api/v1/purchases/${purchaseId}`,
+    {
+      headers: {
+        "X-API-Key": "your-api-key"
+      }
+    }
+  );
+  
+  console.log(response.data);
+})();
+```
+
+## Response Example
+
+```json
+{
+  "purchaseId": "60a1c2d3e4f5a6b7c8d9e0f1",
+  "status": "completed",
+  "merchantRef": "60a1c2d3e4f5a6b7c8d9e0f1",
+  "checkout_url": "https://paysecure.net/payments/60a1c2d3e4f5a6b7c8d9e0f1/",
+  "created_on": 1621234567,
+  "updated_on": 1621234600,
+  "amountUnit": "MAJOR",
+  "errorMsg": "",
+  "payInBankDetails": {
+    "accountName": "PaySecure Ltd",
+    "accountNumber": "12345678",
+    "bankName": "Example Bank",
+    "swiftCode": "EXAMPLEGB",
+    "branchName": "London Branch",
+    "accountType": "CHECKING",
+    "payment_routing_parameters": {
+      "BANK_CODE": "1234",
+      "BRANCH_CODE": "567"
+    }
+  },
+  "status_history": [
+    {
+      "status": "created",
+      "timestamp": 1621234567
+    },
+    {
+      "status": "pending_execute",
+      "timestamp": 1621234568
+    },
+    {
+      "status": "payment_in_process",
+      "timestamp": 1621234569
+    },
+    {
+      "status": "completed",
+      "timestamp": 1621234600
+    }
+  ],
+  "payment": {
+    "is_outgoing": false,
+    "payment_type": "PURCHASE",
+    "amount": 49.99,
+    "currency": "GBP",
+    "net_amount": 49.99,
+    "fee_amount": 0.0,
+    "pending_amount": 0.0,
+    "pending_unfreeze_on": null,
+    "description": "",
+    "paid_on": 1621234600,
+    "remote_paid_on": 1621234600
+  }
+}
+```
+
+## Error Responses
+
+| Status Code | Description |
+|-------------|-------------|
+| 404 | Purchase not found |
+| 401 | Unauthorized - Invalid or missing API key |
+| 500 | Server error |
+
+### Error Response Example
+
+```json
+{
+  "error": "not_found",
+  "message": "Purchase with ID 60a1c2d3e4f5a6b7c8d9e0f1 not found"
+}
+```
+
+## Best Practices
+
+1. **Implement Polling**: For time-sensitive applications, implement a polling mechanism to periodically check the status of a payment.
+
+2. **Use Webhooks**: Configure webhooks to receive real-time notifications about payment status changes.
+
+3. **Handle Timeouts**: Implement proper timeout handling in case a payment takes longer than expected.
+
+4. **Error Handling**: Implement robust error handling to manage cases where payments fail or encounter issues.
+
+5. **User Communication**: Keep your users informed about the status of their payments to provide a better user experience. 

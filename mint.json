@@ -81,6 +81,12 @@
           ]
         },
         {
+          "group": "OpenBanking",
+          "pages": [
+            "pages/openbanking/openbanking"
+          ]
+        },
+        {
           "group": "Card Integrations",
           "pages": [
             "pages/card-integrations",
@@ -132,7 +138,15 @@
     {
       "group":"API Reference",
       "pages": [
-        "api-reference/introduction"
+        "api-reference/introduction",
+        {
+          "group": "OpenBanking API",
+          "pages": [
+            "api-reference/openbanking/openbanking-api",
+            "api-reference/openbanking/get-status",
+            "api-reference/openbanking/webhooks"
+          ]
+        }
       ]
     }
   ]
