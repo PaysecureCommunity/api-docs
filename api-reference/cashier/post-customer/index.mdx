@@ -7,7 +7,7 @@ openapi: "openapi POST /api/v1/customer"
 ### Customer Profile API
 
 #### Overview
-The **createCustomer API**  allows merchants to create a customer profile on PaySecure when a user visits their website, facilitating a seamless payment experience by pre-filling the customer's details on the PaySecure Cashier. The API takes in customer information and returns a unique customerID that can be passed in purchase payload, eliminating the need for customers to manually enter their details during transactions.
+The **createCustomer API**  allows merchants to create a customer profile on Paysecure when a user visits their website, facilitating a seamless payment experience by pre-filling the customer's details on the Paysecure Cashier. The API takes in customer information and returns a unique customerID that can be passed in purchase payload, eliminating the need for customers to manually enter their details during transactions.
 
 #### Endpoint
 **POST**: Create Customer  
@@ -147,8 +147,8 @@ Alternatively, merchants may choose to call createCustomer at the time of custom
 ## User Flow
 
 1. **Customer visits merchant's website**: The customer selects the product or service and proceeds to checkout page.
-2. **Merchant calls the createCustomer API**: The merchant sends a POST request to the PaySecure API with the customer's details.
-3. **Customer ID generation**: PaySecure processes the request and generates a unique customerId which is returned in the response.
+2. **Merchant calls the createCustomer API**: The merchant sends a POST request to the Paysecure API with the customer's details.
+3. **Customer ID generation**: Paysecure processes the request and generates a unique customerId which is returned in the response.
 4. **Payment Process**: The merchant uses the customerId for subsequent transactions, ensuring the customer doesn't need to re-enter their details for future payments.
 
 ## Benefits

@@ -23,7 +23,7 @@
             "name": "customerId",
             "in": "path",
             "required": true,
-            "description": "Unique identifier for the customer in PaySecure system",
+            "description": "Unique identifier for the customer in Paysecure system",
             "schema": {
               "type": "string"
             },
@@ -267,7 +267,7 @@
         "properties": {
           "customerId": {
             "type": "string",
-            "description": "Unique identifier for the customer in PaySecure system",
+            "description": "Unique identifier for the customer in Paysecure system",
             "example": "customerId"
           },
           "merchatCustomerID": {

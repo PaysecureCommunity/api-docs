@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "PaySecure API - Create Session",
+    "title": "Paysecure API - Create Session",
     "version": "1.0.0",
     "description": "API for creating a new payment session"
   },
