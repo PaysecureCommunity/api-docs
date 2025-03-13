@@ -1,6 +1,6 @@
 ## Paysecure Payment Flow
 
-Paysecure leverages its OpenBanking network across Europe and the UK to enable secure and fast payments, making it a top choice for customers in these regions. It allows customers to pay in EUR or GBP via the PaySecure Gateway, directly through their bank account.
+Paysecure leverages its OpenBanking network across Europe and the UK to enable secure and fast payments, making it a top choice for customers in these regions. It allows customers to pay in EUR or GBP via the Paysecure Gateway, directly through their bank account.
 
 ### Paysecure Gateway
 Paysecure Gateway is a web page that handles all user interactions during the payment initiation process, including:
@@ -10,21 +10,21 @@ Paysecure Gateway is a web page that handles all user interactions during the pa
 - Progress reporting
 - Error reporting
 
-After your application receives a URL for executing a payment using PaySecure, you can redirect your end-user to it. There, they will see a screen that lets them pick a provider to execute the payment. The user will be asked to input credentials and, if needed, any interactive credentials. After the process is complete, the user will be redirected back to your application URL.
+After your application receives a URL for executing a payment using Paysecure, you can redirect your end-user to it. There, they will see a screen that lets them pick a provider to execute the payment. The user will be asked to input credentials and, if needed, any interactive credentials. After the process is complete, the user will be redirected back to your application URL.
 
 ## PayIn User Flow
 
 ### Step 1: Initiating the Payment
 1. **Customer Selects 'Net Banking' Payment Option:** At the checkout page, the customer selects 'Net Banking' as their preferred payment method.
-2. **Merchant Redirects to PaySecure Gateway:** The merchant's website or application redirects the customer to the PaySecure Gateway.
+2. **Merchant Redirects to Paysecure Gateway:** The merchant's website or application redirects the customer to the Paysecure Gateway.
 
 ### Step 2: Redirect to Bank Login
-1. **Customer Selects Their Bank:** The customer selects their provider/bank from the list of supported providers/banks on the PaySecure Gateway.
+1. **Customer Selects Their Bank:** The customer selects their provider/bank from the list of supported providers/banks on the Paysecure Gateway.
 2. **Customer is Redirected to Bank Login Page:** The platform securely redirects customers to their bank’s online banking login page.
 
 ### Step 3: Logging into Online Banking
 1. **Customer Logs In:** The customer logs into their online banking account using their credentials.
-2. **Secure Session:** The login session is safe, and the customer’s banking credentials are not shared with PaySecure or the merchant.
+2. **Secure Session:** The login session is safe, and the customer’s banking credentials are not shared with Paysecure or the merchant.
 
 ### Step 4: Confirming the Payment
 1. **Payment Details:** The customer reviews the pre-filled payment details, including the amount and beneficiary information.
@@ -32,10 +32,10 @@ After your application receives a URL for executing a payment using PaySecure, y
 
 ### Step 5: Payment Processing and Confirmation
 1. **Bank Processes Payment:** The customer’s bank processes the payment and debits the amount from the customer’s account.
-2. **Instant Confirmation to the PaySecure Gateway:** Once the payment is processed, payment confirmation is received through a webhook URL.
+2. **Instant Confirmation to the Paysecure Gateway:** Once the payment is processed, payment confirmation is received through a webhook URL.
 
 ### Step 6: Notification to Merchant
-1. **PaySecure Confirms Payment to Merchant:** PaySecure Gateway immediately notifies the merchant of the successful payment.
+1. **Paysecure Confirms Payment to Merchant:** Paysecure Gateway immediately notifies the merchant of the successful payment.
 2. **Order Completion:** The merchant completes and confirms the order to the customer.
 
 ### Step 7: Customer Redirect

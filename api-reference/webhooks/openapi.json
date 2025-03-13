@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
       "title": "Paysecure Webhooks API",
-      "description": "API for receiving transaction status updates via PaySecure webhooks.",
+      "description": "API for receiving transaction status updates via Paysecure webhooks.",
       "version": "1.0.0"
     },
     "paths": {

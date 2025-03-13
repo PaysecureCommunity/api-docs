@@ -1,11 +1,11 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "PaySecure API - PIX Payments",
+    "title": "Paysecure API - PIX Payments",
     "description": "API for processing PIX payments in Brazil",
     "version": "1.0.0",
     "contact": {
-      "name": "PaySecure Support",
+      "name": "Paysecure Support",
       "url": "https://developer.paysecure.net",
       "email": "support@paysecure.net"
     }

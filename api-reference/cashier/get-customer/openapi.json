@@ -161,7 +161,7 @@
         "properties": {
           "customerId": {
             "type": "string",
-            "description": "Unique identifier for the customer in PaySecure system",
+            "description": "Unique identifier for the customer in Paysecure system",
             "example": "67c54bff81fd9953719186ff"
           },
           "merchantCustomerId": {

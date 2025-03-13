@@ -8,7 +8,7 @@ We continuously work on improving the integration flow, and as we roll out updat
 
 ### Step 1
 
-The first call to the PaySecure API is `POST /purchases` initiated by the merchant's backend when they receive a request from the user to make a QuickBit purchase.
+The first call to the Paysecure API is `POST /purchases` initiated by the merchant's backend when they receive a request from the user to make a QuickBit purchase.
 
 It's essential to ensure that the request body includes:
 
@@ -16,7 +16,7 @@ It's essential to ensure that the request body includes:
 - `failure_redirect` - URL where the user will be redirected from Quickbit if the purchase fails.
 - `paymentMethod` - Payment method requested. It must specify `QBPAYFTOPUP`.
 
-> **Note:** `paymentMethod` is not a mandatory parameter. If it is not provided, the redirect URL will point to PaySecure Cashier. It must be provided for direct payment with Quickbit.
+> **Note:** `paymentMethod` is not a mandatory parameter. If it is not provided, the redirect URL will point to Paysecure Cashier. It must be provided for direct payment with Quickbit.
 
 #### Example Request Body
 

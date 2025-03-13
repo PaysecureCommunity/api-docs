@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "title": "PaySecure Interac e-Transfer PayOut API",
+      "title": "Paysecure Interac e-Transfer PayOut API",
       "version": "1.0.0",
       "description": "API for processing payouts using Interac e-Transfer in Canada."
     },

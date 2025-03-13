@@ -7,7 +7,7 @@ openapi: "openapi PATCH /api/v1/{customerId}/patchCustomer"
 ### Customer Profile Update API
 
 #### Overview
-The **patchCustomer API** allows merchants to update customer details in the PaySecure system when a customer or the merchant updates information on the merchant site. This ensures that customer data remains synchronized between the merchant's platform and PaySecure, providing a consistent experience across all touchpoints.
+The **patchCustomer API** allows merchants to update customer details in the Paysecure system when a customer or the merchant updates information on the merchant site. This ensures that customer data remains synchronized between the merchant's platform and Paysecure, providing a consistent experience across all touchpoints.
 
 #### Authorization
 **Bearer Token**
@@ -20,7 +20,7 @@ This API requires Bearer Token authentication, which can be retrieved from the P
 #### Path Parameters
 | Parameter | Type | Description | Example |
 |-----------|------|-------------|---------|
-| `customerId` | String | Unique identifier for the customer in PaySecure system | "customerId" |
+| `customerId` | String | Unique identifier for the customer in Paysecure system | "customerId" |
 
 #### Required Parameters
 To update a customer profile, you must provide the **Brand ID** (header) and **API key** (header), both available in the merchant dashboard.
@@ -145,13 +145,13 @@ curl --location -g --request PATCH 'https://api.paysecure.net/api/v1/{customerId
 ## Use Cases
 
 ### 1. Customer Profile Updates
-When customers update their personal information on your platform, use this API to synchronize the changes with PaySecure.
+When customers update their personal information on your platform, use this API to synchronize the changes with Paysecure.
 
 ### 2. Address Changes
-When a customer changes their address or contact details, update this information in PaySecure to ensure accurate delivery and communication.
+When a customer changes their address or contact details, update this information in Paysecure to ensure accurate delivery and communication.
 
 ### 3. Data Correction
-If you discover incorrect customer information in your system, use this API to correct the data in PaySecure as well.
+If you discover incorrect customer information in your system, use this API to correct the data in Paysecure as well.
 
 ## When to Call This API
 
@@ -159,7 +159,7 @@ You should call the patchCustomer API in the following scenarios:
 
 1. **Customer Self-Service Updates**: When customers update their profile information through your website or app.
 2. **Customer Support Changes**: When your customer support team makes changes to a customer's profile.
-3. **Data Synchronization**: During regular data synchronization processes between your system and PaySecure.
+3. **Data Synchronization**: During regular data synchronization processes between your system and Paysecure.
 4. **Data Correction**: When you identify and correct inaccurate customer information.
 
 ## Error Handling

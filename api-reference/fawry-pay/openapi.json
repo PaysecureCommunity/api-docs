@@ -1,9 +1,9 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "title": "PaySecure API",
+      "title": "Paysecure API",
       "version": "1.0.0",
-      "description": "API for PaySecure's Fawry PayIn and PayOut services."
+      "description": "API for Paysecure's Fawry PayIn and PayOut services."
     },
     "servers": [
       {

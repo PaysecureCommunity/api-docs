@@ -1,9 +1,9 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "title": "PaySecure API",
+      "title": "Paysecure API",
       "version": "1.0.0",
-      "description": "API for processing PayIns and PayOuts via PaySecure."
+      "description": "API for processing PayIns and PayOuts via Paysecure."
     },
     "servers": [
       {
@@ -11,7 +11,7 @@
       }
     ],
     "paths": {
-      "/#purchases": {
+      "/purchases": {
         "post": {
           "summary": "Create a new purchase",
           "operationId": "createPurchase",
@@ -51,7 +51,7 @@
           "security": [{ "bearerAuth": [] }]
         }
       },
-      "/#payout": {
+      "/payout": {
         "post": {
           "summary": "Create a new payout",
           "operationId": "createPayout",
@@ -91,7 +91,7 @@
           "security": [{ "bearerAuth": [] }]
         }
       },
-      "/#getpayout/{payoutId}": {
+      "/getpayout/{payoutId}": {
         "get": {
           "summary": "Get Payout Status",
           "operationId": "getPayoutStatus",
