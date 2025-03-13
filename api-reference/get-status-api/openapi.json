@@ -6,7 +6,7 @@
     "description": "API to retrieve payout details, including history and status."
   },
   "paths": {
-    "/api/v1/getpayout/{payoutId}": {
+    "/#getpayout/{payoutId}": {
       "get": {
         "summary": "Get Payout Status",
         "description": "Retrieves details of a payout, including its history.",

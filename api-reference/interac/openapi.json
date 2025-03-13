@@ -7,12 +7,12 @@
   },
   "servers": [
     {
-      "url": "https://api.paysecure.net/api/v1",
+      "url": "https://staging.paysecure.net/api/v1",
       "description": "Production server"
     }
   ],
   "paths": {
-    "/purchases": {
+    "/#purchases": {
       "post": {
         "summary": "Create Purchase",
         "description": "Initiates a payment and returns PayIn details along with a checkout URL",
@@ -143,7 +143,7 @@
         }
       }
     },
-    "/purchases/{purchaseId}": {
+    "/#purchases/{purchaseId}": {
       "get": {
         "summary": "Get Purchase Status",
         "description": "Retrieves details of a purchase (PayIn), including its history",

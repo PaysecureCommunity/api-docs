@@ -6,7 +6,7 @@
     },
     "servers": [
       {
-        "url": "https://api.paysecure.com/v1"
+        "url": "https://staging.paysecure.com/v1"
       }
     ],
     "security": [

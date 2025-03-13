@@ -7,11 +7,11 @@
     },
     "servers": [
       {
-        "url": "https://api.paysecure.net/api/v1"
+        "url": "https://staging.paysecure.net/api/v1"
       }
     ],
     "paths": {
-      "/#purchases": {
+      "/purchases": {
         "post": {
           "summary": "Create a Purchase",
           "operationId": "createPurchase",
@@ -39,7 +39,7 @@
           }
         }
       },
-      "/#purchases/{purchaseId}": {
+      "/purchases/{purchaseId}": {
         "get": {
           "summary": "Get Purchase Status",
           "operationId": "getPurchaseStatus",
@@ -67,7 +67,7 @@
           }
         }
       },
-      "/#payout": {
+      "/payout": {
         "post": {
           "summary": "Create a PayOut",
           "operationId": "createPayout",
@@ -123,7 +123,7 @@
           }
         }
       },
-      "/#getBalance": {
+      "/getBalance": {
         "post": {
           "summary": "Check Balance",
           "operationId": "checkBalance",

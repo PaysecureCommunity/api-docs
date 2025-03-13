@@ -7,12 +7,12 @@
   },
   "servers": [
     {
-      "url": "https://api.paysecure.net",
+      "url": "https://staging.paysecure.net",
       "description": "Production Server"
     }
   ],
   "paths": {
-    "/api/v1/purchases": {
+    "/#purchases": {
       "post": {
         "summary": "Create a new Interac e-Transfer purchase",
         "description": "Initiates a PayIn (deposit/collections) transaction using Interac e-Transfer.",

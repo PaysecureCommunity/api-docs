@@ -1,7 +1,7 @@
 ---
 title: "Interac e-Transfer PayOut API"
 description: "API for processing payouts using Interac e-Transfer in Canada."
-openapi: "pay-out-openapi POST /#payout"
+openapi: "pay-out-openapi POST /payout"
 ---
 
 ## How It Works
@@ -41,7 +41,7 @@ This API requires Bearer Token authentication, which can be retrieved from the P
 
 ### Endpoint
 **POST**: Create Payout  
-`https://api.paysecure.net/api/v1/payouts/`
+`https://staging.paysecure.net/api/v1/payouts/`
 
 ### Required Parameters
 To generate a payout, you must provide the **Brand ID** (request body) and **API key** (header), both available in the merchant dashboard.

@@ -1,78 +1,71 @@
-# Paysecure PayOut API
-
-## Overview
-The Paysecure PayOut API allows merchants to initiate payouts, check transaction status, and retrieve balance information.
-
+---
+title: "Paysecure PayOut API"
+description: "API for initiating payouts, checking transaction status, and retrieving balance information using Paysecure."
+openapi: "openapi POST /payouts"
 ---
 
-## Authorization
-All API requests require a Bearer Token for authentication.
+## Pay-Out (Withdrawal)
+- `payOut` allows merchants to **withdraw funds** to users using various payout methods.
+- Required parameters:
+  - `client`: Object containing user details (`full_name`, `email`, `documentId`, `country`, `phone`).
+  - `amount`: The withdrawal amount.
+  - `currency`: The currency code (e.g., `EGP`).
+  - `payoutMethod`: Payout type (`Payout-fawrypay`).
+  - `success_callback`: URL for success callback.
+  - `failure_callback`: URL for failure callback.
 
-### Headers:
-```json
-{
-  "Content-Type": "application/json",
-  "Authorization": "Bearer <your_token>"
-}
+```javascript
+const axios = require("axios");
+
+(async () => {
+  const response = await axios.post(
+    "https://staging.paysecure.net/api/v1/payout",
+    {
+      client: {
+        email: "test@gmail.com",
+        country: "EG",
+        phone: "9586445444",
+        full_name: "Test Person-uk",
+        documentId: "29206260104051"
+      },
+      purpose: "test payout",
+      currency: "EGP",
+      payoutMethod: "Payout-fawrypay",
+      amount: 20,
+      success_callback: "https://success.com",
+      failure_callback: "https://failure.com"
+    },
+    {
+      headers: {
+        "Authorization": "Bearer <your_token>",
+        "Content-Type": "application/json"
+      }
+    }
+  );
+  console.log(response.data);
+})();
 ```
-
----
-
-## Create PayOut
-### Endpoint:
-**POST** `/api/v1/payout/`
-
-### Request Body:
-```json
-{
-  "client": {
-    "email": "test@gmail.com",
-    "country": "EG",
-    "phone": "9586445444",
-    "full_name": "Test Person-uk",
-    "documentId": "29206260104051"
-  },
-  "purpose": "test payout",
-  "currency": "EGP",
-  "payoutMethod": "Payout-fawrypay",
-  "amount": 20,
-  "success_callback": "https://success.com",
-  "failure_callback": "https://failure.com"
-}
-```
-
-### Response Example:
-```json
-{
-  "payoutId": "6687d86dde5d5c0feecf7621",
-  "status": "PAYOUT_IN_PROCESS",
-  "status_history": [
-    { "status": "created", "timestamp": 1720178797 },
-    { "status": "payout_in_process", "timestamp": 1720178799 }
-  ],
-  "payOutDetails": {
-    "instruction": "Please use transaction reference 20514294 at any Fawry store within 72 hrs"
-  }
-}
-```
-
----
 
 ## Get PayOut Status
-### Endpoint:
-**GET** `/api/v1/getpayout/{payoutId}/`
+- Retrieve the status of a previously initiated payout.
+- Required parameter: `payoutId` (Path parameter).
 
-### Response Example:
-```json
-{
-  "payoutId": "6685467c0e5b201a73f91256",
-  "status": "PAID",
-  "status_history": [
-    { "status": "created", "timestamp": 1720010364 },
-    { "status": "payout_in_process", "timestamp": 1720010367 },
-    { "status": "paid", "timestamp": 1720010823 }
-  ]
-}
+```javascript
+const axios = require("axios");
+
+(async () => {
+  const payoutId = "6685467c0e5b201a73f91256";
+  const response = await axios.get(
+    `https://staging.paysecure.net/api/v1/getpayout/${payoutId}`,
+    {
+      headers: {
+        "Authorization": "Bearer <your_token>",
+        "Content-Type": "application/json"
+      }
+    }
+  );
+  console.log(response.data);
+})();
 ```
 
 ### Possible Status Values:
@@ -80,23 +73,31 @@ All API requests require a Bearer Token for authentication.
 - `payout_in_process` – Payout is being processed.
 - `error` – Transaction failed.
 
----
-
 ## Check Balance
-### Endpoint:
-**POST** `/api/v1/getBalance`
+- Retrieve the balance available for payouts.
+- Required parameter: `paymentMethod`.
 
-### Request Body:
-```json
-{
-  "paymentMethod": "INTERAC"
-}
+```javascript
+const axios = require("axios");
+
+(async () => {
+  const response = await axios.post(
+    "https://staging.paysecure.net/api/v1/getBalance",
+    { paymentMethod: "INTERAC" },
+    {
+      headers: {
+        "Authorization": "Bearer <your_token>",
+        "Content-Type": "application/json"
+      }
+    }
+  );
+  console.log(response.data);
+})();
 ```
 
-### Response Example:
-```json
-{
-  "balance": 1500.00,
-  "currency": "USD"
-}
-```
+## Summary
+- **`payOut`** allows merchants to withdraw funds to users.
+- **`getPayoutStatus`** retrieves the payout status.
+- **`getBalance`** checks available funds.
+- API requires **Bearer Token authentication**.
+
