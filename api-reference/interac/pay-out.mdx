@@ -1,37 +1,40 @@
-# Payout API
+---
+title: "Payout API"
+description: "API for processing payouts using PaySecure."
+openapi: "openapi POST /payout"
+---
+Initiate a Payout
+To initiate a payout, send a POST request to the following endpoint:
 
-## Initiate a Payout
+Endpoint
+POST: Initiate Payout
+https://staging.paysecure.net/api/v1/payout/
 
-To initiate a payout, send a `POST` request to the following endpoint:
 
-<Endpoint method="POST" url="https://api.paysecure.net/api/v1/payout/" />
+This API allows merchants to initiate a payout to a recipient.
 
-### Authentication
+Authentication
+A Bearer Token is required for authentication. You can find your API key in the Dashboard section of your merchant account.
 
-This API requires a Bearer Token for authentication. You can find your API key in the Dashboard section of your merchant account login.
-
-```http
+```
 Authorization: Bearer <YOUR_API_KEY>
 Content-Type: application/json
 ```
 
-### Request Body
+Request Parameters
+Parameter	Notes
+client.email	An identifier for a user
+client.phone	An identifier for a user
+client.full_name	Full name of the client
+client.country	Country code (e.g., CA for Canada)
+payoutMethod	Payment method (e.g., Payout-INTERAC)
+currency	Currency of the account balance
+amount	Amount to be paid out
+purpose	Purpose of the payout
+success_callback	Callback URL on successful transaction
+failure_callback	Callback URL on failed transaction
 
-| Parameter           | Notes |
-|---------------------|----------------------------------------------|
-| `client.email`      | An identifier for a user                    |
-| `client.phone`      | An identifier for a user                    |
-| `client.full_name`  | Full name of the client                     |
-| `client.country`    | Country code (e.g., `CA` for Canada)       |
-| `payoutMethod`      | Payment method (e.g., `Payout-INTERAC`)     |
-| `currency`          | Currency of the account balance             |
-| `amount`           | Amount to be paid out                        |
-| `purpose`          | Purpose of the payout                        |
-| `success_callback` | Callback URL on successful transaction      |
-| `failure_callback` | Callback URL on failed transaction          |
-
-### Example Request
-
+Example Request
 ```json
 {
     "client": {
@@ -48,11 +51,9 @@ Content-Type: application/json
     "failure_callback": "https://failure.com"
 }
 ```
-
-### Example cURL Request
-
-```sh
-curl --location 'https://api.paysecure.net/api/v1/payout/' \
+Example cURL Request
+```bash
+curl --location 'https://staging.paysecure.net/api/v1/payout/' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer <YOUR_API_KEY>' \
 --data-raw '{
@@ -70,32 +71,45 @@ curl --location 'https://api.paysecure.net/api/v1/payout/' \
     "failure_callback": "https://failure.com"
 }'
 ```
+Get Payout Status
+This API retrieves the status and history of a payout.
 
----
+Endpoint
+GET: Get Payout Status
+https://api.paysecure.net/api/v1/getpayout/{payoutId}/
 
-## Get Payout Status
+Required Parameters
+Parameter	Required	Description
+payoutId	Yes	Unique identifier of the payout
+Possible Status Values
+Status	Notes
+paid	Transaction successful
+payout_in_process	Payout is under processing
+error	Transaction has failed
 
-Use this API to retrieve the status and history of a payout:
+Example Request
+```javascript
+const axios = require("axios");
 
-<Endpoint method="GET" url="https://api.paysecure.net/api/v1/getpayout/{payoutId}/" />
+(async () => {
+  const payoutId = "payout_123456";
 
-### Request Parameters
+  const response = await axios.get(
+    `https://api.paysecure.net/api/v1/getpayout/${payoutId}/`,
+    {
+      headers: {
+        "Authorization": "Bearer your-token-here",
+        "Content-Type": "application/json"
+      }
+    }
+  );
 
-| Parameter  | Required | Description |
-|------------|----------|-------------|
-| `payoutId` | Yes      | Unique identifier of the payout |
-
-### Possible Status Values
-
-| Status               | Notes |
-|----------------------|----------------------------------|
-| `paid`              | Transaction successful         |
-| `payout_in_process` | Payout is under processing     |
-| `error`             | Transaction has failed        |
-
-### Webhook Notifications
-
-- **Success:** The `success_callback` URL will be triggered when the payout is successful.
-- **Error:** The `failure_callback` URL will be triggered when the payout fails.
-
----
+  console.log(response.data);
+})();
+```
+cuRL Request
+```bash
+curl --location -g 'https://api.paysecure.net/api/v1/getpayout/{payoutId}/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer Token'
+```

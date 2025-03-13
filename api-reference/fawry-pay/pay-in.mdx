@@ -1,7 +1,7 @@
 ---
 title: "Fawry PayIn API"
 description: "API for processing payments and payouts using Fawry Pay and Paysecure."
-openapi: "openapi POST /#purchases"
+openapi: "openapi POST /purchases"
 ---
 
 ### Pay-In (Deposit)
@@ -19,7 +19,7 @@ const axios = require("axios");
 
 (async () => {
   const response = await axios.post(
-    "https://api.paysecure.net/api/v1/purchases",
+    "https://staging.paysecure.net/api/v1/purchases",
     {
       jsonrpc: "2.0",
       id: 1,
@@ -65,7 +65,7 @@ const axios = require("axios");
 
 (async () => {
   const response = await axios.post(
-    "https://api.paysecure.net/api/v1/payout",
+    "https://staging.paysecure.net/api/v1/payout",
     {
       jsonrpc: "2.0",
       id: 2,
@@ -100,5 +100,3 @@ const axios = require("axios");
 - **`payIn`** enables users to deposit money via mobile money.
 - **`payOut`** allows users to withdraw funds.
 - Both APIs use **JSON-RPC** and require **API Key authentication**.
-
-Use these APIs to integrate **mobile money transactions** into your platform. 🚀
