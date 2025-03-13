@@ -1,9 +1,9 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "title": "PaySecure API",
+      "title": "Paysecure API",
       "version": "1.0.0",
-      "description": "API for processing PayIns and PayOuts via PaySecure."
+      "description": "API for processing PayIns and PayOuts via Paysecure."
     },
     "servers": [
       {
