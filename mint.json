@@ -58,7 +58,6 @@
     {
       "group": "GETTING STARTED",
       "pages": [
-        "overview",
         "introduction"
       ]
     },
@@ -69,29 +68,18 @@
           "group": "Payment Methods",
           "pages": [
             "pages/payment-methods/interac-payments",
-            "pages/payment-methods/upi-payments",
+            "pages/payment-methods/UPI-payments",
             "pages/payment-methods/webhooks",
-            "pages/payment-methods/secure-eft",
+            "pages/payment-methods/Secure-EFT",
             "pages/payment-methods/mobile-money/mobile-money",
             "pages/payment-methods/interac-e-transfer",
             "pages/payment-methods/fawry-payments",
             "pages/payment-methods/pix/pix",
-            "pages/payment-methods/mobile-money/mobile-money-pay-in-out",
-            "pages/payment-methods/pix/pix-pay-in-out"
-          ]
-        },
-        {
-          "group": "Card Integrations",
-          "pages": [
-            "pages/card-integrations",
-            "pages/card-payments/card-payments-status-codes",
-            "pages/card-payments/card-payments"
-          ]
-        },
-        {
-          "group": "On-Ramp",
-          "pages": [
-            "pages/on-ramp/on-ramp"
+            "pages/payment-methods/mobile-money/mobile-money-pay-in-and-pay-out",
+            "pages/payment-methods/pix/pix-pay-in-and-pay-out",
+            "pages/payment-methods/bank-transfers/bank-transfer",
+            "pages/payment-methods/bank-transfers/concept",
+            "pages/payment-methods/bank-transfers/status-code"
           ]
         },
         {
@@ -104,21 +92,13 @@
         {
           "group": "FAQ",
           "pages": [
-            "pages/faq/faq"
+            "pages/FAQ/FAQ"
           ]
         },
         {
           "group": "Coverage of Paysecure",
           "pages": [
-            "pages/c"
-          ]
-        },
-        {
-          "group": "Bank Transfers",
-          "pages": [
-            "pages/bank-transfers/bank-transfer",
-            "pages/bank-transfers/concept",
-            "pages/bank-transfers/status-code"
+            "pages/payment-methods/coverage"
           ]
         }
       ]
