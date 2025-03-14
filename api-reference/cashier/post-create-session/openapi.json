@@ -7,12 +7,12 @@
   },
   "servers": [
     {
-      "url": "https://api.paysecure.net",
+      "url": "https://staging.paysecure.net",
       "description": "Production server"
     }
   ],
   "paths": {
-    "/api/v1/createSession": {
+    "/#v1/createSession": {
       "post": {
         "summary": "Create a new payment session",
         "description": "Creates a new payment session for a customer after their profile has been created via the createCustomer API. The session is automatically generated at the backend on the merchant's checkout URL.",

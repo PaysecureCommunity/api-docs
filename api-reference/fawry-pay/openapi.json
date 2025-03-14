@@ -11,7 +11,7 @@
       }
     ],
     "paths": {
-      "/purchases": {
+      "/#purchases": {
         "post": {
           "summary": "Create a Purchase",
           "operationId": "createPurchase",
