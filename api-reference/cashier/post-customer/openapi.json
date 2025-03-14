@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/v1/customer": {
+    "/#v1/customer": {
       "post": {
         "summary": "Create a customer profile",
         "description": "Creates a customer profile on Paysecure to facilitate a seamless payment experience by pre-filling customer details on the Paysecure Cashier.",
