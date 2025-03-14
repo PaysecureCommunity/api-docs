@@ -7,12 +7,12 @@
   },
   "servers": [
     {
-      "url": "https://api.paysecure.net",
+      "url": "https://staging.paysecure.net",
       "description": "Production server"
     }
   ],
   "paths": {
-    "/api/v1/{customerId}/patchCustomer": {
+    "/{customerId}/patchCustomer": {
       "patch": {
         "summary": "Update a customer profile",
         "description": "Updates customer information in the Paysecure API when customer details are changed on the merchant site.",

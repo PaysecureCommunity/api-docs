@@ -7,12 +7,12 @@
   },
   "servers": [
     {
-      "url": "https://api.paysecure.net",
+      "url": "https://staging.paysecure.net",
       "description": "Production server"
     }
   ],
   "paths": {
-    "/api/v1/customer": {
+    "/customer": {
       "get": {
         "summary": "Retrieve a customer profile",
         "description": "Retrieves customer information from the Paysecure API using the merchantCustomerId.",
