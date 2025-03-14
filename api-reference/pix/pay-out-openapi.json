@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/#payout/": {
+    "/#payout": {
       "post": {
         "summary": "Create a PIX payout",
         "description": "Initiates a PIX payout to a recipient using their PIX key",
