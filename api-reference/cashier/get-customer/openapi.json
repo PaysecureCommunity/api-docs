@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/customer": {
+    "/#customer": {
       "get": {
         "summary": "Retrieve a customer profile",
         "description": "Retrieves customer information from the Paysecure API using the merchantCustomerId.",

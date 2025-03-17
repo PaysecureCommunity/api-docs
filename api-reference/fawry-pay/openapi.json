@@ -67,7 +67,7 @@
           }
         }
       },
-      "/payout": {
+      "/#payout": {
         "post": {
           "summary": "Create a PayOut",
           "operationId": "createPayout",
