@@ -117,10 +117,8 @@
     }
   ],
   "api": {
-    "mdx": {
-      "auth": {
-        "method": "bearer"
-      }
+    "auth": {
+      "method": "bearer"
     }
   }
 }
