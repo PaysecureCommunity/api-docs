@@ -116,9 +116,11 @@
       ]
     }
   ],
-  "auth": {
-    "providers": ["google", "github"],
-    "required": true,
-    "redirect": "/"
+  "api": {
+    "mdx": {
+      "auth": {
+        "method": "bearer"
+      }
+    }
   }
 }
