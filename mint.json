@@ -116,9 +116,9 @@
       ]
     }
   ],
-  "auth": {
-    "providers": ["google", "github"],
-    "required": true,
-    "redirect": "/"
+  "api": {
+    "auth": {
+      "method": "bearer"
+    }
   }
 }

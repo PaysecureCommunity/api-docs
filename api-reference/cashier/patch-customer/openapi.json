@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/{customerId}/patchCustomer": {
+    "/#{customerId}/patchCustomer": {
       "patch": {
         "summary": "Update a customer profile",
         "description": "Updates customer information in the Paysecure API when customer details are changed on the merchant site.",
