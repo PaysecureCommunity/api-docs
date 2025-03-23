@@ -11,7 +11,7 @@
       }
     ],
     "paths": {
-      "/#payout": {
+      "/payout": {
         "post": {
           "summary": "Create PayOut",
           "description": "To initiate a payment, the very first call to make is to create a payout with the required data in the request body.",
