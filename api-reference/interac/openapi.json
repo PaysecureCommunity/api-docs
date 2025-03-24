@@ -12,100 +12,29 @@
     }
   ],
   "paths": {
-    "/#purchases": {
+    "/payout": {
       "post": {
-        "summary": "Create Purchase",
-        "description": "Initiates a payment and returns PayIn details along with a checkout URL",
-        "operationId": "createPurchase",
-        "tags": ["Purchases"],
+        "summary": "Create Payout",
+        "description": "Initiates a payout transaction",
+        "operationId": "createPayout",
+        "tags": ["Payouts"],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreatePurchaseRequest"
-              },
-              "examples": {
-                "interacPayment": {
-                  "value": {
-                    "client": {
-                      "email": "seo2009@test.com",
-                      "street_address": "10 New Burlington Street Apt. 214",
-                      "city": "London",
-                      "full_name": "Test test",
-                      "zip_code": "W1S 3BE",
-                      "country": "CA",
-                      "stateCode": "QLD",
-                      "phone": "+447755564318"
-                    },
-                    "purchase": {
-                      "currency": "CAD",
-                      "expireInMin": "80",
-                      "products": [
-                        {
-                          "name": "test",
-                          "price": 100
-                        }
-                      ]
-                    },
-                    "paymentMethod": "INTERAC",
-                    "brand_id": "f6aff7d7-bb40-4857-bc84-9b4c8310b043",
-                    "success_redirect": "https://your.redirect.url/getResponse.jsp?success=true",
-                    "failure_redirect": "https://your.redirect.url/getResponse.jsp?success=false",
-                    "success_callback": "https://your.success.callback.url",
-                    "failure_callback": "https://your.success.failure.url"
-                  }
-                }
+                "$ref": "#/components/schemas/CreatePayoutRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Purchase created successfully",
+            "description": "Payout created successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreatePurchaseResponse"
-                },
-                "examples": {
-                  "interacPayment": {
-                    "value": {
-                      "purchaseId": "6790e75fa46a5a5bb0b00e55",
-                      "client": {
-                        "customerId": "NA",
-                        "email": "ashishm.21190@gmail.com",
-                        "phone": "+14377717874",
-                        "full_name": "Test test",
-                        "date_of_birth": "1970-07-10",
-                        "street_address": "10 New Burlington Street Apt. 214",
-                        "country": "CA",
-                        "city": "London",
-                        "zip_code": "W1S 3BE",
-                        "stateCode": "QLD"
-                      },
-                      "paymentMethod": "INTERAC",
-                      "status": "PAID",
-                      "purchase": {
-                        "currency": "CAD",
-                        "products": [
-                          {
-                            "name": "test",
-                            "quantity": 1,
-                            "price": 1
-                          }
-                        ],
-                        "total": 2
-                      },
-                      "payInDetails": {
-                        "name": "INTERAC",
-                        "emailAddress": "deposit@ieft.ca",
-                        "secretQA": "66a8c78af1fc2f768304bce4",
-                        "secretAnswer": "ps8766a8af"
-                      },
-                      "checkout_url": "https://api.choicepay.ca/payments/6790e75fa46a5a5bb0b00e55/"
-                    }
-                  }
+                  "$ref": "#/components/schemas/CreatePayoutResponse"
                 }
               }
             }
@@ -142,386 +71,47 @@
           }
         }
       }
-    },
-    "/#purchases/{purchaseId}": {
-      "get": {
-        "summary": "Get Purchase Status",
-        "description": "Retrieves details of a purchase (PayIn), including its history",
-        "operationId": "getPurchaseStatus",
-        "tags": ["Purchases"],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "purchaseId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the purchase to retrieve",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Purchase details retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreatePurchaseResponse"
-                },
-                "examples": {
-                  "interacPayment": {
-                    "value": {
-                      "purchaseId": "6790e75fa46a5a5bb0b00e55",
-                      "client": {
-                        "customerId": "NA",
-                        "email": "ashishm.21190@gmail.com",
-                        "phone": "+14377717874",
-                        "full_name": "Test test",
-                        "date_of_birth": "1970-07-10",
-                        "street_address": "10 New Burlington Street Apt. 214",
-                        "country": "CA",
-                        "city": "London",
-                        "zip_code": "W1S 3BE",
-                        "stateCode": "QLD"
-                      },
-                      "paymentMethod": "INTERAC",
-                      "status": "PAID",
-                      "purchase": {
-                        "currency": "CAD",
-                        "products": [
-                          {
-                            "name": "test",
-                            "quantity": 1,
-                            "price": 1
-                          }
-                        ],
-                        "total": 2
-                      },
-                      "payInDetails": {
-                        "name": "INTERAC",
-                        "emailAddress": "deposit@ieft.ca",
-                        "secretQA": "66a8c78af1fc2f768304bce4",
-                        "secretAnswer": "ps8766a8af"
-                      },
-                      "checkout_url": "https://api.choicepay.ca/payments/6790e75fa46a5a5bb0b00e55/"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Purchase not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
-    },
     "schemas": {
-      "CreatePurchaseRequest": {
+      "CreatePayoutRequest": {
         "type": "object",
-        "required": [
-          "client",
-          "purchase",
-          "paymentMethod",
-          "brand_id",
-          "success_redirect",
-          "failure_redirect"
-        ],
+        "required": ["amount", "currency", "recipient"],
         "properties": {
-          "client": {
+          "amount": {
+            "type": "number",
+            "description": "Amount to be paid out"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency code"
+          },
+          "recipient": {
             "type": "object",
-            "required": [
-              "email",
-              "street_address",
-              "city",
-              "full_name",
-              "zip_code",
-              "country",
-              "stateCode",
-              "phone"
-            ],
             "properties": {
               "email": {
                 "type": "string",
-                "format": "email",
-                "description": "Client's email address"
+                "description": "Recipient's email"
               },
-              "street_address": {
+              "bankAccount": {
                 "type": "string",
-                "description": "Client's street address"
-              },
-              "city": {
-                "type": "string",
-                "description": "Client's city"
-              },
-              "full_name": {
-                "type": "string",
-                "description": "Client's full name"
-              },
-              "zip_code": {
-                "type": "string",
-                "description": "Client's postal/zip code"
-              },
-              "country": {
-                "type": "string",
-                "description": "ISO-3166 Country Code (Uppercase). 'CA' for Interac",
-                "example": "CA"
-              },
-              "stateCode": {
-                "type": "string",
-                "description": "Client's state/province code (Uppercase)",
-                "example": "QLD"
-              },
-              "phone": {
-                "type": "string",
-                "description": "Client's phone number with country code",
-                "example": "+447755564318"
+                "description": "Recipient's bank account details"
               }
             }
-          },
-          "purchase": {
-            "type": "object",
-            "required": [
-              "currency",
-              "products"
-            ],
-            "properties": {
-              "currency": {
-                "type": "string",
-                "description": "ISO 4217 currency code. 'CAD' for Interac",
-                "example": "CAD"
-              },
-              "expireInMin": {
-                "type": "string",
-                "description": "Time in minutes until the purchase expires",
-                "example": "80"
-              },
-              "products": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "required": [
-                    "name",
-                    "price"
-                  ],
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Product name"
-                    },
-                    "price": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Product price in decimal format"
-                    },
-                    "quantity": {
-                      "type": "integer",
-                      "description": "Product quantity",
-                      "default": 1
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "paymentMethod": {
-            "type": "string",
-            "description": "Payment method to use",
-            "example": "INTERAC"
-          },
-          "brand_id": {
-            "type": "string",
-            "description": "Brand ID obtainable from the Dashboard",
-            "example": "f6aff7d7-bb40-4857-bc84-9b4c8310b043"
-          },
-          "success_redirect": {
-            "type": "string",
-            "format": "uri",
-            "description": "URL for redirecting after successful transactions"
-          },
-          "failure_redirect": {
-            "type": "string",
-            "format": "uri",
-            "description": "URL for redirecting after failed transactions"
-          },
-          "success_callback": {
-            "type": "string",
-            "format": "uri",
-            "description": "URL for success webhook notifications"
-          },
-          "failure_callback": {
-            "type": "string",
-            "format": "uri",
-            "description": "URL for failure webhook notifications"
           }
         }
       },
-      "CreatePurchaseResponse": {
+      "CreatePayoutResponse": {
         "type": "object",
         "properties": {
-          "purchaseId": {
+          "payoutId": {
             "type": "string",
-            "description": "Unique identifier for the purchase"
-          },
-          "client": {
-            "type": "object",
-            "properties": {
-              "customerId": {
-                "type": "string",
-                "description": "Customer identifier"
-              },
-              "email": {
-                "type": "string",
-                "format": "email",
-                "description": "Client's email address"
-              },
-              "phone": {
-                "type": "string",
-                "description": "Client's phone number"
-              },
-              "full_name": {
-                "type": "string",
-                "description": "Client's full name"
-              },
-              "date_of_birth": {
-                "type": "string",
-                "format": "date",
-                "description": "Client's date of birth"
-              },
-              "street_address": {
-                "type": "string",
-                "description": "Client's street address"
-              },
-              "country": {
-                "type": "string",
-                "description": "Client's country code"
-              },
-              "city": {
-                "type": "string",
-                "description": "Client's city"
-              },
-              "zip_code": {
-                "type": "string",
-                "description": "Client's postal/zip code"
-              },
-              "stateCode": {
-                "type": "string",
-                "description": "Client's state/province code"
-              }
-            }
-          },
-          "paymentMethod": {
-            "type": "string",
-            "description": "Payment method used",
-            "example": "INTERAC"
+            "description": "Unique identifier for the payout"
           },
           "status": {
             "type": "string",
-            "description": "Current status of the purchase",
-            "enum": ["PAID", "PAYMENT_IN_PROCESS", "EXPIRED", "ERROR"]
-          },
-          "purchase": {
-            "type": "object",
-            "properties": {
-              "currency": {
-                "type": "string",
-                "description": "Currency code"
-              },
-              "products": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Product name"
-                    },
-                    "quantity": {
-                      "type": "integer",
-                      "description": "Product quantity"
-                    },
-                    "price": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Product price"
-                    }
-                  }
-                }
-              },
-              "total": {
-                "type": "number",
-                "format": "float",
-                "description": "Total purchase amount"
-              }
-            }
-          },
-          "payInDetails": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Payment method name"
-              },
-              "emailAddress": {
-                "type": "string",
-                "format": "email",
-                "description": "Deposit email address for Interac"
-              },
-              "secretQA": {
-                "type": "string",
-                "description": "Secret question for Interac"
-              },
-              "secretAnswer": {
-                "type": "string",
-                "description": "Secret answer for Interac"
-              }
-            }
-          },
-          "checkout_url": {
-            "type": "string",
-            "format": "uri",
-            "description": "URL to redirect the user for payment completion"
+            "description": "Payout status"
           }
         }
       },
@@ -535,10 +125,6 @@
           "error_code": {
             "type": "string",
             "description": "Error code"
-          },
-          "details": {
-            "type": "object",
-            "description": "Additional error details"
           }
         }
       }
