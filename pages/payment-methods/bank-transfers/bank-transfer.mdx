@@ -27,3 +27,75 @@ After finishing your integration in sandbox mode, create the **three items** men
 
 ### 4. Go Live!
 Just let the team know when that will be so that we can work with you to get everything done.
+
+## 🏦 PayIn Flows
+### How it Works
+Paysecure's A2A paying system utilizes powerful Virtual Accounts capabilities, enabling you to support a wide range of scenarios using the following methods.
+
+### Key Steps
+#### Flow
+1. The merchant platform retrieves the account details (Account number, IBAN, and SWIFT code) for the merchant-assigned currency account intended for the PayIn.
+2. These account details are then provided to the payer, who is instructed to make the payment to this account.
+3. The payer accesses their banking app and inputs the provided account details along with the transaction amount.
+4. Upon receiving the money from the payer, Paysecure promptly receives an Inward Credit Notification (ICN) webhook from its banking partner, confirming that the funds have been deposited into the corresponding virtual account.
+5. The ICN contains all relevant transaction details. Paysecure forwards this notification to the merchant to inform them of the transaction.
+
+---
+
+## 💸 PayOut Flows
+### How it Works
+Paysecure offers the ability to make payments to customers', individuals', or businesses' bank accounts using various transfer methods via its dashboard or suite of APIs. The dashboard consolidates all available features accessible through APIs, allowing you to easily go live with minimal technical setup.
+
+### Key Steps
+#### Flow
+1. The merchant platform initiates the creation of a payout by passing beneficiary details, along with payout details.
+
+   **Beneficiary details include:**
+   - Beneficiary ID (email or phone)
+   - Beneficiary's address (mandatory but not validated; if available, send it, otherwise use a placeholder value)
+   - Beneficiary's bank details
+   - Beneficiary's name
+
+2. Upon completion of the payout, reaching either a Success or Failure state, Paysecure notifies the merchant’s platform via webhook, providing the final status of the transaction and additional details.
+
+# HTTP Status Codes
+
+| Code | HTTP Response Code | Triggering Event |
+|------|--------------------|-----------------|
+| 200  | Successful Response |
+| 202  | Successful / Accepted |
+| 400  | Bad request, the given data is invalid, or data is required |
+| 401  | Unauthorized request |
+| 404  | Page not found |
+| 405  | Method Not Allowed (GET/POST) |
+| 415  | Unsupported media type |
+| 422  | Unprocessable content, data is required |
+| 429  | Too many request attempts |
+| 500  | Internal server error |
+
+> **Note:** You will not receive error codes if the HTTPS response code is `200` or `202`.
+
+---
+
+## Error Codes and Messages
+
+Error codes are returned with HTTP response codes `400`, `404`, `401`, `415`, and `405`.
+
+### Format
+
+```json
+{
+    "message": "descriptive error message",
+    "code": "error_code"
+}
+```
+
+### Error Codes Table
+
+| Code                  | Message                                              | APIs that could generate the error code |
+|-----------------------|------------------------------------------------------|-----------------------------------------|
+| `authentication_failed` | Authorization header missing                        | All                                     |
+| `already_in_process`   | Some processing is running on this `purchaseId`     | All                                     |
+| `unsupported_media_type` | Unsupported media type "text/plain; charset=ISO-8859-1" in request. | All                                     |
+| `authentication_failed` | Incorrect `secret_key` / Invalid Merchant Type     | All                                     |
+| `transaction_error`    | See the table below                                 | See the table below                     |
