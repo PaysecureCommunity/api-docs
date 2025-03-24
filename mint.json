@@ -69,17 +69,11 @@
           "pages": [
             "pages/payment-methods/interac-payments",
             "pages/payment-methods/UPI-payments",
-            "pages/payment-methods/webhooks",
-            "pages/payment-methods/Secure-EFT",
             "pages/payment-methods/mobile-money/mobile-money",
             "pages/payment-methods/interac-e-transfer",
             "pages/payment-methods/fawry-payments",
             "pages/payment-methods/pix/pix",
-            "pages/payment-methods/mobile-money/mobile-money-pay-in-and-pay-out",
-            "pages/payment-methods/pix/pix-pay-in-and-pay-out",
-            "pages/payment-methods/bank-transfers/bank-transfer",
-            "pages/payment-methods/bank-transfers/concept",
-            "pages/payment-methods/bank-transfers/status-code"
+            "pages/payment-methods/bank-transfers/bank-transfer"
           ]
         },
         {
