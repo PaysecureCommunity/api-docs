@@ -1,13 +1,13 @@
 ---
 title: 'Mobile Money Pay-Out'
 description: Learn how to use the Mobile Money Pay-In and Pay-Out JSON-RPC methods.
-openapi: 'openapi-auth POST /payout'
+openapi: 'openapi POST /payout'
 ---
 
 ## Understanding Mobile Money Pay-In & Pay-Out
 
 ### Pay-Out
-- `payIn` allows users to **deposit funds** into their account using mobile money.
+- `payOut` allows users to **deposit funds** into their account using mobile money.
 - Required parameters:
   - `client`: Object containing user details (`full_name`, `email`, `documentId`, `documentType`).
   - `amount`: The transaction amount.
@@ -25,7 +25,7 @@ const axios = require("axios");
     {
       jsonrpc: "2.0",
       id: 1,
-      method: "payIn",
+      method: "payOut",
       params: {
         client: {
           full_name: "John Doe",

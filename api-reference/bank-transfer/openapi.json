@@ -11,7 +11,7 @@
       }
     ],
     "paths": {
-      "/purchases": {
+      "/#purchases": {
         "post": {
           "summary": "Initiate a payment purchase",
           "description": "Creates a new purchase request with client and purchase details.",
@@ -40,7 +40,7 @@
           }
         }
       },
-      "/purchases/{purchaseId}": {
+      "/#purchases/{purchaseId}": {
         "get": {
           "summary": "Retrieve purchase details",
           "description": "Fetches details of a specific purchase, including status and transaction history.",
