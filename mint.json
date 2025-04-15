@@ -38,8 +38,8 @@
       "url": "api-reference"
     },
     {
-      "name": "Reach out to us",
-      "url": "support"
+      "name": "Support",
+      "url": "Support"
     }
   ],
   "anchors": [
@@ -58,7 +58,12 @@
     {
       "group": "GETTING STARTED",
       "pages": [
-        "introduction"
+        "introduction",
+        "environments",
+        "authentication",
+        "headers",
+        "guides"
+      
       ]
     },
     {
