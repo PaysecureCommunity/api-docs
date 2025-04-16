@@ -118,5 +118,9 @@
     "auth": {
       "method": "bearer"
     }
+  },
+  "footerSocials": {
+    "github": "https://github.com/paysecurecommunity",
+    "website": "https://paysecure.net"
   }
 }
