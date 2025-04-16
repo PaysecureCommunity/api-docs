@@ -4,7 +4,7 @@
     "dark": "/logo/logo.png",
     "light": "/logo/logo.png"
   },
-  "favicon": "/logo.png",
+  "favicon": "/logo/logo.png",
   "colors": {
     "primary": "#5023B6",
     "light": "#626262",
@@ -31,15 +31,15 @@
   "tabs": [
     {
       "name": "Overview",
-      "url": "overview"
+      "url": "/overview"
     },
     {
       "name": "API Reference",
-      "url": "api-reference"
+      "url": "/api-reference"
     },
     {
       "name": "Support",
-      "url": "Support"
+      "url": "/support"
     }
   ],
   "anchors": [
@@ -63,7 +63,6 @@
         "authentication",
         "headers",
         "guides"
-      
       ]
     },
     {
@@ -79,7 +78,6 @@
             "pages/payment-methods/mobile-money/mobile-money",
             "pages/payment-methods/pix/pix",
             "pages/payment-methods/upi-payments"
-
           ]
         },
         {
