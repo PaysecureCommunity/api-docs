@@ -72,13 +72,14 @@
         {
           "group": "Payment Methods",
           "pages": [
-            "pages/payment-methods/interac-payments",
-            "pages/payment-methods/UPI-payments",
-            "pages/payment-methods/mobile-money/mobile-money",
-            "pages/payment-methods/interac-e-transfer",
+            "pages/payment-methods/bank-transfers/bank-transfer",
             "pages/payment-methods/fawry-payments",
+            "pages/payment-methods/interac-payments",
+            "pages/payment-methods/interac-e-transfer",
+            "pages/payment-methods/mobile-money/mobile-money",
             "pages/payment-methods/pix/pix",
-            "pages/payment-methods/bank-transfers/bank-transfer"
+            "pages/payment-methods/upi-payments"
+
           ]
         },
         {
@@ -91,7 +92,7 @@
         {
           "group": "FAQ",
           "pages": [
-            "pages/FAQ/FAQ"
+            "pages/faq/faq"
           ]
         },
         {
